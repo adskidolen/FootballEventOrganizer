@@ -8,12 +8,14 @@ namespace Footeo.Data.Migrations
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
     [DbContext(typeof(FooteoDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181111194003_Initial_Create")]
+    partial class Initial_Create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

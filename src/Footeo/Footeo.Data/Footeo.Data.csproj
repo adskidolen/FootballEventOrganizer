@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181111175133_TestMigration.cs" />
+    <Compile Remove="Migrations\20181111181944_Test_Two.cs" />
+    <Compile Remove="Migrations\20181111182301_Test_Two.cs" />
+    <Compile Remove="Migrations\20181111182640_Migration_3.cs" />
+    <Compile Remove="Migrations\20181111185050_Migration_Test_4.cs" />
+    <Compile Remove="Migrations\20181111190459_NewTest.cs" />
+    <Compile Remove="Migrations\20181111193218_Initial_Create.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.design" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.proxies" Version="2.1.4" />

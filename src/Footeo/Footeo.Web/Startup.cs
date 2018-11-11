@@ -16,6 +16,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Footeo.Models;
 
     public class Startup
     {
@@ -39,7 +40,7 @@
             services.AddDbContext<FooteoDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<FooteoUser>()
                 .AddEntityFrameworkStores<FooteoDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

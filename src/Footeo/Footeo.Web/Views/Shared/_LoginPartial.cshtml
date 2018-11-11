@@ -1,7 +1,8 @@
 @using Microsoft.AspNetCore.Identity
+@using Footeo.Models;
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<FooteoUser> SignInManager
+@inject UserManager<FooteoUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

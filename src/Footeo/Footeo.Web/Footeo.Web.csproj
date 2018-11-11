@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Footeo.Data\Footeo.Data.csproj" />
+    <ProjectReference Include="..\Footeo.Models\Footeo.Models.csproj" />
   </ItemGroup>
 
 </Project>
