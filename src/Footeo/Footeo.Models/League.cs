@@ -23,12 +23,12 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<TeamLeague> Teams { get; set; }
         public virtual ICollection<Fixture> Fixtures { get; set; }
 
         public League()
         {
-            this.Teams = new List<Team>();
+            this.Teams = new List<TeamLeague>();
             this.Fixtures = new List<Fixture>();
         }
     }

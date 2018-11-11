@@ -32,9 +32,8 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
-        [Required]
         [ForeignKey(nameof(Team))]
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
 
         [Required]

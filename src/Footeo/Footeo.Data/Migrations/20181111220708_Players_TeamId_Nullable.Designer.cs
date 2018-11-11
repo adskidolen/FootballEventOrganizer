@@ -4,14 +4,16 @@ using Footeo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Footeo.Data.Migrations
 {
     [DbContext(typeof(FooteoDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181111220708_Players_TeamId_Nullable")]
+    partial class Players_TeamId_Nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,32 +297,6 @@ namespace Footeo.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<string>("Initials")
-                        .IsRequired()
-                        .HasMaxLength(5);
-
-                    b.Property<string>("LogoUrl")
-                        .IsRequired();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(15);
-
-                    b.Property<int>("TownId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TownId");
-
-                    b.ToTable("Teams");
-                });
-
-            modelBuilder.Entity("Footeo.Models.TeamLeague", b =>
-                {
-                    b.Property<int>("TeamId");
-
-                    b.Property<int>("LeagueId");
-
                     b.Property<int>("Drawn");
 
                     b.Property<int>("GoalDifference");
@@ -329,7 +305,20 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int>("GoalsFor");
 
+                    b.Property<string>("Initials")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<int>("LeagueId");
+
+                    b.Property<string>("LogoUrl")
+                        .IsRequired();
+
                     b.Property<int>("Lost");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(15);
 
                     b.Property<int>("PlayedMatches");
 
@@ -337,13 +326,17 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int>("Position");
 
+                    b.Property<int>("TownId");
+
                     b.Property<int>("Won");
 
-                    b.HasKey("TeamId", "LeagueId");
+                    b.HasKey("Id");
 
                     b.HasIndex("LeagueId");
 
-                    b.ToTable("TeamsLeagues");
+                    b.HasIndex("TownId");
+
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("Footeo.Models.Town", b =>
@@ -597,22 +590,14 @@ namespace Footeo.Data.Migrations
 
             modelBuilder.Entity("Footeo.Models.Team", b =>
                 {
-                    b.HasOne("Footeo.Models.Town", "Town")
-                        .WithMany("Teams")
-                        .HasForeignKey("TownId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Footeo.Models.TeamLeague", b =>
-                {
                     b.HasOne("Footeo.Models.League", "League")
                         .WithMany("Teams")
                         .HasForeignKey("LeagueId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Footeo.Models.Team", "Team")
-                        .WithMany("Leagues")
-                        .HasForeignKey("TeamId")
+                    b.HasOne("Footeo.Models.Town", "Town")
+                        .WithMany("Teams")
+                        .HasForeignKey("TownId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

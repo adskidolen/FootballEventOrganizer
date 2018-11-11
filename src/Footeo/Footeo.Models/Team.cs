@@ -20,41 +20,6 @@
         [Required]
         public string LogoUrl { get; set; }
 
-        [Required]
-        [Range(0, 150)]
-        public int Points { get; set; }
-
-        [Required]
-        [Range(0, 20)]
-        public int Position { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int GoalsFor { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int GoalsAgainst { get; set; }
-
-        [Required]
-        public int GoalDifference { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int PlayedMatches { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int Won { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int Drawn { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int Lost { get; set; }
-
         public DateTime CreatedOn { get; set; }
 
         [Required]
@@ -62,11 +27,11 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(League))]
-        public int LeagueId { get; set; }
-        public virtual League League { get; set; }
+        //[ForeignKey(nameof(League))]
+        //public int? LeagueId { get; set; }
+        //public virtual League League { get; set; }
 
+        public virtual ICollection<TeamLeague> Leagues { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Trophy> Trophies { get; set; }
         public virtual ICollection<Match> HomeMatches { get; set; }
@@ -76,6 +41,7 @@
         {
             this.CreatedOn = DateTime.UtcNow;
 
+            this.Leagues = new List<TeamLeague>();
             this.Players = new List<Player>();
             this.Trophies = new List<Trophy>();
             this.HomeMatches = new List<Match>();

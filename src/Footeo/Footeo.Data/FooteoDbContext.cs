@@ -20,6 +20,7 @@
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Field> Fields { get; set; }
+        public DbSet<TeamLeague> TeamsLeagues { get; set; }
 
         public FooteoDbContext() { }
 
@@ -40,6 +41,7 @@
 
             modelBuilder.ApplyConfiguration(new MatchEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerStatisticsEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new TeamLeagueEntityConfiguration());
         }
     }
 }
