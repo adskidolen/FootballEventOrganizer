@@ -9,6 +9,7 @@
         public int Id { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]
@@ -17,6 +18,7 @@
         [Required]
         public string News { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }

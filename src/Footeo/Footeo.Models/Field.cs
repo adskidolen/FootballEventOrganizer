@@ -14,6 +14,7 @@
         [Required]
         public bool IsIndoors { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }

@@ -29,32 +29,40 @@
         public int Position { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int GoalsFor { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int GoalsAgainst { get; set; }
 
         [Required]
         public int GoalDifference { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int PlayedMatches { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int Won { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int Drawn { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int Lost { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
+        [Required]
         [ForeignKey(nameof(League))]
         public int LeagueId { get; set; }
         public virtual League League { get; set; }

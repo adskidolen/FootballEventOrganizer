@@ -19,13 +19,14 @@
         public string FullName => $"{this.FirstName} {this.LastName}";
 
         [Required]
-        [Range(14, 50, ErrorMessage = "Player must be over 14 years old and under 50 years old!")]
+        [Range(18, 50, ErrorMessage = "Referee must be over 18 years old and under 50 years old!")]
         public int Age { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
-        
+
         public virtual ICollection<Match> Matches { get; set; }
 
         public Referee()

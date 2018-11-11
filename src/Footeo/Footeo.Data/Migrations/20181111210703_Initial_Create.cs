@@ -59,7 +59,7 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(nullable: false),
                     News = table.Column<string>(nullable: false),
                     TownId = table.Column<int>(nullable: false)
@@ -162,7 +162,7 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
                     FixtureId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -184,7 +184,7 @@
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 20, nullable: false),
                     LastName = table.Column<string>(maxLength: 20, nullable: false),
-                    Nickname = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(maxLength: 20, nullable: true),
                     Age = table.Column<int>(nullable: false),
                     TownId = table.Column<int>(nullable: false),
                     TeamId = table.Column<int>(nullable: false),
@@ -218,8 +218,8 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    TeamId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    TeamId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -229,7 +229,7 @@
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

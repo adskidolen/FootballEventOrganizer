@@ -12,7 +12,7 @@ namespace Footeo.Data.Migrations
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
     [DbContext(typeof(FooteoDbContext))]
-    [Migration("20181111194003_Initial_Create")]
+    [Migration("20181111210703_Initial_Create")]
     partial class Initial_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,7 +129,8 @@ namespace Footeo.Data.Migrations
                         .IsRequired();
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("News")
                         .IsRequired();
@@ -152,7 +153,8 @@ namespace Footeo.Data.Migrations
                     b.Property<int?>("FixtureId");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -220,7 +222,8 @@ namespace Footeo.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
-                    b.Property<string>("Nickname");
+                    b.Property<string>("Nickname")
+                        .HasMaxLength(20);
 
                     b.Property<string>("PictureUrl")
                         .IsRequired();
@@ -360,9 +363,10 @@ namespace Footeo.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<int>("TeamId");
+                    b.Property<int?>("TeamId");
 
                     b.HasKey("Id");
 
@@ -488,7 +492,7 @@ namespace Footeo.Data.Migrations
             modelBuilder.Entity("Footeo.Models.Field", b =>
                 {
                     b.HasOne("Footeo.Models.Town", "Town")
-                        .WithMany()
+                        .WithMany("Fields")
                         .HasForeignKey("TownId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -514,7 +518,7 @@ namespace Footeo.Data.Migrations
             modelBuilder.Entity("Footeo.Models.League", b =>
                 {
                     b.HasOne("Footeo.Models.Town", "Town")
-                        .WithMany()
+                        .WithMany("Leagues")
                         .HasForeignKey("TownId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -604,8 +608,7 @@ namespace Footeo.Data.Migrations
                 {
                     b.HasOne("Footeo.Models.Team", "Team")
                         .WithMany("Trophies")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

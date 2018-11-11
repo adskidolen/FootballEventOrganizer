@@ -12,6 +12,7 @@
     <Compile Remove="Migrations\20181111185050_Migration_Test_4.cs" />
     <Compile Remove="Migrations\20181111190459_NewTest.cs" />
     <Compile Remove="Migrations\20181111193218_Initial_Create.cs" />
+    <Compile Remove="Migrations\20181111194003_Initial_Create.cs" />
   </ItemGroup>
 
   <ItemGroup>
