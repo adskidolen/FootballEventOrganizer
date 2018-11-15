@@ -27,14 +27,6 @@
         public FooteoDbContext(DbContextOptions<FooteoDbContext> options)
             : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            if (!builder.IsConfigured)
-            {
-                builder.UseLazyLoadingProxies();
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

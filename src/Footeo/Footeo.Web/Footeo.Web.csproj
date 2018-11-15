@@ -14,6 +14,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Footeo.Data\Footeo.Data.csproj" />
     <ProjectReference Include="..\Footeo.Models\Footeo.Models.csproj" />
+    <ProjectReference Include="..\Footeo.Services\Footeo.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Leagues\View\" />
+    <Folder Include="ViewModels\Teams\View\" />
   </ItemGroup>
 
 </Project>

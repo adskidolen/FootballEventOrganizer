@@ -4,9 +4,6 @@
 
     public class BaseController : Controller
     {
-        public BaseController()
-        {
-
-        }
+        public BaseController() { }
     }
 }

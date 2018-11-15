@@ -17,6 +17,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Footeo.Models;
+    using Footeo.Services.Contracts;
+    using Footeo.Services;
 
     public class Startup
     {
@@ -39,11 +41,15 @@
 
             services.AddDbContext<FooteoDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"))
+                       .UseLazyLoadingProxies());
             services.AddDefaultIdentity<FooteoUser>()
                 .AddEntityFrameworkStores<FooteoDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<ILeaguesService, LeagueService>();
+            services.AddScoped<ITeamsService, TeamsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
