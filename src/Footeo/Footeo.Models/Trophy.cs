@@ -8,7 +8,7 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
+        [StringLength(100, MinimumLength = 3)]
         public string Name { get; set; }
 
         [ForeignKey(nameof(Team))]

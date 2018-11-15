@@ -48,6 +48,8 @@
 
         public Match()
         {
+            this.HomeTeamGoals = 0;
+            this.AwayTeamGoals = 0;
             this.Statistics = new List<PlayerStatistic>();
         }
     }

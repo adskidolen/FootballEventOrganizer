@@ -19,5 +19,11 @@
         [Required]
         [Range(0, 20)]
         public int Assists { get; set; }
+
+        public PlayerStatistic()
+        {
+            this.GoalsScored = 0;
+            this.Assists = 0;
+        }
     }
 }

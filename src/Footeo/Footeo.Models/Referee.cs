@@ -9,17 +9,17 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 1)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 1)]
         public string LastName { get; set; }
 
         public string FullName => $"{this.FirstName} {this.LastName}";
 
         [Required]
-        [Range(18, 50, ErrorMessage = "Referee must be over 18 years old and under 50 years old!")]
+        [Range(18, 50)]
         public int Age { get; set; }
 
         [Required]

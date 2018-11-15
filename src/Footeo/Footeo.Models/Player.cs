@@ -11,20 +11,20 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 1)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 1)]
         public string LastName { get; set; }
 
         public string FullName => $"{this.FirstName} {this.LastName}";
 
-        [StringLength(20, MinimumLength = 1)]
+        [StringLength(30, MinimumLength = 1)]
         public string Nickname { get; set; }
 
         [Required]
-        [Range(14, 50, ErrorMessage = "Player must be over 14 years old and under 50 years old!")]
+        [Range(14, 50)]
         public int Age { get; set; }
 
         [Required]
@@ -59,6 +59,7 @@
 
         public Player()
         {
+            this.Rating = 0;
             this.Statistics = new List<PlayerStatistic>();
         }
     }
