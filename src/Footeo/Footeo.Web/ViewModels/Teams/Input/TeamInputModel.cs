@@ -2,9 +2,10 @@
 {
     public class TeamInputModel
     {
+        // TODO: Validation
         public string Name { get; set; }
         public string Initials { get; set; }
-        public string Logo { get; set; }
+        public byte[] Logo { get; set; }
         public int TownId { get; set; }
     }
 }

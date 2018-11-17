@@ -1,5 +1,7 @@
 ﻿namespace Footeo.Models
 {
+    using Footeo.Models.Enums;
+
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +21,9 @@
         public string News { get; set; }
 
         [Required]
+        public Status Status { get; set; }
+
+        [Required]
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
@@ -28,6 +33,7 @@
 
         public League()
         {
+            this.Status = Status.Pending;
             this.Teams = new List<TeamLeague>();
             this.Fixtures = new List<Fixture>();
         }

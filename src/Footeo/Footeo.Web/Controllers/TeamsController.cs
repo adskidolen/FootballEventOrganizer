@@ -31,6 +31,11 @@
         [HttpPost]
         public IActionResult Create(TeamInputModel model)
         {
+            if (this.teamsService.ExistsByName(model.Name))
+            {
+                // TODO: Error for existing team
+            }
+
             this.teamsService.CreateTeam(model.Name, model.Initials, model.Logo, model.TownId);
 
             return this.Redirect("/Teams/All");

@@ -13,6 +13,11 @@
     <Compile Remove="Migrations\20181111190459_NewTest.cs" />
     <Compile Remove="Migrations\20181111193218_Initial_Create.cs" />
     <Compile Remove="Migrations\20181111194003_Initial_Create.cs" />
+    <Compile Remove="Migrations\20181111210703_Initial_Create.cs" />
+    <Compile Remove="Migrations\20181111220708_Players_TeamId_Nullable.cs" />
+    <Compile Remove="Migrations\20181111222652_Test_TeamLeagues_Table.cs" />
+    <Compile Remove="Migrations\20181115022903_ModifiedEntities_1.0.cs" />
+    <Compile Remove="Migrations\20181116192325_Modified_FooteoUsers_Players_Referees.cs" />
   </ItemGroup>
 
   <ItemGroup>

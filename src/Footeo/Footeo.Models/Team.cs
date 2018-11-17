@@ -18,7 +18,7 @@
         public string Initials { get; set; }
 
         [Required]
-        public string LogoUrl { get; set; }
+        public byte[] Logo { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -26,6 +26,9 @@
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
+
+        [Required]
+        public byte[] Picture { get; set; }
 
         //[ForeignKey(nameof(League))]
         //public int? LeagueId { get; set; }

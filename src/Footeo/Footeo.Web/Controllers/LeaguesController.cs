@@ -31,6 +31,11 @@
         [HttpPost]
         public IActionResult Create(LeagueInputModel model)
         {
+            if (this.leaguesService.ExistsByName(model.Name))
+            {
+                // TODO: Error for existing league
+            }
+
             this.leaguesService.CreateLeague(model.Name, model.Description, model.News, model.TownId);
 
             return this.Redirect("/Leagues/All");

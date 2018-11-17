@@ -3,8 +3,7 @@
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
-
-    using System;
+    
     using System.Collections.Generic;
     using System.Linq;
 
@@ -22,18 +21,13 @@
         public IEnumerable<Team> All()
             => this.dbContext.Teams.ToList();
 
-        public void CreateTeam(string name, string initials, string logo, int townId)
+        public void CreateTeam(string name, string initials, byte[] logo, int townId)
         {
-            if (this.ExistsByName(name))
-            {
-                throw new InvalidOperationException(TeamAlreadyExistsErrorMessage);
-            }
-
             var team = new Team
             {
                 Name = name,
                 Initials = initials,
-                LogoUrl = logo,
+                Logo = logo,
                 TownId = townId
             };
 

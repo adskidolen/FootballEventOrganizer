@@ -11,16 +11,14 @@
         [StringLength(30, MinimumLength = 3)]
         public string Name { get; set; }
 
-        public virtual ICollection<Player> Players { get; set; }
-        public virtual ICollection<Referee> Referees { get; set; }
+        public virtual ICollection<FooteoUser> FooteoUsers { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection<Field> Fields { get; set; }
         public virtual ICollection<League> Leagues { get; set; }
 
         public Town()
         {
-            this.Players = new List<Player>();
-            this.Referees = new List<Referee>();
+            this.FooteoUsers = new List<FooteoUser>();
             this.Teams = new List<Team>();
             this.Fields = new List<Field>();
             this.Leagues = new List<League>();

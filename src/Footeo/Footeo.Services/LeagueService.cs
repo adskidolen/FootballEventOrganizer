@@ -4,7 +4,6 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -23,11 +22,6 @@
 
         public void CreateLeague(string name, string description, string news, int townId)
         {
-            if (this.ExistsByName(name))
-            {
-                throw new InvalidOperationException(AlreadyExistsLeagueMessage);
-            }
-
             var league = new League
             {
                 Name = name,

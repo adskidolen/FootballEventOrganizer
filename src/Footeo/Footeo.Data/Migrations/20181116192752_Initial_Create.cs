@@ -9,6 +9,46 @@
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Age",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "FirstName",
+                table: "AspNetUsers",
+                maxLength: 30,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "LastName",
+                table: "AspNetUsers",
+                maxLength: 30,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<byte[]>(
+                name: "Picture",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: new byte[] { });
+
             migrationBuilder.AddColumn<int>(
                 name: "PlayerId",
                 table: "AspNetUsers",
@@ -18,6 +58,44 @@
                 name: "RefereeId",
                 table: "AspNetUsers",
                 nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Role",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<int>(
+                name: "TownId",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldMaxLength: 128);
+
+            migrationBuilder.CreateTable(
+                name: "Referees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Referees", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Towns",
@@ -59,9 +137,10 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(nullable: false),
                     News = table.Column<string>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     TownId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -76,25 +155,27 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Referees",
+                name: "Teams",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(maxLength: 20, nullable: false),
-                    Age = table.Column<int>(nullable: false),
-                    TownId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Initials = table.Column<string>(maxLength: 5, nullable: false),
+                    Logo = table.Column<byte[]>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    TownId = table.Column<int>(nullable: false),
+                    Picture = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Referees", x => x.Id);
+                    table.PrimaryKey("PK_Teams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Referees_Towns_TownId",
+                        name: "FK_Teams_Towns_TownId",
                         column: x => x.TownId,
                         principalTable: "Towns",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,14 +199,36 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teams",
+                name: "Players",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 15, nullable: false),
-                    Initials = table.Column<string>(maxLength: 5, nullable: false),
-                    LogoUrl = table.Column<string>(nullable: false),
+                    Nickname = table.Column<string>(maxLength: 30, nullable: true),
+                    TeamId = table.Column<int>(nullable: true),
+                    Position = table.Column<int>(nullable: false),
+                    SquadNumber = table.Column<int>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    Height = table.Column<double>(nullable: false),
+                    Weight = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Players", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Players_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamsLeagues",
+                columns: table => new
+                {
+                    TeamId = table.Column<int>(nullable: false),
+                    LeagueId = table.Column<int>(nullable: false),
                     Points = table.Column<int>(nullable: false),
                     Position = table.Column<int>(nullable: false),
                     GoalsFor = table.Column<int>(nullable: false),
@@ -134,24 +237,41 @@
                     PlayedMatches = table.Column<int>(nullable: false),
                     Won = table.Column<int>(nullable: false),
                     Drawn = table.Column<int>(nullable: false),
-                    Lost = table.Column<int>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    TownId = table.Column<int>(nullable: false),
-                    LeagueId = table.Column<int>(nullable: false)
+                    Lost = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.PrimaryKey("PK_TeamsLeagues", x => new { x.TeamId, x.LeagueId });
                     table.ForeignKey(
-                        name: "FK_Teams_Leagues_LeagueId",
+                        name: "FK_TeamsLeagues_Leagues_LeagueId",
                         column: x => x.LeagueId,
                         principalTable: "Leagues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Teams_Towns_TownId",
-                        column: x => x.TownId,
-                        principalTable: "Towns",
+                        name: "FK_TeamsLeagues_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Trophies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    TeamId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trophies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Trophies_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -162,7 +282,7 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     FixtureId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -172,62 +292,6 @@
                         name: "FK_Legs_Fixtures_FixtureId",
                         column: x => x.FixtureId,
                         principalTable: "Fixtures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Players",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(maxLength: 20, nullable: false),
-                    Nickname = table.Column<string>(maxLength: 20, nullable: true),
-                    Age = table.Column<int>(nullable: false),
-                    TownId = table.Column<int>(nullable: false),
-                    TeamId = table.Column<int>(nullable: false),
-                    Position = table.Column<int>(nullable: false),
-                    SquadNumber = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false),
-                    Height = table.Column<double>(nullable: false),
-                    Weight = table.Column<double>(nullable: false),
-                    PictureUrl = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Players", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Players_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Players_Towns_TownId",
-                        column: x => x.TownId,
-                        principalTable: "Towns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Trophies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    TeamId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trophies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Trophies_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -320,6 +384,11 @@
                 column: "RefereeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_TownId",
+                table: "AspNetUsers",
+                column: "TownId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fields_TownId",
                 table: "Fields",
                 column: "TownId");
@@ -370,29 +439,19 @@
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_TownId",
-                table: "Players",
-                column: "TownId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PlayersStatistics_MatchId",
                 table: "PlayersStatistics",
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Referees_TownId",
-                table: "Referees",
-                column: "TownId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teams_LeagueId",
-                table: "Teams",
-                column: "LeagueId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Teams_TownId",
                 table: "Teams",
                 column: "TownId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamsLeagues_LeagueId",
+                table: "TeamsLeagues",
+                column: "LeagueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trophies_TeamId",
@@ -414,6 +473,14 @@
                 principalTable: "Referees",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Towns_TownId",
+                table: "AspNetUsers",
+                column: "TownId",
+                principalTable: "Towns",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -426,8 +493,15 @@
                 name: "FK_AspNetUsers_Referees_RefereeId",
                 table: "AspNetUsers");
 
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_Towns_TownId",
+                table: "AspNetUsers");
+
             migrationBuilder.DropTable(
                 name: "PlayersStatistics");
+
+            migrationBuilder.DropTable(
+                name: "TeamsLeagues");
 
             migrationBuilder.DropTable(
                 name: "Trophies");
@@ -467,6 +541,26 @@
                 name: "IX_AspNetUsers_RefereeId",
                 table: "AspNetUsers");
 
+            migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_TownId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "Age",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "FirstName",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "LastName",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "Picture",
+                table: "AspNetUsers");
+
             migrationBuilder.DropColumn(
                 name: "PlayerId",
                 table: "AspNetUsers");
@@ -474,6 +568,42 @@
             migrationBuilder.DropColumn(
                 name: "RefereeId",
                 table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "Role",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "TownId",
+                table: "AspNetUsers");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "AspNetUserTokens",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserTokens",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ProviderKey",
+                table: "AspNetUserLogins",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LoginProvider",
+                table: "AspNetUserLogins",
+                maxLength: 128,
+                nullable: false,
+                oldClrType: typeof(string));
         }
     }
 }

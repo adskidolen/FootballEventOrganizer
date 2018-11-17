@@ -13,7 +13,7 @@
         [Range(0, 150)]
         public int Points { get; set; }
 
-        // TODO: Edit
+        // TODO: Edit position
         [Range(1, 20)]
         public int Position { get; set; }
 

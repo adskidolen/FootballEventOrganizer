@@ -1,6 +1,9 @@
 ﻿namespace Footeo.Web
 {
     using Footeo.Data;
+    using Footeo.Models;
+    using Footeo.Services.Contracts;
+    using Footeo.Services;
 
     using System;
     using System.Collections.Generic;
@@ -16,9 +19,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Footeo.Models;
-    using Footeo.Services.Contracts;
-    using Footeo.Services;
+    using Microsoft.AspNetCore.Identity.UI.Services;
 
     public class Startup
     {
@@ -40,11 +41,23 @@
             });
 
             services.AddDbContext<FooteoDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                        .UseLazyLoadingProxies());
-            services.AddDefaultIdentity<FooteoUser>()
-                .AddEntityFrameworkStores<FooteoDbContext>();
+
+            // TODO: modify identity
+
+            services.AddIdentity<FooteoUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+
+                options.SignIn.RequireConfirmedEmail = false;
+            })
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<FooteoDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
