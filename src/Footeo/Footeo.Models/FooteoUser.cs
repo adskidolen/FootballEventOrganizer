@@ -10,11 +10,11 @@
     public class FooteoUser : IdentityUser
     {
         [Required]
-        [StringLength(30, MinimumLength = 1)]
+        [StringLength(30, MinimumLength = 3)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 1)]
+        [StringLength(30, MinimumLength = 3)]
         public string LastName { get; set; }
 
         public string FullName => $"{this.FirstName} {this.LastName}";
@@ -36,7 +36,5 @@
 
         public int? RefereeId { get; set; }
         public virtual Referee Referee { get; set; }
-
-        public Role? Role { get; set; }
     }
 }

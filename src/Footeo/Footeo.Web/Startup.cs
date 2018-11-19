@@ -4,6 +4,7 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
     using Footeo.Services;
+    using Footeo.Web.Middlewares.MiddlewareExtensions;
 
     using System;
     using System.Collections.Generic;
@@ -46,23 +47,34 @@
 
             // TODO: modify identity
 
-            services.AddIdentity<FooteoUser, IdentityRole>(options =>
+            services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 3;
+                options.Password.RequiredLength = 6;
 
                 options.SignIn.RequireConfirmedEmail = false;
-            })
-            .AddDefaultTokenProviders()
-            .AddEntityFrameworkStores<FooteoDbContext>();
+            });
+
+            services.AddIdentity<FooteoUser, IdentityRole>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<FooteoDbContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Account/Login";
+                options.LogoutPath = $"/Account/Logout";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<ILeaguesService, LeagueService>();
             services.AddScoped<ITeamsService, TeamsService>();
+            services.AddScoped<ITownsService, TownsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +90,8 @@
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseSeedDataMiddleware();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

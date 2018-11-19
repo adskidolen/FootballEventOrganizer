@@ -1,14 +1,16 @@
 ﻿namespace Footeo.Web.Controllers
 {
     using Footeo.Web.Controllers.Base;
+    using Footeo.Services.Contracts;
+    using Footeo.Web.ViewModels.Teams.Input;
 
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
-    using Footeo.Services.Contracts;
-    using Footeo.Web.ViewModels.Teams.Input;
+    using Microsoft.AspNetCore.Authorization;
+    using Footeo.Web.ViewModels.Teams.View;
 
     public class TeamsController : BaseController
     {
@@ -19,26 +21,47 @@
             this.teamsService = teamsService;
         }
 
-        public IActionResult All()
-        {
-            var teams = this.teamsService.All();
-
-            return View(teams);
-        }
-
+        [Authorize]
         public IActionResult Create() => this.View();
 
+        [Authorize]
         [HttpPost]
-        public IActionResult Create(TeamInputModel model)
+        public IActionResult Create(TeamCreateInputModel model)
         {
-            if (this.teamsService.ExistsByName(model.Name))
+            if (this.teamsService.Exists(model.Name))
             {
                 // TODO: Error for existing team
             }
 
-            this.teamsService.CreateTeam(model.Name, model.Initials, model.Logo, model.TownId);
+            if (ModelState.IsValid)
+            {
+                this.teamsService.CreateTeam(model.Name, model.Initials, model.Town);
 
-            return this.Redirect("/Teams/All");
+                return this.RedirectToAction(nameof(All));
+            }
+
+            return this.View();
+        }
+
+        public IActionResult All()
+        {
+            var teams = this.teamsService
+                             .All()
+                             .Select(vm => new TeamViewModel
+                             {
+                                 Name = vm.Name,
+                                 Initials = vm.Initials,
+                                 CreatedOn = vm.CreatedOn,
+                                 Town = vm.Town.Name
+                             })
+                             .ToList();
+
+            var teamViewModels = new AllTeamsViewModel
+            {
+                Teams = teams
+            };
+
+            return View(teamViewModels);
         }
     }
 }

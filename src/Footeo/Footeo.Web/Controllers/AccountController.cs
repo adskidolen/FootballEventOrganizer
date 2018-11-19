@@ -14,16 +14,23 @@
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Authentication;
     using System.IO;
+    using Footeo.Services.Contracts;
+    using Footeo.Web.Utilities;
 
     public class AccountController : BaseController
     {
         private readonly UserManager<FooteoUser> userManager;
         private readonly SignInManager<FooteoUser> signInManager;
 
-        public AccountController(UserManager<FooteoUser> userManager, SignInManager<FooteoUser> signInManager)
+        private readonly ITownsService townsService;
+
+        public AccountController(UserManager<FooteoUser> userManager, SignInManager<FooteoUser> signInManager,
+            ITownsService townsService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+
+            this.townsService = townsService;
         }
 
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -48,7 +55,7 @@
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, Constants.InvalidLoginMessage);
                     return View(model);
                 }
             }
@@ -71,6 +78,13 @@
 
             if (ModelState.IsValid)
             {
+                var town = this.townsService.GetByName(model.Town);
+
+                if (town == null)
+                {
+                    town = this.townsService.Create(model.Town);
+                }
+
                 var user = new FooteoUser
                 {
                     UserName = model.Username,
@@ -78,7 +92,7 @@
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Age = model.Age,
-                    TownId = model.TownId
+                    Town = town
                 };
 
                 //using (var memoryStream = new MemoryStream())

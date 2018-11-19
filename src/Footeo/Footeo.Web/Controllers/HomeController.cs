@@ -13,32 +13,13 @@
 
     public class HomeController : BaseController
     {
-        public HomeController()
-        {
-
-        }
-
         public IActionResult Index()
         {
-            return View();
-        }
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.View("IndexLoggedIn");
+            }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 

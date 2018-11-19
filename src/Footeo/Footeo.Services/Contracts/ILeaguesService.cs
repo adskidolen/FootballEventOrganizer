@@ -6,11 +6,12 @@
 
     public interface ILeaguesService
     {
-        void CreateLeague(string name, string description, string news, int townId);
+        void CreateLeague(string name, string description, string town);
         bool ExistsById(int id);
         bool ExistsByName(string name);
         League GetById(int id);
         League GetByName(string name);
         IEnumerable<League> All();
+        Town GetTown(string name);
     }
 }

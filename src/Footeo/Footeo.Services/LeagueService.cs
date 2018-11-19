@@ -9,30 +9,38 @@
 
     public class LeagueService : ILeaguesService
     {
-        private const string AlreadyExistsLeagueMessage = "League already exists!";
-
         private readonly FooteoDbContext dbContext;
 
-        public LeagueService(FooteoDbContext dbContext)
+        private readonly ITownsService townsService;
+
+        public LeagueService(FooteoDbContext dbContext, ITownsService townsService)
         {
             this.dbContext = dbContext;
+            this.townsService = townsService;
         }
 
-        public IEnumerable<League> All() => this.dbContext.Leagues.ToList();
-
-        public void CreateLeague(string name, string description, string news, int townId)
+        public void CreateLeague(string name, string description, string townName)
         {
+            var town = this.townsService.GetByName(townName);
+
+            if (town == null)
+            {
+                town = this.townsService.Create(townName);
+            }
+
             var league = new League
             {
                 Name = name,
                 Description = description,
-                News = news,
-                TownId = townId
+                Town = town
             };
 
             this.dbContext.Leagues.Add(league);
             this.dbContext.SaveChanges();
         }
+
+        public IEnumerable<League> All()
+            => this.dbContext.Leagues.ToList();
 
         public bool ExistsById(int id)
             => this.dbContext.Leagues.Any(l => l.Id == id);
@@ -41,9 +49,11 @@
             => this.dbContext.Leagues.Any(l => l.Name == name);
 
         public League GetById(int id)
-            => this.dbContext.Leagues.FirstOrDefault(l => l.Id == id);
+            => this.dbContext.Leagues.SingleOrDefault(l => l.Id == id);
 
         public League GetByName(string name)
-            => this.dbContext.Leagues.FirstOrDefault(l => l.Name == name);
+            => this.dbContext.Leagues.SingleOrDefault(l => l.Name == name);
+
+        public Town GetTown(string name) => this.townsService.GetByName(name);
     }
 }

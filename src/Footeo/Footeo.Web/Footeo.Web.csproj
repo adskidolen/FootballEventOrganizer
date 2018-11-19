@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Leagues\View\" />
-    <Folder Include="ViewModels\Teams\View\" />
+    <Folder Include="ViewModels\Home\" />
   </ItemGroup>
 
 </Project>

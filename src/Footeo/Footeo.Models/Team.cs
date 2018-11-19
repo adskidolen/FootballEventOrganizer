@@ -17,8 +17,8 @@
         [StringLength(5, MinimumLength = 1)]
         public string Initials { get; set; }
 
-        [Required]
-        public byte[] Logo { get; set; }
+        //[Required]
+        //public byte[] Logo { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -27,8 +27,8 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
-        [Required]
-        public byte[] Picture { get; set; }
+        //[Required]
+        //public byte[] Picture { get; set; }
 
         //[ForeignKey(nameof(League))]
         //public int? LeagueId { get; set; }

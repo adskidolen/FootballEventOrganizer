@@ -4,14 +4,16 @@ using Footeo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Footeo.Data.Migrations
 {
     [DbContext(typeof(FooteoDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181119141433_Changes_In_Leagues_Table")]
+    partial class Changes_In_Leagues_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,6 +102,8 @@ namespace Footeo.Data.Migrations
                     b.Property<int?>("PlayerId");
 
                     b.Property<int?>("RefereeId");
+
+                    b.Property<int?>("Role");
 
                     b.Property<string>("SecurityStamp");
 
@@ -196,8 +200,7 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int?>("LegId");
 
-                    b.Property<int?>("RefereeId")
-                        .IsRequired();
+                    b.Property<int>("RefereeId");
 
                     b.Property<string>("Result")
                         .IsRequired()
@@ -224,6 +227,8 @@ namespace Footeo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("Height");
+
                     b.Property<string>("Nickname")
                         .HasMaxLength(30);
 
@@ -234,6 +239,8 @@ namespace Footeo.Data.Migrations
                     b.Property<int>("SquadNumber");
 
                     b.Property<int?>("TeamId");
+
+                    b.Property<double>("Weight");
 
                     b.HasKey("Id");
 
@@ -282,9 +289,15 @@ namespace Footeo.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(5);
 
+                    b.Property<byte[]>("Logo")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30);
+
+                    b.Property<byte[]>("Picture")
+                        .IsRequired();
 
                     b.Property<int>("TownId");
 

@@ -36,7 +36,7 @@
 
         [Required]
         [ForeignKey(nameof(Referee))]
-        public int RefereeId { get; set; }
+        public int? RefereeId { get; set; }
         public virtual Referee Referee { get; set; }
 
         [Required]

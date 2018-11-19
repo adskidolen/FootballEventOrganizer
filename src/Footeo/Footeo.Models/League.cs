@@ -2,6 +2,7 @@
 {
     using Footeo.Models.Enums;
 
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,10 @@
         public string Description { get; set; }
 
         [Required]
-        public string News { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
 
         [Required]
         public Status Status { get; set; }

@@ -27,11 +27,11 @@
         [Range(0, 10)]
         public int Rating { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        public double Height { get; set; }
+        //[Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        //public double Height { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        public double Weight { get; set; }
+        //[Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        //public double Weight { get; set; }
 
         public virtual ICollection<PlayerStatistic> Statistics { get; set; }
 

@@ -2,8 +2,8 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
-        public BaseController() { }
+        protected BaseController() { }
     }
 }

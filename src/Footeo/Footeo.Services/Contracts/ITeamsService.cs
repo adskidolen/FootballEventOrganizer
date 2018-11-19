@@ -6,9 +6,9 @@
 
     public interface ITeamsService
     {
-        void CreateTeam(string name, string initials, byte[] logo, int townId);
-        bool ExistsById(int id);
-        bool ExistsByName(string name);
+        void CreateTeam(string name, string initials, string townName);
+        bool Exists(int id);
+        bool Exists(string name);
         Team GetById(int id);
         Team GetByName(string name);
         IEnumerable<Team> All();
