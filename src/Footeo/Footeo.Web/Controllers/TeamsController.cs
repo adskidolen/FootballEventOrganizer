@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using Footeo.Web.ViewModels.Teams.View;
+    using Footeo.Web.Utilities;
 
     public class TeamsController : BaseController
     {
@@ -21,14 +22,14 @@
             this.teamsService = teamsService;
         }
 
-        [Authorize]
+        [Authorize(Roles = Constants.PlayerAndAdminRoleName)]
         public IActionResult Create() => this.View();
 
-        [Authorize]
+        [Authorize(Roles = Constants.PlayerAndAdminRoleName)]
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
-            if (this.teamsService.Exists(model.Name))
+            if (this.teamsService.ExistsByName(model.Name))
             {
                 // TODO: Error for existing team
             }

@@ -75,6 +75,7 @@
             services.AddScoped<ILeaguesService, LeagueService>();
             services.AddScoped<ITeamsService, TeamsService>();
             services.AddScoped<ITownsService, TownsService>();
+            services.AddScoped<IFieldsService, FieldsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

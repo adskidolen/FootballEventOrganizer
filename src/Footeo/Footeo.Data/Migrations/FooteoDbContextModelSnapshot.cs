@@ -4,16 +4,14 @@ using Footeo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Footeo.Data.Migrations
 {
     [DbContext(typeof(FooteoDbContext))]
-    [Migration("20181116211814_FooteoUsers_Picture_CurrentlyRemoved")]
-    partial class FooteoUsers_Picture_CurrentlyRemoved
+    partial class FooteoDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +29,9 @@ namespace Footeo.Data.Migrations
                         .IsRequired();
 
                     b.Property<bool>("IsIndoors");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("TownId");
 
@@ -103,8 +104,6 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int?>("RefereeId");
 
-                    b.Property<int?>("Role");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<int>("TownId");
@@ -142,12 +141,13 @@ namespace Footeo.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("News")
-                        .IsRequired();
+                    b.Property<DateTime>("StartDate");
 
                     b.Property<int>("Status");
 
@@ -158,6 +158,19 @@ namespace Footeo.Data.Migrations
                     b.HasIndex("TownId");
 
                     b.ToTable("Leagues");
+                });
+
+            modelBuilder.Entity("Footeo.Models.LeagueTrophy", b =>
+                {
+                    b.Property<int>("LeagueId");
+
+                    b.Property<int>("TrophyId");
+
+                    b.HasKey("LeagueId", "TrophyId");
+
+                    b.HasIndex("TrophyId");
+
+                    b.ToTable("LeaguesTrophies");
                 });
 
             modelBuilder.Entity("Footeo.Models.Leg", b =>
@@ -199,7 +212,8 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int?>("LegId");
 
-                    b.Property<int>("RefereeId");
+                    b.Property<int?>("RefereeId")
+                        .IsRequired();
 
                     b.Property<string>("Result")
                         .IsRequired()
@@ -226,8 +240,6 @@ namespace Footeo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Height");
-
                     b.Property<string>("Nickname")
                         .HasMaxLength(30);
 
@@ -235,11 +247,9 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int>("Rating");
 
-                    b.Property<int>("SquadNumber");
+                    b.Property<int?>("SquadNumber");
 
                     b.Property<int?>("TeamId");
-
-                    b.Property<double>("Weight");
 
                     b.HasKey("Id");
 
@@ -288,15 +298,9 @@ namespace Footeo.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(5);
 
-                    b.Property<byte[]>("Logo")
-                        .IsRequired();
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30);
-
-                    b.Property<byte[]>("Picture")
-                        .IsRequired();
 
                     b.Property<int>("TownId");
 
@@ -518,6 +522,19 @@ namespace Footeo.Data.Migrations
                     b.HasOne("Footeo.Models.Town", "Town")
                         .WithMany("Leagues")
                         .HasForeignKey("TownId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Footeo.Models.LeagueTrophy", b =>
+                {
+                    b.HasOne("Footeo.Models.League", "League")
+                        .WithMany("Trophies")
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Footeo.Models.Trophy", "Trophy")
+                        .WithMany("Leagues")
+                        .HasForeignKey("TrophyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

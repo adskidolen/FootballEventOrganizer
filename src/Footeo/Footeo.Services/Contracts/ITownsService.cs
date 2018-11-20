@@ -4,9 +4,9 @@
 
     public interface ITownsService
     {
-        Town Create(string name);
-        bool Exists(string name);
-        bool Exists(int name);
+        Town CreateTown(string name);
+        bool ExistsByName(string name);
+        bool ExistsById(int id);
         Town GetById(int id);
         Town GetByName(string name);
     }

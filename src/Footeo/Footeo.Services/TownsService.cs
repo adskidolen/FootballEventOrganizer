@@ -15,7 +15,7 @@
             this.dbContext = dbContext;
         }
 
-        public Town Create(string name)
+        public Town CreateTown(string name)
         {
             var town = new Town
             {
@@ -28,9 +28,9 @@
             return town;
         }
 
-        public bool Exists(string name) => this.dbContext.Towns.Any(t => t.Name == name);
+        public bool ExistsByName(string name) => this.dbContext.Towns.Any(t => t.Name == name);
 
-        public bool Exists(int id) => this.dbContext.Towns.Any(t => t.Id == id);
+        public bool ExistsById(int id) => this.dbContext.Towns.Any(t => t.Id == id);
 
         public Town GetById(int id) => this.dbContext.Towns.SingleOrDefault(t => t.Id == id);
 

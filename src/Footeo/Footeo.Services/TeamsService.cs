@@ -27,7 +27,7 @@
 
             if (town == null)
             {
-                town = this.townsService.Create(townName);
+                town = this.townsService.CreateTown(townName);
             }
 
             var team = new Team
@@ -41,10 +41,10 @@
             this.dbContext.SaveChanges();
         }
 
-        public bool Exists(int id)
+        public bool ExistsById(int id)
             => this.dbContext.Teams.Any(t => t.Id == id);
 
-        public bool Exists(string name)
+        public bool ExistsByName(string name)
             => this.dbContext.Teams.Any(t => t.Name == name);
 
         public Team GetById(int id)

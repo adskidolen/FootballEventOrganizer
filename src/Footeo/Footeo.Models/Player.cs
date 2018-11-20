@@ -20,9 +20,8 @@
         [Required]
         public Position Position { get; set; }
 
-        [Required]
         [Range(1, 99)]
-        public int SquadNumber { get; set; }
+        public int? SquadNumber { get; set; }
 
         [Range(0, 10)]
         public int Rating { get; set; }

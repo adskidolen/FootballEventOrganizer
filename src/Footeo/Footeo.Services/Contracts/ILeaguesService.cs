@@ -12,6 +12,5 @@
         League GetById(int id);
         League GetByName(string name);
         IEnumerable<League> All();
-        Town GetTown(string name);
     }
 }

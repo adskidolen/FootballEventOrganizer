@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Home\" />
+    <Folder Include="Views\Referees\" />
+    <Folder Include="Views\Players\" />
   </ItemGroup>
 
 </Project>

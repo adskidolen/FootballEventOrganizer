@@ -3,10 +3,10 @@
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Web.Utilities;
-
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
 
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -22,7 +22,7 @@
         public async Task InvokeAsync(HttpContext context, FooteoDbContext dbContext,
            UserManager<FooteoUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            if (!dbContext.Roles.Any() || dbContext.Roles.Count() == 1)
+            if (!dbContext.Roles.Any())
             {
                 await this.SeedRoles(userManager, roleManager);
             }
@@ -32,22 +32,17 @@
 
         private async Task SeedRoles(UserManager<FooteoUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var adminResult = await roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName));
-
-            if (adminResult.Succeeded && userManager.Users.Count() == 1)
-            {
-                var firstUser = userManager.Users.FirstOrDefault();
-
-                await userManager.AddToRoleAsync(firstUser, Constants.AdminRoleName);
-            }
-
+            var adminRoleExists = await roleManager.RoleExistsAsync(Constants.AdminRoleName);
             var playerRoleExist = await roleManager.RoleExistsAsync(Constants.PlayerRoleName);
             var refereeRoleExists = await roleManager.RoleExistsAsync(Constants.RefereeRoleName);
-            if (!playerRoleExist || !refereeRoleExists)
+
+            if (!playerRoleExist || !refereeRoleExists || !adminRoleExists)
             {
+                var adminRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName));
                 var playerRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerRoleName));
                 var refereeRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.RefereeRoleName));
             }
+
         }
     }
 }

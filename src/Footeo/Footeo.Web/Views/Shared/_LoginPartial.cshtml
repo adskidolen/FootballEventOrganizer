@@ -11,13 +11,23 @@
         <ul class="nav navbar-nav navbar-left">
             <li><a asp-controller="Leagues" asp-action="Create">Create League</a></li>
             <li><a asp-controller="Teams" asp-action="Create">Create Team</a></li>
+            <li><a asp-controller="Fields" asp-action="Add">Add Field</a></li>
         </ul>
     }
     else
     {
-        <ul class="nav navbar-nav navbar-left">
-            <li><a asp-controller="Teams" asp-action="Create">Create Team</a></li>
-        </ul>
+        @if (User.IsInRole("Player"))
+        {
+            <ul class="nav navbar-nav navbar-left">
+                <li><a asp-controller="Teams" asp-action="Create">Create Team</a></li>
+            </ul>
+        }
+        @if (User.IsInRole("Referee"))
+        {
+            <ul class="nav navbar-nav navbar-left">
+                <li><a asp-controller="Matches" asp-action="Join">Join Match</a></li>
+            </ul>
+        }
     }
     <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">

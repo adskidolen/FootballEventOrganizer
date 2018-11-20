@@ -1,7 +1,5 @@
 ﻿namespace Footeo.Models
 {
-    using Footeo.Models.Enums;
-
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Identity;
@@ -16,8 +14,6 @@
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string LastName { get; set; }
-
-        public string FullName => $"{this.FirstName} {this.LastName}";
 
         [Required]
         [Range(14, 50)]

@@ -82,7 +82,7 @@
 
                 if (town == null)
                 {
-                    town = this.townsService.Create(model.Town);
+                    town = this.townsService.CreateTown(model.Town);
                 }
 
                 var user = new FooteoUser
@@ -95,6 +95,8 @@
                     Town = town
                 };
 
+                var role = model.Role;
+
                 //using (var memoryStream = new MemoryStream())
                 //{
                 //    await model.Picture.CopyToAsync(memoryStream);
@@ -106,6 +108,16 @@
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (this.userManager.Users.Count() == 1)
+                    {
+                        var adminResult = userManager.AddToRoleAsync(user, Constants.AdminRoleName).Result;
+                    }
+                    else
+                    {
+                        var roleResult = userManager.AddToRoleAsync(user, role).Result;
+                    }
+
 
                     return RedirectToLocal(returnUrl);
                 }

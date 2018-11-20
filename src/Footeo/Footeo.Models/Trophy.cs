@@ -1,5 +1,6 @@
 ﻿namespace Footeo.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +15,12 @@
         [ForeignKey(nameof(Team))]
         public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
+
+        public virtual ICollection<LeagueTrophy> Leagues { get; set; }
+
+        public Trophy()
+        {
+            this.Leagues = new List<LeagueTrophy>();
+        }
     }
 }

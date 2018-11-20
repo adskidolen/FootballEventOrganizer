@@ -7,18 +7,18 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class LeagueService : ILeaguesService
+    public class FieldsService : IFieldsService
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
 
-        public LeagueService(FooteoDbContext dbContext, ITownsService townsService)
+        public FieldsService(FooteoDbContext dbContext, ITownsService townsService)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
         }
 
-        public void CreateLeague(string name, string description, string townName)
+        public void CreateField(string name, string address, bool isIndoors, string townName)
         {
             var town = this.townsService.GetByName(townName);
 
@@ -27,31 +27,31 @@
                 town = this.townsService.CreateTown(townName);
             }
 
-            var league = new League
+            var field = new Field
             {
                 Name = name,
-                Description = description,
+                Address = address,
+                IsIndoors = isIndoors,
                 Town = town
             };
 
-            this.dbContext.Leagues.Add(league);
+            this.dbContext.Fields.Add(field);
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<League> All()
-            => this.dbContext.Leagues.ToList();
-
         public bool ExistsById(int id)
-            => this.dbContext.Leagues.Any(l => l.Id == id);
+            => this.dbContext.Fields.Any(f => f.Id == id);
 
         public bool ExistsByName(string name)
-            => this.dbContext.Leagues.Any(l => l.Name == name);
+            => this.dbContext.Fields.Any(f => f.Name == name);
 
-        public League GetById(int id)
-            => this.dbContext.Leagues.SingleOrDefault(l => l.Id == id);
+        public Field GetById(int id)
+            => this.dbContext.Fields.SingleOrDefault(f => f.Id == id);
 
-        public League GetByName(string name)
-            => this.dbContext.Leagues.SingleOrDefault(l => l.Name == name);
+        public Field GetByName(string name)
+            => this.dbContext.Fields.SingleOrDefault(f => f.Name == name);
 
+        public IEnumerable<Field> All()
+            => this.dbContext.Fields.ToList();
     }
 }

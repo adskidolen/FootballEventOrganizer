@@ -34,12 +34,15 @@
 
         public virtual ICollection<TeamLeague> Teams { get; set; }
         public virtual ICollection<Fixture> Fixtures { get; set; }
+        public virtual ICollection<LeagueTrophy> Trophies { get; set; }
 
         public League()
         {
             this.Status = Status.Pending;
+
             this.Teams = new List<TeamLeague>();
             this.Fixtures = new List<Fixture>();
+            this.Trophies = new List<LeagueTrophy>();
         }
     }
 }

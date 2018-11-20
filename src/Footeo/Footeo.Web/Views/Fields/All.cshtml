@@ -1,0 +1,27 @@
+﻿@model Footeo.Web.ViewModels.Fields.View.AllFieldsViewModel
+
+@{
+    ViewData["Title"] = "All Fields";
+}
+
+<h2 class="text-center">All Fields</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Is Indoors</th>
+            <th>Town</th>
+        </tr>
+        @foreach (var field in Model.Fields)
+        {
+            <tr>
+                <td>@field.Name</td>
+                <td>@field.Address</td>
+                <td>@field.IsIndoors</td>
+                <td>@field.Town</td>
+            </tr>
+        }
+    </table>
+</div>
