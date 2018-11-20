@@ -3,19 +3,15 @@
     using Footeo.Models;
     using Footeo.Web.ViewModels.Users;
     using Footeo.Web.Controllers.Base;
+    using Footeo.Services.Contracts;
+    using Footeo.Web.Utilities;
 
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Authentication;
-    using System.IO;
-    using Footeo.Services.Contracts;
-    using Footeo.Web.Utilities;
 
     public class AccountController : BaseController
     {
@@ -23,14 +19,16 @@
         private readonly SignInManager<FooteoUser> signInManager;
 
         private readonly ITownsService townsService;
+        private readonly IUsersService usersService;
 
         public AccountController(UserManager<FooteoUser> userManager, SignInManager<FooteoUser> signInManager,
-            ITownsService townsService)
+            ITownsService townsService, IUsersService usersService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
 
             this.townsService = townsService;
+            this.usersService = usersService;
         }
 
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -85,6 +83,8 @@
                     town = this.townsService.CreateTown(model.Town);
                 }
 
+                var role = model.Role;
+
                 var user = new FooteoUser
                 {
                     UserName = model.Username,
@@ -94,14 +94,6 @@
                     Age = model.Age,
                     Town = town
                 };
-
-                var role = model.Role;
-
-                //using (var memoryStream = new MemoryStream())
-                //{
-                //    await model.Picture.CopyToAsync(memoryStream);
-                //    user.Picture = memoryStream.ToArray();
-                //}
 
                 var result = await userManager.CreateAsync(user, model.Password);
 
@@ -116,8 +108,19 @@
                     else
                     {
                         var roleResult = userManager.AddToRoleAsync(user, role).Result;
-                    }
 
+                        if (role == Constants.PlayerRoleName && this.userManager.Users.Count() > 1)
+                        {
+                            var player = new Player();
+                            this.usersService.CreatePlayer(user, player);
+                        }
+
+                        if (role == Constants.RefereeRoleName && this.userManager.Users.Count() > 1)
+                        {
+                            var referee = new Referee();
+                            this.usersService.CreateReferee(user, referee);
+                        }
+                    }
 
                     return RedirectToLocal(returnUrl);
                 }

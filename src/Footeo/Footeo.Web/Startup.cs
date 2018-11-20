@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using System.Globalization;
 
     public class Startup
     {
@@ -76,6 +77,7 @@
             services.AddScoped<ITeamsService, TeamsService>();
             services.AddScoped<ITownsService, TownsService>();
             services.AddScoped<IFieldsService, FieldsService>();
+            services.AddScoped<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

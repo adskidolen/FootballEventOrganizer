@@ -1,14 +1,17 @@
 ﻿namespace Footeo.Web.Controllers
 {
     using Footeo.Services.Contracts;
+    using Footeo.Web.Controllers.Base;
     using Footeo.Web.Utilities;
     using Footeo.Web.ViewModels.Fields.Input;
     using Footeo.Web.ViewModels.Fields.View;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using System.Linq;
 
-    public class FieldsController : Controller
+    public class FieldsController : BaseController
     {
         private readonly IFieldsService fieldsService;
 

@@ -17,8 +17,7 @@
         public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
 
-        [Required]
-        public Position Position { get; set; }
+        public Position? Position { get; set; }
 
         [Range(1, 99)]
         public int? SquadNumber { get; set; }

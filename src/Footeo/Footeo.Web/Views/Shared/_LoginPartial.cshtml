@@ -32,7 +32,7 @@
     <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-controller="Account" asp-action="Manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-controller="Users" asp-action="Profile" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>

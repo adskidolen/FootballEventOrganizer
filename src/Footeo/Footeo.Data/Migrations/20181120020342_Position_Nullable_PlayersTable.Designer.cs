@@ -4,14 +4,16 @@ using Footeo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Footeo.Data.Migrations
 {
     [DbContext(typeof(FooteoDbContext))]
-    partial class FooteoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181120020342_Position_Nullable_PlayersTable")]
+    partial class Position_Nullable_PlayersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
