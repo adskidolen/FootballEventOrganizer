@@ -29,5 +29,13 @@
 
         public bool HasATeam(string userName)
             => this.dbContext.Users.Where(u => u.UserName == userName).Any(p => p.Player.TeamId != null);
+
+        public void SetNickname(string userName, string nickname)
+        {
+            var player = this.dbContext.Users.Where(u => u.UserName == userName).Select(p => p.Player).FirstOrDefault();
+            player.Nickname = nickname;
+
+            this.dbContext.SaveChanges();
+        }
     }
 }

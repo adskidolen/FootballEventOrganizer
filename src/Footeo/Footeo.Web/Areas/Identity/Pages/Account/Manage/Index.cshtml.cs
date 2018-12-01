@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Footeo.Models;
+using Footeo.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,18 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<FooteoUser> _userManager;
         private readonly SignInManager<FooteoUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IUsersService _usersService;
 
         public IndexModel(
             UserManager<FooteoUser> userManager,
             SignInManager<FooteoUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUsersService usersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _usersService = usersService;
         }
 
         public string Username { get; set; }
@@ -47,6 +51,8 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public string Nickname { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -66,7 +72,8 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Nickname = user.Player.Nickname
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -108,6 +115,8 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            _usersService.SetNickname(user.UserName, Input.Nickname);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
