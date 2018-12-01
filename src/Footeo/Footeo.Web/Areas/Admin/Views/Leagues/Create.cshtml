@@ -7,7 +7,7 @@
 <h2 class="text-center">@this.ViewData["Title"]</h2>
 <hr />
 <div class="w-50 mx-auto">
-    <form asp-controller="Leagues" asp-action="Create">
+    <form asp-area="Admin" asp-controller="Leagues" asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-controller="Leagues" asp-action="All">Back to Leagues</a>
+    <a asp-area="" asp-controller="Leagues" asp-action="All">Back to Leagues</a>
 </div>
 
 @section Scripts {

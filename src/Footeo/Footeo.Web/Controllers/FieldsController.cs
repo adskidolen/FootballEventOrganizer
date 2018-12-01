@@ -20,28 +20,6 @@
             this.fieldsService = fieldsService;
         }
 
-        [Authorize(Roles = Constants.AdminRoleName)]
-        public IActionResult Add() => this.View();
-
-        [Authorize(Roles = Constants.AdminRoleName)]
-        [HttpPost]
-        public IActionResult Add(FieldCreateInputModel model)
-        {
-            if (this.fieldsService.ExistsByName(model.Name))
-            {
-                // TODO: Error for existing field
-            }
-
-            if (ModelState.IsValid)
-            {
-                this.fieldsService.CreateField(model.Name, model.Address, model.IsIndoors, model.Town);
-
-                return this.RedirectToAction(nameof(All));
-            }
-
-            return this.View(model);
-        }
-
         public IActionResult All()
         {
             var fields = this.fieldsService

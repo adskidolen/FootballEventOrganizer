@@ -7,7 +7,7 @@
 <h2>@this.ViewData["Title"]</h2>
 <hr />
 <div class="w-50 mx-auto">
-    <form asp-action="Add">
+    <form asp-area="Admin" asp-controller="Fields" asp-action="Add" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
@@ -38,6 +38,6 @@
 </div>
 
 <div>
-    <a asp-controller="Home" asp-action="Index">Back to Home Page</a>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
 </div>
 
