@@ -4,6 +4,8 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
+    using Microsoft.AspNetCore.Identity;
+
     using System.Collections.Generic;
     using System.Linq;
 
@@ -39,6 +41,8 @@
 
             var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
             player.Team = team;
+            player.IsCaptain = true;
+            
 
             team.Players.Add(player);
 
@@ -63,6 +67,8 @@
             var team = this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId);
             var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
 
+            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
+            
             team.Players.Add(player);
             this.dbContext.SaveChanges();
         }

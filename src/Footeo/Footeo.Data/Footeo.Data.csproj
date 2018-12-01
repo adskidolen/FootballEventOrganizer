@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181201031708_AddedCreatorToTeamTable.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.design" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.proxies" Version="2.1.4" />

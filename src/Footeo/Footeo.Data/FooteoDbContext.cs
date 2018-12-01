@@ -31,7 +31,7 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder.ApplyConfiguration(new MatchEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerStatisticsEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TeamLeagueEntityConfiguration());

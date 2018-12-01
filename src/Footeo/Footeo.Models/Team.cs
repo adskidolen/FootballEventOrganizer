@@ -20,6 +20,7 @@
         //[Required]
         //public byte[] Logo { get; set; }
 
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         [Required]

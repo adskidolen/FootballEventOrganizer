@@ -34,8 +34,15 @@
         {
             <h1 class="text-center">Hello, @this.User.Identity.Name!</h1>
             <hr />
-            <h1 class="text-center">Join Team</h1>
-            <h1 class="text-center">Join Match</h1>
+            <div class="container text-center">
+                <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
+                Or
+                <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
+            </div>
+            <hr />
+            <div class="container text-center">
+                <a asp-controller="Matches" asp-action="Join" class="btn btn-dark">Join Match</a>
+            </div>
         }
     }
     else

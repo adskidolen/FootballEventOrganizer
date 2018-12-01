@@ -6,7 +6,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post" id="logoutForm" class="navbar-right">
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav">
             @if (User.IsInRole("Admin"))
             {
@@ -16,7 +16,7 @@
                             Leagues
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All">Leagues</a>
+                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All"> All Leagues</a>
                             <a class="dropdown-item" asp-controller="Leagues" asp-action="Create">Create League</a>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                             Teams
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">Teams</a>
+                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">All Teams</a>
                             <a class="dropdown-item" asp-controller="Teams" asp-action="Create">Create Team</a>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             Fields
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">Fields</a>
+                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">All Fields</a>
                             <a class="dropdown-item" asp-controller="Fields" asp-action="Add">Add Field</a>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             Leagues
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All">Leagues</a>
+                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All">All Leagues</a>
                         </div>
                     </div>
                 </li>
@@ -66,7 +66,7 @@
                             Teams
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">Teams</a>
+                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">All Teams</a>
                         </div>
                     </div>
                 </li>
@@ -77,11 +77,14 @@
                             Fields
                         </button>
                         <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">Fields</a>
+                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">All Fields</a>
                         </div>
                     </div>
                 </li>
             }
+            <li class="nav-item active">
+                <a class="nav-link font-weight-bold" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            </li>
             <li class="nav-item active">
                 <button type="submit" class="btn btn-link navbar-btn nav-link font-weight-bold">Logout</button>
             </li>
@@ -90,12 +93,12 @@
 }
 else
 {
-    <ul class="navbar-nav">
+    <ul class="navbar-nav right">
         <li class="nav-item">
-            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Login</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Register</a>
         </li>
     </ul>
 }

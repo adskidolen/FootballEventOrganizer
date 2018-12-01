@@ -1,6 +1,6 @@
 using System;
 
-namespace Footeo.Web.Models
+namespace Footeo.Web.ViewModels
 {
     public class ErrorViewModel
     {

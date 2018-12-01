@@ -5,14 +5,12 @@
     using Footeo.Web.ViewModels.Teams.Input;
     using Footeo.Web.ViewModels.Teams.View;
     using Footeo.Web.Utilities;
-
-    using System;
-    using System.Collections.Generic;
+    using Footeo.Web.ViewModels;
+    
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    using Footeo.Web.Models;
 
     public class TeamsController : BaseController
     {
@@ -25,10 +23,10 @@
             this.usersService = usersService;
         }
 
-        [Authorize(Roles = Constants.PlayerAndAdminRoleName)]
+        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
         public IActionResult Create() => this.View();
 
-        [Authorize(Roles = Constants.PlayerAndAdminRoleName)]
+        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
@@ -81,7 +79,7 @@
             return View(teamViewModels);
         }
 
-        [Authorize(Roles = Constants.PlayerRoleName)]
+        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
         public IActionResult Join(int id)
         {
             var currentUser = this.User.Identity.Name;

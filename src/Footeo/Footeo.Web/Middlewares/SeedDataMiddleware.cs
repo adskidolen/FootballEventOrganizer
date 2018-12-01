@@ -34,12 +34,14 @@
             var adminRoleExists = await roleManager.RoleExistsAsync(Constants.AdminRoleName);
             var playerRoleExist = await roleManager.RoleExistsAsync(Constants.PlayerRoleName);
             var refereeRoleExists = await roleManager.RoleExistsAsync(Constants.RefereeRoleName);
+            var playerInTeamRoleExists = await roleManager.RoleExistsAsync(Constants.PlayerInTeamRoleName);
 
-            if (!playerRoleExist || !refereeRoleExists || !adminRoleExists)
+            if (!playerRoleExist || !refereeRoleExists || !adminRoleExists || !playerInTeamRoleExists)
             {
                 var adminRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName));
                 var playerRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerRoleName));
                 var refereeRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.RefereeRoleName));
+                var playerInTeamRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerInTeamRoleName));
             }
         }
     }

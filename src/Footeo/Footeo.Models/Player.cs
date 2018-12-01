@@ -17,6 +17,8 @@
         public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
 
+        public bool IsCaptain { get; set; }
+
         public Position? Position { get; set; }
 
         [Range(1, 99)]
@@ -35,6 +37,7 @@
 
         public Player()
         {
+            this.IsCaptain = false;
             this.Rating = 0;
             this.Statistics = new List<PlayerStatistic>();
         }

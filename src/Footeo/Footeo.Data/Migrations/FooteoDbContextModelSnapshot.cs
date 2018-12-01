@@ -240,6 +240,8 @@ namespace Footeo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("IsCaptain");
+
                     b.Property<string>("Nickname")
                         .HasMaxLength(30);
 

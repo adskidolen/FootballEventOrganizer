@@ -4,40 +4,37 @@
     ViewData["Title"] = "Add Field";
 }
 
-<h2>Add Field</h2>
-
+<h2>@this.ViewData["Title"]</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Add">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" placeholder="Estadio Santiago Bernabeu" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="w-50 mx-auto">
+    <form asp-action="Add">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Estadio Santiago Bernabeu" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" placeholder="Av. de Concha Espina, 1, 28036 Madrid" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsIndoors" /> @Html.DisplayNameFor(model => model.IsIndoors)
+                </label>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" placeholder="Av. de Concha Espina, 1, 28036 Madrid" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsIndoors" /> @Html.DisplayNameFor(model => model.IsIndoors)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Town" class="control-label"></label>
-                <input asp-for="Town" class="form-control" placeholder="Madrid" />
-                <span asp-validation-for="Town" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add Field" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Town" class="control-label"></label>
+            <input asp-for="Town" class="form-control" placeholder="Madrid" />
+            <span asp-validation-for="Town" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Field" class="btn btn-default" />
+        </div>
+    </form>
 </div>
 
 <div>
