@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Footeo.Models;
 using Footeo.Services.Contracts;
+using Footeo.Web.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -69,12 +70,24 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            Input = new InputModel
+            if (this.User.IsInRole(Constants.PlayerRoleName))
             {
-                Email = email,
-                PhoneNumber = phoneNumber,
-                Nickname = user.Player.Nickname
-            };
+                Input = new InputModel
+                {
+                    Email = email,
+                    PhoneNumber = phoneNumber,
+                    Nickname = user.Player.Nickname
+                };
+            }
+            else
+            {
+                Input = new InputModel
+                {
+                    Email = email,
+                    PhoneNumber = phoneNumber
+                };
+
+            }
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
 
@@ -116,7 +129,10 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            _usersService.SetNickname(user.UserName, Input.Nickname);
+            if (this.User.IsInRole(Constants.PlayerRoleName))
+            {
+                _usersService.SetNickname(user.UserName, Input.Nickname);
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
