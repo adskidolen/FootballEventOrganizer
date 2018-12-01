@@ -13,6 +13,8 @@
             <th>Initials</th>
             <th>Create On</th>
             <th>Town</th>
+            <th>Players</th>
+            <th>Join Team</th>
         </tr>
         @foreach (var team in Model.Teams)
         {
@@ -21,6 +23,8 @@
                 <td>@team.Initials</td>
                 <td>@team.CreatedOn</td>
                 <td>@team.Town</td>
+                <td><a asp-controller="Players" asp-action="All" asp-route-id="@team.Id">View</a></td>
+                <td><a asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
             </tr>
         }
     </table>

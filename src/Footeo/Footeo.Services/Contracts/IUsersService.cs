@@ -6,5 +6,6 @@
     {
         void CreatePlayer(FooteoUser user, Player player);
         void CreateReferee(FooteoUser user, Referee referee);
+        bool HasATeam(string userName);
     }
 }

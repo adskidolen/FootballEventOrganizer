@@ -1,5 +1,45 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Footeo.Models;
+
+@inject SignInManager<FooteoUser> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="text-center">Welcome to your Football Event Organizer!</h1>
+<div class="container">
+    @if (this.SignInManager.IsSignedIn(this.User))
+    {
+        <h1 class="text-center">Welcome to your Football Event Organizer!</h1>
+        <hr />
+        @if (User.IsInRole("Player"))
+        {
+            <h1 class="text-center">Hello, @this.User.Identity.Name!</h1>
+            <hr />
+            <div class="container text-center">
+                <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
+                Or
+                <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
+            </div>
+        }
+
+        @if (User.IsInRole("Referee"))
+        {
+            <h1 class="text-center">Hello, @this.User.Identity.Name!</h1>
+            <hr />
+            <h1 class="text-center">Join Match</h1>
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <h1 class="text-center">Hello, @this.User.Identity.Name!</h1>
+            <hr />
+            <h1 class="text-center">Join Team</h1>
+            <h1 class="text-center">Join Match</h1>
+        }
+    }
+    else
+    {
+        <h1 class="text-center">Join our Football Event Organizer platform now!</h1>
+    }
+</div>

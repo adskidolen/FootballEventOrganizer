@@ -39,7 +39,7 @@
                 return this.RedirectToAction(nameof(All));
             }
 
-            return this.View();
+            return this.View(model);
         }
 
         public IActionResult All()

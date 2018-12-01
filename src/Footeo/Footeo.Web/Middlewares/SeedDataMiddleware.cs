@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
 
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -42,7 +41,6 @@
                 var playerRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerRoleName));
                 var refereeRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.RefereeRoleName));
             }
-
         }
     }
 }

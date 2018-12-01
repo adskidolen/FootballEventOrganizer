@@ -4,66 +4,94 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Register</h2>
-<hr />
-<div class="row mx-auto w-50">
-    <div class="col-md-4">
-        <form asp-controller="Account" asp-action="Register">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Choose what you want to be:</label>
+<div class="w-50 mx-auto">
+    <h2 class="text-center">@this.ViewData["Title"]</h2>
+    <hr />
+    <form class="mx-auto half-width" method="post" asp-controller="Account" asp-action="Register">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="d-flex justify-content-between">
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="Username"></label>
+                </div>
+                <input asp-for="Username" class="form-control" placeholder="adskidolen">
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="Email"></label>
+                </div>
+                <input asp-for="Email" class="form-control" placeholder="adskidolen@@mail.bg">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="Password"></label>
+                </div>
+                <input asp-for="Password" class="form-control" placeholder="Password...">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="ConfirmPassword"></label>
+                </div>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password...">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <hr class="hr-2 bg-eventures" />
+        <div class="d-flex justify-content-between">
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="FirstName"></label>
+                </div>
+                <input asp-for="FirstName" class="form-control" placeholder="Alexander">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="LastName"></label>
+                </div>
+                <input asp-for="LastName" class="form-control" placeholder="Paunski">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="Age"></label>
+                </div>
+                <input asp-for="Age" class="form-control" placeholder="22">
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group w-50">
+                <div class="d-flex justify-content-center">
+                    <label class="font-weight-bold" asp-for="Town"></label>
+                </div>
+                <input asp-for="Town" class="form-control" placeholder="Sofia">
+                <span asp-validation-for="Town" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="form-group w-50">
+                <label class="font-weight-bold">Choose your role in the FootEO:</label>
                 @{ var roles = new string[] { "Player", "Referee" }; }
                 @foreach (var role in roles)
                 {
-                    <label class="radio-inline" asp-for="Role"><input asp-for="Role" type="radio" value="@role" />@role</label>
+                    <div class="d-flex justify-content-center">
+                        <label class="radio-inline" asp-for="Role"><input asp-for="Role" type="radio" value="@role" />@role</label>
+                    </div>
                 }
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Town" class="control-label"></label>
-                <input asp-for="Town" class="form-control" />
-                <span asp-validation-for="Town" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+        </div>
+        <hr />
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn">Register</button>
+        </div>
+    </form>
 </div>
 
 <div>

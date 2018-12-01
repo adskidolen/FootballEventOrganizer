@@ -4,6 +4,8 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
+    using System.Linq;
+
     public class UsersService : IUsersService
     {
         private readonly FooteoDbContext dbContext;
@@ -24,5 +26,8 @@
             user.Referee = referee;
             this.dbContext.SaveChanges();
         }
+
+        public bool HasATeam(string userName)
+            => this.dbContext.Users.Where(u => u.UserName == userName).Any(p => p.Player.TeamId != null);
     }
 }

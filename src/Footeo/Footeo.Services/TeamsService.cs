@@ -21,7 +21,7 @@
         public IEnumerable<Team> All()
             => this.dbContext.Teams.ToList();
 
-        public void CreateTeam(string name, string initials, string townName)
+        public void CreateTeam(string name, string initials, string townName, string userName)
         {
             var town = this.townsService.GetByName(townName);
 
@@ -36,6 +36,11 @@
                 Initials = initials,
                 Town = town
             };
+
+            var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
+            player.Team = team;
+
+            team.Players.Add(player);
 
             this.dbContext.Teams.Add(team);
             this.dbContext.SaveChanges();
@@ -52,5 +57,21 @@
 
         public Team GetByName(string name)
             => this.dbContext.Teams.SingleOrDefault(t => t.Name == name);
+
+        public void JoinTeam(int teamId, string userName)
+        {
+            var team = this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId);
+            var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
+
+            team.Players.Add(player);
+            this.dbContext.SaveChanges();
+        }
+
+        public IEnumerable<Player> Players(int teamId)
+        {
+            var team = this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            return team.Players;
+        }
     }
 }

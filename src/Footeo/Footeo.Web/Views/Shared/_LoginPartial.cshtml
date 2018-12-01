@@ -6,44 +6,96 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    if (User.IsInRole("Admin"))
-    {
-        <ul class="nav navbar-nav navbar-left">
-            <li><a asp-controller="Leagues" asp-action="Create">Create League</a></li>
-            <li><a asp-controller="Teams" asp-action="Create">Create Team</a></li>
-            <li><a asp-controller="Fields" asp-action="Add">Add Field</a></li>
-        </ul>
-    }
-    else
-    {
-        @if (User.IsInRole("Player"))
-        {
-            <ul class="nav navbar-nav navbar-left">
-                <li><a asp-controller="Teams" asp-action="Create">Create Team</a></li>
-            </ul>
-        }
-        @if (User.IsInRole("Referee"))
-        {
-            <ul class="nav navbar-nav navbar-left">
-                <li><a asp-controller="Matches" asp-action="Join">Join Match</a></li>
-            </ul>
-        }
-    }
     <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-controller="Users" asp-action="Profile" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+        <ul class="nav navbar-nav">
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Leagues
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All">Leagues</a>
+                            <a class="dropdown-item" asp-controller="Leagues" asp-action="Create">Create League</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Teams
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">Teams</a>
+                            <a class="dropdown-item" asp-controller="Teams" asp-action="Create">Create Team</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Fields
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">Fields</a>
+                            <a class="dropdown-item" asp-controller="Fields" asp-action="Add">Add Field</a>
+                        </div>
+                    </div>
+                </li>
+
+            }
+            else
+            {
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Leagues
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Leagues" asp-action="All">Leagues</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Teams
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Teams" asp-action="All">Teams</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Fields
+                        </button>
+                        <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Fields" asp-action="All">Fields</a>
+                        </div>
+                    </div>
+                </li>
+            }
+            <li class="nav-item active">
+                <button type="submit" class="btn btn-link navbar-btn nav-link font-weight-bold">Logout</button>
             </li>
         </ul>
     </form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
     </ul>
 }

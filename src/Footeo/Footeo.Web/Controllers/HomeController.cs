@@ -15,11 +15,6 @@
     {
         public IActionResult Index()
         {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                return this.View("IndexLoggedIn");
-            }
-
             return View();
         }
 
