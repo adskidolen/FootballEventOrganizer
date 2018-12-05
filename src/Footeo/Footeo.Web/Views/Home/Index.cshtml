@@ -25,11 +25,23 @@
 
         @if (User.IsInRole("PlayerInTeam"))
         {
-            <h1 class="text-center">Hello, Player @this.User.Identity.Name!</h1>
-            <div class="container text-center">
-                <a asp-controller="League" asp-action="Join" class="btn btn-dark">Join League</a>
-            </div>
+            @if (User.IsInRole("Captain"))
+            {
+                <h1 class="text-center">Hello, Captain @this.User.Identity.Name!</h1>
+                <div class="container text-center">
+                    <a asp-controller="League" asp-action="Join" class="btn btn-dark">Join League</a>
+                </div>
+            }
+            else
+            {
+                <h1 class="text-center">Hello, Player @this.User.Identity.Name!</h1>
+                <hr />
+                <div class="container text-center">
+                    Wait for the start of the season
+                </div>
+            }
         }
+
 
         @if (User.IsInRole("Referee"))
         {

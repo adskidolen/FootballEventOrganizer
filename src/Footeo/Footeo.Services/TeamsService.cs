@@ -50,9 +50,10 @@
             var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
 
             var removeResult = this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
-            var addResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
+            var addPlayerInTeamResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
+            var addCaptainResult = this.userManager.AddToRoleAsync(user, GlobalConstants.CaptainRoleName).GetAwaiter().GetResult();
 
-            if (removeResult.Succeeded && addResult.Succeeded)
+            if (removeResult.Succeeded && addPlayerInTeamResult.Succeeded && addCaptainResult.Succeeded)
             {
                 user.Player.Team = team;
                 user.Player.IsCaptain = true;
