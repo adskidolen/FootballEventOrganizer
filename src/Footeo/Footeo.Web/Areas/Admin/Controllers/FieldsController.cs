@@ -1,17 +1,14 @@
 ﻿namespace Footeo.Web.Areas.Admin.Controllers
 {
+    using Footeo.Common;
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
-    using Footeo.Web.Utilities;
     using Footeo.Web.ViewModels.Fields.Input;
-    using Footeo.Web.ViewModels.Fields.View;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using System.Linq;
-
-    [Area(Constants.AdminRoleName)]
+    [Area(GlobalConstants.AdminRoleName)]
     public class FieldsController : BaseController
     {
         private readonly IFieldsService fieldsService;
@@ -21,10 +18,10 @@
             this.fieldsService = fieldsService;
         }
 
-        [Authorize(Roles = Constants.AdminRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public IActionResult Add() => this.View();
 
-        [Authorize(Roles = Constants.AdminRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         [HttpPost]
         public IActionResult Add(FieldCreateInputModel model)
         {

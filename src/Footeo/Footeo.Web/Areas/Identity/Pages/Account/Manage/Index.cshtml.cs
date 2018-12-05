@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Footeo.Common;
 using Footeo.Models;
 using Footeo.Services.Contracts;
-using Footeo.Web.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +70,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            if (this.User.IsInRole(Constants.PlayerRoleName))
+            if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
             {
                 Input = new InputModel
                 {
@@ -129,7 +129,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (this.User.IsInRole(Constants.PlayerRoleName))
+            if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
             {
                 _usersService.SetNickname(user.UserName, Input.Nickname);
             }

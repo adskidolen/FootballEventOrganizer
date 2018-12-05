@@ -4,8 +4,8 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.ViewModels.Teams.Input;
     using Footeo.Web.ViewModels.Teams.View;
-    using Footeo.Web.Utilities;
     using Footeo.Web.ViewModels;
+    using Footeo.Common;
     
     using System.Linq;
 
@@ -23,10 +23,10 @@
             this.usersService = usersService;
         }
 
-        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
         public IActionResult Create() => this.View();
 
-        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
@@ -79,7 +79,7 @@
             return View(teamViewModels);
         }
 
-        [Authorize(Roles = Constants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
         public IActionResult Join(int id)
         {
             var currentUser = this.User.Identity.Name;

@@ -1,8 +1,9 @@
 ﻿namespace Footeo.Web.Middlewares
 {
+    using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
-    using Footeo.Web.Utilities;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
 
@@ -31,17 +32,17 @@
 
         private async Task SeedRoles(UserManager<FooteoUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var adminRoleExists = await roleManager.RoleExistsAsync(Constants.AdminRoleName);
-            var playerRoleExist = await roleManager.RoleExistsAsync(Constants.PlayerRoleName);
-            var refereeRoleExists = await roleManager.RoleExistsAsync(Constants.RefereeRoleName);
-            var playerInTeamRoleExists = await roleManager.RoleExistsAsync(Constants.PlayerInTeamRoleName);
+            var adminRoleExists = await roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName);
+            var playerRoleExist = await roleManager.RoleExistsAsync(GlobalConstants.PlayerRoleName);
+            var refereeRoleExists = await roleManager.RoleExistsAsync(GlobalConstants.RefereeRoleName);
+            var playerInTeamRoleExists = await roleManager.RoleExistsAsync(GlobalConstants.PlayerInTeamRoleName);
 
             if (!playerRoleExist || !refereeRoleExists || !adminRoleExists || !playerInTeamRoleExists)
             {
-                var adminRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName));
-                var playerRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerRoleName));
-                var refereeRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.RefereeRoleName));
-                var playerInTeamRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.PlayerInTeamRoleName));
+                var adminRoleResult = await roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName));
+                var playerRoleResult = await roleManager.CreateAsync(new IdentityRole(GlobalConstants.PlayerRoleName));
+                var refereeRoleResult = await roleManager.CreateAsync(new IdentityRole(GlobalConstants.RefereeRoleName));
+                var playerInTeamRoleResult = await roleManager.CreateAsync(new IdentityRole(GlobalConstants.PlayerInTeamRoleName));
             }
         }
     }

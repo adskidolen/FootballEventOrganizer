@@ -13,8 +13,8 @@
     using Microsoft.Extensions.Logging;
 
     using Footeo.Models;
-    using Footeo.Web.Utilities;
     using Footeo.Services.Contracts;
+    using Footeo.Common;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -137,19 +137,19 @@
 
                     if (_userManager.Users.Count() == 1)
                     {
-                        await _userManager.AddToRoleAsync(user, Constants.AdminRoleName);
+                        await _userManager.AddToRoleAsync(user, GlobalConstants.AdminRoleName);
                     }
                     else
                     {
                         await _userManager.AddToRoleAsync(user, role);
 
-                        if (role == Constants.PlayerRoleName && _userManager.Users.Count() > 1)
+                        if (role == GlobalConstants.PlayerRoleName && _userManager.Users.Count() > 1)
                         {
                             var player = new Player();
                             _usersService.CreatePlayer(user, player);
                         }
 
-                        if (role == Constants.RefereeRoleName && _userManager.Users.Count() > 1)
+                        if (role == GlobalConstants.RefereeRoleName && _userManager.Users.Count() > 1)
                         {
                             var referee = new Referee();
                             _usersService.CreateReferee(user, referee);

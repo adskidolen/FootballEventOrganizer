@@ -1,6 +1,6 @@
-﻿namespace Footeo.Web.Utilities
+﻿namespace Footeo.Common
 {
-    public class Constants
+    public static class GlobalConstants
     {
         public const string AdminRoleName = "Admin";
 
@@ -10,7 +10,5 @@
         public const string RefereeRoleName = "Referee";
         public const string AdminAndPlayerRoleName = "Admin, Player";
         public const string AdminAndRefereeRoleName = "Admin, Referee";
-
-        public const string InvalidLoginMessage = "Invalid login attempt.";
     }
 }

@@ -3,12 +3,12 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
     using Footeo.Web.ViewModels.Leagues.Input;
-    using Footeo.Web.Utilities;
+    using Footeo.Common;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    [Area("Admin")]
+    [Area(GlobalConstants.AdminRoleName)]
     public class LeaguesController : BaseController
     {
         private readonly ILeaguesService leaguesService;
@@ -18,10 +18,10 @@
             this.leaguesService = leaguesService;
         }
 
-        [Authorize(Roles = Constants.AdminRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public IActionResult Create() => this.View();
 
-        [Authorize(Roles = Constants.AdminRoleName)]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         [HttpPost]
         public IActionResult Create(LeagueCreateInputModel model)
         {
