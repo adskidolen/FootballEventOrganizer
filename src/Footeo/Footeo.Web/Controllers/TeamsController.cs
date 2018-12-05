@@ -6,11 +6,12 @@
     using Footeo.Web.ViewModels.Teams.View;
     using Footeo.Web.ViewModels;
     using Footeo.Common;
-    
+
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+    using Footeo.Web.ViewModels.Players;
 
     public class TeamsController : BaseController
     {
@@ -94,7 +95,25 @@
 
             this.teamsService.JoinTeam(id, currentUser);
 
-            return this.RedirectToAction(controllerName: "Players", actionName: "All", routeValues: id);
+            return this.RedirectToAction(nameof(Details), new { Id = id });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var players = this.teamsService.GetById(id)
+                                        .Players
+                                        .Select(p => new PlayerViewModel
+                                        {
+                                            Nickname = p.Nickname
+                                        })
+                                        .ToList();
+
+            var teamDetailsViewModel = new TeamDetailsViewModel
+            {
+                Players = players
+            };
+
+            return this.View(teamDetailsViewModel);
         }
     }
 }

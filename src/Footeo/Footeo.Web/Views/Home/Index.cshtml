@@ -34,11 +34,20 @@
         {
             <h1 class="text-center">Hello, @this.User.Identity.Name!</h1>
             <hr />
-            <div class="container text-center">
-                <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
-                Or
-                <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
-            </div>
+            if (!User.IsInRole("PlayerInTeam"))
+            {
+                <div class="container text-center">
+                    <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
+                    Or
+                    <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
+                </div>
+            }
+            else
+            {
+                <div class="container text-center">
+                    <a>Join League</a>
+                </div>
+            }
             <hr />
             <div class="container text-center">
                 <a asp-controller="Matches" asp-action="Join" class="btn btn-dark">Join Match</a>

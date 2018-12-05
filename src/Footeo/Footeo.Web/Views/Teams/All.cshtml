@@ -23,7 +23,7 @@
                 <td>@team.Initials</td>
                 <td>@team.CreatedOn</td>
                 <td>@team.Town</td>
-                <td><a asp-controller="Players" asp-action="All" asp-route-id="@team.Id">View</a></td>
+                <td><a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">View</a></td>
                 <td><a asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
             </tr>
         }

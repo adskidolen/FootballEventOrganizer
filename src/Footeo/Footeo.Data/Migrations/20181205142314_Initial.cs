@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Footeo.Data.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,6 +74,7 @@ namespace Footeo.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     IsIndoors = table.Column<bool>(nullable: false),
                     TownId = table.Column<int>(nullable: false)
@@ -163,7 +164,8 @@ namespace Footeo.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nickname = table.Column<string>(maxLength: 30, nullable: true),
                     TeamId = table.Column<int>(nullable: true),
-                    Position = table.Column<int>(nullable: false),
+                    IsCaptain = table.Column<bool>(nullable: false),
+                    Position = table.Column<int>(nullable: true),
                     SquadNumber = table.Column<int>(nullable: true),
                     Rating = table.Column<int>(nullable: false)
                 },
@@ -354,7 +356,7 @@ namespace Footeo.Data.Migrations
                         column: x => x.FieldId,
                         principalTable: "Fields",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_HomeTeamId",
                         column: x => x.HomeTeamId,

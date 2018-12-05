@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Footeo.Data.Migrations
 {
     [DbContext(typeof(FooteoDbContext))]
-    [Migration("20181201032649_IsCaptainPropertyAddedToPlayerTable")]
-    partial class IsCaptainPropertyAddedToPlayerTable
+    [Migration("20181205142314_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

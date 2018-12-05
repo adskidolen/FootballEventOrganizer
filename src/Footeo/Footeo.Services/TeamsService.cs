@@ -1,5 +1,6 @@
 ﻿namespace Footeo.Services
 {
+    using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
@@ -13,11 +14,13 @@
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
+        private readonly UserManager<FooteoUser> userManager;
 
-        public TeamsService(FooteoDbContext dbContext, ITownsService townsService)
+        public TeamsService(FooteoDbContext dbContext, ITownsService townsService, UserManager<FooteoUser> userManager)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
+            this.userManager = userManager;
         }
 
         public IEnumerable<Team> All()
@@ -42,12 +45,15 @@
             var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
             player.Team = team;
             player.IsCaptain = true;
-            
 
             team.Players.Add(player);
 
             this.dbContext.Teams.Add(team);
             this.dbContext.SaveChanges();
+
+            //var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
+            //this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName);
+            //this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName);
         }
 
         public bool ExistsById(int id)
@@ -64,13 +70,14 @@
 
         public void JoinTeam(int teamId, string userName)
         {
-            var team = this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId);
-            var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
-
             var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
-            
-            team.Players.Add(player);
+            var team = this.GetById(teamId);
+
+            team.Players.Add(user.Player);
             this.dbContext.SaveChanges();
+
+            //this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName);
+            //this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName);
         }
 
         public IEnumerable<Player> Players(int teamId)

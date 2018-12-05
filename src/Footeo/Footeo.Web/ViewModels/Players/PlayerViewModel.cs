@@ -4,7 +4,6 @@
 
     public class PlayerViewModel
     {
-        public string Name { get; set; }
-        public string TeamName { get; set; }
+        public string Nickname { get; set; }
     }
 }
