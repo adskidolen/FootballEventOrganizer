@@ -9,18 +9,23 @@
 
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class TeamsService : ITeamsService
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
         private readonly UserManager<FooteoUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public TeamsService(FooteoDbContext dbContext, ITownsService townsService, UserManager<FooteoUser> userManager)
+        public TeamsService(FooteoDbContext dbContext, ITownsService townsService,
+            UserManager<FooteoUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public IEnumerable<Team> All()
@@ -42,18 +47,21 @@
                 Town = town
             };
 
-            var player = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault().Player;
-            player.Team = team;
-            player.IsCaptain = true;
+            var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
 
-            team.Players.Add(player);
+            var removeResult = this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
+            var addResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
 
-            this.dbContext.Teams.Add(team);
-            this.dbContext.SaveChanges();
+            if (removeResult.Succeeded && addResult.Succeeded)
+            {
+                user.Player.Team = team;
+                user.Player.IsCaptain = true;
 
-            //var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
-            //this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName);
-            //this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName);
+                team.Players.Add(user.Player);
+
+                this.dbContext.Teams.Add(team);
+                this.dbContext.SaveChanges();
+            }
         }
 
         public bool ExistsById(int id)
@@ -70,14 +78,17 @@
 
         public void JoinTeam(int teamId, string userName)
         {
-            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
             var team = this.GetById(teamId);
+            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
 
-            team.Players.Add(user.Player);
-            this.dbContext.SaveChanges();
+            var removeResult = this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
+            var addResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
 
-            //this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName);
-            //this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName);
+            if (removeResult.Succeeded && addResult.Succeeded)
+            {
+                team.Players.Add(user.Player);
+                this.dbContext.SaveChanges();
+            }
         }
 
         public IEnumerable<Player> Players(int teamId)
