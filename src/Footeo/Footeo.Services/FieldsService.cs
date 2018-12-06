@@ -1,10 +1,11 @@
 ﻿namespace Footeo.Services
 {
+    using AutoMapper.QueryableExtensions;
+
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
-    using System.Collections.Generic;
     using System.Linq;
 
     public class FieldsService : IFieldsService
@@ -25,6 +26,11 @@
             if (town == null)
             {
                 town = this.townsService.CreateTown(townName);
+            }
+
+            if (this.ExistsByName(name))
+            {
+                // TODO: Error for existing field
             }
 
             var field = new Field
@@ -51,7 +57,7 @@
         public Field GetByName(string name)
             => this.dbContext.Fields.SingleOrDefault(f => f.Name == name);
 
-        public IEnumerable<Field> All()
-            => this.dbContext.Fields.ToList();
+        public IQueryable<TModel> All<TModel>()
+            => this.dbContext.Fields.AsQueryable().ProjectTo<TModel>();
     }
 }

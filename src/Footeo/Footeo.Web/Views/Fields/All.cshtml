@@ -11,7 +11,7 @@
         <tr>
             <th>Name</th>
             <th>Address</th>
-            <th>Is Indoors</th>
+            <th>Indoor or Outdoor</th>
             <th>Town</th>
         </tr>
         @foreach (var field in Model.Fields)
@@ -19,8 +19,15 @@
             <tr>
                 <td>@field.Name</td>
                 <td>@field.Address</td>
-                <td>@field.IsIndoors</td>
-                <td>@field.Town</td>
+                @if (field.IsIndoors)
+                {
+                    <td>Indoor</td>
+                }
+                else
+                {
+                    <td>Outdoor</td>
+                }
+                <td>@field.TownName</td>
             </tr>
         }
     </table>

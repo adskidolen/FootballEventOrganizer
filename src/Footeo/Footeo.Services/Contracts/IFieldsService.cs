@@ -1,8 +1,8 @@
 ﻿namespace Footeo.Services.Contracts
 {
     using Footeo.Models;
-
-    using System.Collections.Generic;
+    
+    using System.Linq;
 
     public interface IFieldsService
     {
@@ -11,6 +11,6 @@
         bool ExistsByName(string name);
         Field GetById(int id);
         Field GetByName(string name);
-        IEnumerable<Field> All();
+        IQueryable<TModel> All<TModel>();
     }
 }

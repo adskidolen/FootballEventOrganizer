@@ -3,7 +3,7 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
     using Footeo.Web.ViewModels.Fields.View;
-    
+
     using Microsoft.AspNetCore.Mvc;
 
     using System.Linq;
@@ -19,16 +19,7 @@
 
         public IActionResult All()
         {
-            var fields = this.fieldsService
-                              .All()
-                              .Select(vm => new FieldViewModel
-                              {
-                                  Name = vm.Name,
-                                  Address = vm.Address,
-                                  IsIndoors = vm.IsIndoors,
-                                  Town = vm.Town.Name
-                              })
-                              .ToList();
+            var fields = this.fieldsService.All<FieldViewModel>().ToList();
 
             var fieldViewModels = new AllFieldsViewModel
             {

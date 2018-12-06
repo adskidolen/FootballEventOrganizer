@@ -5,6 +5,7 @@
     using Footeo.Services.Contracts;
     using Footeo.Services;
     using Footeo.Web.Middlewares.MiddlewareExtensions;
+    using Footeo.Web.Infrastructure.Mapping;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Authentication.Cookies;
+
+    using AutoMapper;
 
     public class Startup
     {
@@ -74,6 +77,13 @@
             services.AddScoped<ITownsService, TownsService>();
             services.AddScoped<IFieldsService, FieldsService>();
             services.AddScoped<IUsersService, UsersService>();
+
+            services.AddAutoMapper();
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

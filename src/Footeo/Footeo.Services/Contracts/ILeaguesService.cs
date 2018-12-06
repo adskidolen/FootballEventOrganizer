@@ -2,15 +2,16 @@
 {
     using Footeo.Models;
 
-    using System.Collections.Generic;
+    using System;
+    using System.Linq;
 
     public interface ILeaguesService
     {
-        void CreateLeague(string name, string description, string town);
+        void CreateLeague(string name, string description, DateTime startDate, DateTime endDate, string town);
         bool ExistsById(int id);
         bool ExistsByName(string name);
         League GetById(int id);
         League GetByName(string name);
-        IEnumerable<League> All();
+        IQueryable<TModel> All<TModel>();
     }
 }

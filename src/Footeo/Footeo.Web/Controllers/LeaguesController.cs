@@ -19,18 +19,7 @@
 
         public IActionResult All()
         {
-            var leagues = this.leaguesService
-                              .All()
-                              .Select(vm => new LeagueViewModel
-                              {
-                                  Name = vm.Name,
-                                  Description = vm.Description,
-                                  StartDate = vm.StartDate,
-                                  EndDate = vm.EndDate,
-                                  Status = vm.Status,
-                                  Town = vm.Town.Name
-                              })
-                              .ToList();
+            var leagues = this.leaguesService.All<LeagueViewModel>().ToList();
 
             var leagueViewModels = new AllLeaguesViewModel
             {

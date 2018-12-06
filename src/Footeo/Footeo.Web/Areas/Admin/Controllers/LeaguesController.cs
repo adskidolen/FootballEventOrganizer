@@ -25,16 +25,11 @@
         [HttpPost]
         public IActionResult Create(LeagueCreateInputModel model)
         {
-            if (this.leaguesService.ExistsByName(model.Name))
-            {
-                // TODO: Error for existing league
-            }
-
             if (ModelState.IsValid)
             {
-                this.leaguesService.CreateLeague(model.Name, model.Description, model.Town);
+                this.leaguesService.CreateLeague(model.Name, model.Description, model.StartDate, model.EndDate, model.Town);
 
-                return this.RedirectToAction(actionName: "All", controllerName: "Leagues");
+                return this.RedirectToAction(actionName: "All", controllerName: "Leagues", routeValues: new { Area = "" });
             }
 
             return this.View(model);

@@ -25,16 +25,11 @@
         [HttpPost]
         public IActionResult Add(FieldCreateInputModel model)
         {
-            if (this.fieldsService.ExistsByName(model.Name))
-            {
-                // TODO: Error for existing field
-            }
-
             if (ModelState.IsValid)
             {
                 this.fieldsService.CreateField(model.Name, model.Address, model.IsIndoors, model.Town);
 
-                return this.RedirectToAction(actionName: "All", controllerName: "Fields");
+                return this.RedirectToAction(actionName: "All", controllerName: "Fields", routeValues: new { Area = "" });
             }
 
             return this.View(model);
