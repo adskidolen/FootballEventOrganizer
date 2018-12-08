@@ -4,14 +4,14 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.ViewModels.Teams.Input;
     using Footeo.Web.ViewModels.Teams.View;
-    using Footeo.Web.ViewModels;
+    using Footeo.Web.ViewModels.Players;
     using Footeo.Common;
 
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    using Footeo.Web.ViewModels.Players;
+    using Footeo.Web.ViewModels;
 
     public class TeamsController : BaseController
     {
@@ -33,21 +33,6 @@
         {
             var currentUser = this.User.Identity.Name;
 
-            var hasAteam = this.usersService.HasATeam(currentUser);
-            if (hasAteam)
-            {
-                // TODO: check if player has a team
-
-                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " User has a team" });
-            }
-
-            if (this.teamsService.ExistsByName(model.Name))
-            {
-                // TODO: check if team exists before creating it
-
-                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " Team already exists" });
-            }
-
             if (ModelState.IsValid)
             {
                 this.teamsService.CreateTeam(model.Name, model.Initials, model.Town, currentUser);
@@ -60,17 +45,7 @@
 
         public IActionResult All()
         {
-            var teams = this.teamsService
-                             .All()
-                             .Select(vm => new TeamViewModel
-                             {
-                                 Id = vm.Id,
-                                 Name = vm.Name,
-                                 Initials = vm.Initials,
-                                 CreatedOn = vm.CreatedOn,
-                                 Town = vm.Town.Name
-                             })
-                             .ToList();
+            var teams = this.teamsService.AllTeams<TeamViewModel>().ToList();
 
             var teamViewModels = new AllTeamsViewModel
             {
@@ -85,28 +60,14 @@
         {
             var currentUser = this.User.Identity.Name;
 
-            var hasAteam = this.usersService.HasATeam(currentUser);
-            if (hasAteam)
-            {
-                // TODO: check if player has a team
-
-                return this.View("Error", new ErrorViewModel { RequestId = id + " User has a team" });
-            }
-
-            this.teamsService.JoinTeam(id, currentUser);
+            this.usersService.JoinTeam(id, currentUser);
 
             return this.RedirectToAction(nameof(Details), new { Id = id });
         }
 
         public IActionResult Details(int id)
         {
-            var players = this.teamsService.GetById(id)
-                                        .Players
-                                        .Select(p => new PlayerViewModel
-                                        {
-                                            Nickname = p.Nickname
-                                        })
-                                        .ToList();
+            var players = this.usersService.PlayersByTeam<PlayerViewModel>(id).ToList();
 
             var teamDetailsViewModel = new TeamDetailsViewModel
             {

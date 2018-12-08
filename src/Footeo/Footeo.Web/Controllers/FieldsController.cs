@@ -19,7 +19,7 @@
 
         public IActionResult All()
         {
-            var fields = this.fieldsService.All<FieldViewModel>().ToList();
+            var fields = this.fieldsService.AllFields<FieldViewModel>().ToList();
 
             var fieldViewModels = new AllFieldsViewModel
             {

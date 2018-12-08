@@ -101,7 +101,7 @@
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var town = _townsService.GetByName(Input.Town);
+                var town = _townsService.GetTownByName<Town>(Input.Town);
 
                 if (town == null)
                 {

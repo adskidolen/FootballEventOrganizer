@@ -131,7 +131,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
             if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
             {
-                _usersService.SetNickname(user.UserName, Input.Nickname);
+                _usersService.SetPlayersNickname(user.UserName, Input.Nickname);
             }
 
             await _signInManager.RefreshSignInAsync(user);

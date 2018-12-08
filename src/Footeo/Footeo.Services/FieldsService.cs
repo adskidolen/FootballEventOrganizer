@@ -6,6 +6,8 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class FieldsService : IFieldsService
@@ -21,14 +23,14 @@
 
         public void CreateField(string name, string address, bool isIndoors, string townName)
         {
-            var town = this.townsService.GetByName(townName);
+            var town = this.townsService.GetTownByName<Town>(townName);
 
             if (town == null)
             {
                 town = this.townsService.CreateTown(townName);
             }
 
-            if (this.ExistsByName(name))
+            if (this.FieldExistsByName(name))
             {
                 // TODO: Error for existing field
             }
@@ -45,19 +47,22 @@
             this.dbContext.SaveChanges();
         }
 
-        public bool ExistsById(int id)
+        public bool FieldExistsById(int id)
             => this.dbContext.Fields.Any(f => f.Id == id);
 
-        public bool ExistsByName(string name)
+        public bool FieldExistsByName(string name)
             => this.dbContext.Fields.Any(f => f.Name == name);
 
-        public Field GetById(int id)
-            => this.dbContext.Fields.SingleOrDefault(f => f.Id == id);
-
-        public Field GetByName(string name)
-            => this.dbContext.Fields.SingleOrDefault(f => f.Name == name);
-
-        public IQueryable<TModel> All<TModel>()
+        public IQueryable<TModel> AllFields<TModel>()
             => this.dbContext.Fields.AsQueryable().ProjectTo<TModel>();
+
+        public TModel GetFieldById<TModel>(int id)
+            => By<TModel>(f => f.Id == id).SingleOrDefault();
+
+        public TModel GetFieldByName<TModel>(string name)
+            => this.By<TModel>(f => f.Name == name).SingleOrDefault();
+
+        private IEnumerable<TModel> By<TModel>(Func<Field, bool> predicate)
+            => this.dbContext.Fields.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

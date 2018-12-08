@@ -19,7 +19,7 @@
 
         public IActionResult All()
         {
-            var leagues = this.leaguesService.All<LeagueViewModel>().ToList();
+            var leagues = this.leaguesService.AllLeagues<LeagueViewModel>().ToList();
 
             var leagueViewModels = new AllLeaguesViewModel
             {

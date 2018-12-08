@@ -7,6 +7,7 @@
     using Footeo.Services.Contracts;
 
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class LeagueService : ILeaguesService
@@ -22,14 +23,14 @@
 
         public void CreateLeague(string name, string description, DateTime startDate, DateTime endDate, string townName)
         {
-            var town = this.townsService.GetByName(townName);
+            var town = this.townsService.GetTownByName<Town>(townName);
 
             if (town == null)
             {
                 town = this.townsService.CreateTown(townName);
             }
 
-            if (this.ExistsByName(name))
+            if (this.LeagueExistsByName(name))
             {
                 // TODO: Error for existing league
             }
@@ -47,19 +48,22 @@
             this.dbContext.SaveChanges();
         }
 
-        public bool ExistsById(int id)
+        public bool LeagueExistsById(int id)
             => this.dbContext.Leagues.Any(l => l.Id == id);
 
-        public bool ExistsByName(string name)
+        public bool LeagueExistsByName(string name)
             => this.dbContext.Leagues.Any(l => l.Name == name);
 
-        public League GetById(int id)
-            => this.dbContext.Leagues.SingleOrDefault(l => l.Id == id);
+        public TModel GetLeagueById<TModel>(int id)
+            => this.By<TModel>(l => l.Id == id).SingleOrDefault();
 
-        public League GetByName(string name)
-            => this.dbContext.Leagues.SingleOrDefault(l => l.Name == name);
+        public TModel GetLeagueByName<TModel>(string name)
+            => this.By<TModel>(l => l.Name == name).SingleOrDefault();
 
-        public IQueryable<TModel> All<TModel>()
+        public IQueryable<TModel> AllLeagues<TModel>()
             => this.dbContext.Leagues.AsQueryable().ProjectTo<TModel>();
+
+        private IEnumerable<TModel> By<TModel>(Func<League, bool> predicate)
+           => this.dbContext.Leagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

@@ -1,9 +1,13 @@
 ﻿namespace Footeo.Services
 {
+    using AutoMapper.QueryableExtensions;
+
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class TownsService : ITownsService
@@ -28,12 +32,19 @@
             return town;
         }
 
-        public bool ExistsByName(string name) => this.dbContext.Towns.Any(t => t.Name == name);
+        public bool TownExistsByName(string name)
+            => this.dbContext.Towns.Any(t => t.Name == name);
 
-        public bool ExistsById(int id) => this.dbContext.Towns.Any(t => t.Id == id);
+        public bool TownExistsById(int id)
+            => this.dbContext.Towns.Any(t => t.Id == id);
 
-        public Town GetById(int id) => this.dbContext.Towns.SingleOrDefault(t => t.Id == id);
+        public TModel GetTownById<TModel>(int id)
+            => this.By<TModel>(t => t.Id == id).SingleOrDefault();
 
-        public Town GetByName(string name) => this.dbContext.Towns.SingleOrDefault(t => t.Name == name);
+        public TModel GetTownByName<TModel>(string name)
+            => this.By<TModel>(t => t.Name == name).SingleOrDefault();
+
+        private IEnumerable<TModel> By<TModel>(Func<Town, bool> predicate)
+          => this.dbContext.Towns.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

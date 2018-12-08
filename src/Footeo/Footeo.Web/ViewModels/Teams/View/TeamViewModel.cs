@@ -14,6 +14,6 @@
         [Display(Name = "Created On")]
         public DateTime CreatedOn { get; set; }
 
-        public string Town { get; set; }
+        public string TownName { get; set; }
     }
 }

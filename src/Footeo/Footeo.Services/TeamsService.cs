@@ -1,5 +1,7 @@
 ﻿namespace Footeo.Services
 {
+    using AutoMapper.QueryableExtensions;
+
     using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
@@ -7,6 +9,7 @@
 
     using Microsoft.AspNetCore.Identity;
 
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -14,29 +17,33 @@
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
+        //   private readonly IUsersService usersService;
         private readonly UserManager<FooteoUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public TeamsService(FooteoDbContext dbContext, ITownsService townsService,
-            UserManager<FooteoUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public TeamsService(FooteoDbContext dbContext,
+            ITownsService townsService,
+            UserManager<FooteoUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
+            //  this.usersService = usersService;
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
 
-        public IEnumerable<Team> All()
-            => this.dbContext.Teams.ToList();
-
         public void CreateTeam(string name, string initials, string townName, string userName)
         {
-            var town = this.townsService.GetByName(townName);
+            var town = this.townsService.GetTownByName<Town>(townName);
 
             if (town == null)
             {
                 town = this.townsService.CreateTown(townName);
+            }
+
+            if (this.TeamExistsByName(name))
+            {
+                throw new InvalidOperationException("Team already exists!");
             }
 
             var team = new Team
@@ -54,6 +61,11 @@
 
             if (removeResult.Succeeded && addPlayerInTeamResult.Succeeded && addCaptainResult.Succeeded)
             {
+                //if (this.usersService.PlayerHasATeam(user.UserName))
+                //{
+                //    throw new InvalidOperationException("User has a team!");
+                //}
+
                 user.Player.Team = team;
                 user.Player.IsCaptain = true;
 
@@ -64,38 +76,22 @@
             }
         }
 
-        public bool ExistsById(int id)
+        public bool TeamExistsById(int id)
             => this.dbContext.Teams.Any(t => t.Id == id);
 
-        public bool ExistsByName(string name)
+        public bool TeamExistsByName(string name)
             => this.dbContext.Teams.Any(t => t.Name == name);
 
-        public Team GetById(int id)
-            => this.dbContext.Teams.SingleOrDefault(t => t.Id == id);
+        public TModel GetTeamById<TModel>(int id)
+            => this.By<TModel>(t => t.Id == id).SingleOrDefault();
 
-        public Team GetByName(string name)
-            => this.dbContext.Teams.SingleOrDefault(t => t.Name == name);
+        public TModel GetTeamByName<TModel>(string name)
+            => this.By<TModel>(t => t.Name == name).SingleOrDefault();
 
-        public void JoinTeam(int teamId, string userName)
-        {
-            var team = this.GetById(teamId);
-            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
+        public IQueryable<TModel> AllTeams<TModel>()
+            => this.dbContext.Teams.AsQueryable().ProjectTo<TModel>();
 
-            var removeResult = this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
-            var addResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
-
-            if (removeResult.Succeeded && addResult.Succeeded)
-            {
-                team.Players.Add(user.Player);
-                this.dbContext.SaveChanges();
-            }
-        }
-
-        public IEnumerable<Player> Players(int teamId)
-        {
-            var team = this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId);
-
-            return team.Players;
-        }
+        private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
+          => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }
