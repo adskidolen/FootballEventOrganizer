@@ -70,7 +70,7 @@
 
             services.AddSession();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<ILeaguesService, LeagueService>();
             services.AddScoped<ITeamsService, TeamsService>();
