@@ -27,16 +27,23 @@
         public IActionResult Create(LeagueCreateInputModel model)
         {
             var leagueExists = this.leaguesService.LeagueExistsByName(model.Name);
-            if (!leagueExists)
+            if (leagueExists)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.LeagueExistsErrorMessage, model.Name)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             if (ModelState.IsValid)
             {
                 this.leaguesService.CreateLeague(model.Name, model.Description, model.StartDate, model.EndDate, model.Town);
 
-                return this.RedirectToAction(actionName: "All", controllerName: "Leagues", routeValues: new { Area = "" });
+                return this.RedirectToAction(actionName: GlobalConstants.AllActionName,
+                                             controllerName: GlobalConstants.LeaguesControllerName,
+                                             routeValues: new { Area = GlobalConstants.EmptyArea });
             }
 
             return this.View(model);

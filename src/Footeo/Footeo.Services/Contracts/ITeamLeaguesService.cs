@@ -1,7 +1,10 @@
-﻿namespace Footeo.Services.Contracts
+﻿using System.Linq;
+
+namespace Footeo.Services.Contracts
 {
     public interface ITeamLeaguesService
     {
-        void JoinLeague(int teamId, int leagueId);
+        void JoinLeague(string userName, int leagueId);
+        IQueryable<TModel> LeagueTable<TModel>(int leagueId);
     }
 }

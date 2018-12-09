@@ -86,5 +86,11 @@
 
         public int PlayersCount(int teamId)
             => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Players.Count;
+
+        public bool IsTeamInLeague(int teamId)
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Leagues.Any(l => l.League != null);
+
+        public Team GetUsersTeam(string userName)
+            => this.dbContext.Users.FirstOrDefault(u => u.UserName == userName).Player.Team;
     }
 }

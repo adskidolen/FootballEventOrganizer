@@ -31,10 +31,6 @@
         //[Required]
         //public byte[] Picture { get; set; }
 
-        //[ForeignKey(nameof(League))]
-        //public int? LeagueId { get; set; }
-        //public virtual League League { get; set; }
-
         public virtual ICollection<TeamLeague> Leagues { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Trophy> Trophies { get; set; }

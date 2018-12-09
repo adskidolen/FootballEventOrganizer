@@ -4,7 +4,7 @@
 
     using System.Collections.Generic;
 
-    public class DetailsLeagueViewModel
+    public class LeagueTableViewModel
     {
         public IEnumerable<TeamLeagueViewModel> Teams { get; set; }
     }

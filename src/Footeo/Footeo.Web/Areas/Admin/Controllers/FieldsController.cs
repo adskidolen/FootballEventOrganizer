@@ -29,14 +29,21 @@
             var fieldExists = this.fieldsService.FieldExistsByName(model.Name);
             if (!fieldExists)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.FieldExistsErrorMessage, model.Name)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             if (ModelState.IsValid)
             {
                 this.fieldsService.CreateField(model.Name, model.Address, model.IsIndoors, model.Town);
 
-                return this.RedirectToAction(actionName: "All", controllerName: "Fields", routeValues: new { Area = "" });
+                return this.RedirectToAction(actionName: GlobalConstants.AllActionName,
+                                             controllerName: GlobalConstants.FieldsControllerName,
+                                             routeValues: new { Area = GlobalConstants.EmptyArea });
             }
 
             return this.View(model);

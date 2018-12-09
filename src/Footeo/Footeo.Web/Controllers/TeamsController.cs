@@ -24,10 +24,10 @@
             this.usersService = usersService;
         }
 
-        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.PlayerRoleName)]
         public IActionResult Create() => this.View();
 
-        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.PlayerRoleName)]
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
@@ -36,13 +36,23 @@
             var playerHasATeam = this.usersService.PlayerHasATeam(currentUser);
             if (playerHasATeam)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = currentUser + " player already has a team!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             var teamExists = this.teamsService.TeamExistsByName(model.Name);
-            if (!teamExists)
+            if (teamExists)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.TeamExistsErrorMessage, model.Name)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             if (ModelState.IsValid)
@@ -67,19 +77,29 @@
             return View(teamViewModels);
         }
 
-        [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
+        [Authorize(Roles = GlobalConstants.PlayerRoleName)]
         public IActionResult Join(int id)
         {
             var teamExists = this.teamsService.TeamExistsById(id);
             if (!teamExists)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = id + " team does not exists!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.TeamExistsErrorMessage
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             var playersCount = this.teamsService.PlayersCount(id);
             if (playersCount == GlobalConstants.MaxPlayersInTeamCount)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = id + " team already full!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.TeamIsFullErrorMessage, id)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             var currentUser = this.User.Identity.Name;
@@ -87,7 +107,12 @@
             var playerHasATeam = this.usersService.PlayerHasATeam(currentUser);
             if (playerHasATeam)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = id + " player already has a team!" });
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
             }
 
             this.usersService.JoinTeam(id, currentUser);
@@ -100,7 +125,12 @@
             var teamExists = this.teamsService.TeamExistsById(id);
             if (!teamExists)
             {
-                return this.View("Error", new ErrorViewModel { RequestId = id + " team does not exists" });
+                var errorModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.TeamDoesNotExistsErrorMessage
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorModel);
             }
 
             var players = this.usersService.PlayersByTeam<PlayerViewModel>(id).ToList();

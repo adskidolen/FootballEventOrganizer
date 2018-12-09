@@ -10,11 +10,13 @@
     <table class="table-hover table table-striped">
         <tr>
             <th>Players</th>
+            <th>Role</th>
         </tr>
         @foreach (var player in Model.Players)
         {
             <tr>
                 <td>@player.Nickname</td>
+                <td>@player.Captain</td>
             </tr>
         }
     </table>

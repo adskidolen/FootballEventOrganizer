@@ -6,6 +6,7 @@
     using Footeo.Web.ViewModels.Fields.View;
     using Footeo.Web.ViewModels.Leagues.View;
     using Footeo.Web.ViewModels.Players;
+    using Footeo.Web.ViewModels.TeamLeagues.View;
     using Footeo.Web.ViewModels.Teams.View;
 
     public class MappingProfile : Profile
@@ -27,6 +28,8 @@
             this.CreateMap<Player, Player>();
 
             this.CreateMap<Town, Town>();
+
+            this.CreateMap<TeamLeague, TeamLeagueViewModel>();
         }
     }
 }

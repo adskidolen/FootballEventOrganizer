@@ -16,6 +16,7 @@
             <th>Town</th>
             <th>Status</th>
             <th>Details</th>
+            <th>Join</th>
         </tr>
         @foreach (var league in Model.Leagues)
         {
@@ -26,7 +27,8 @@
                 <td>@league.EndDate</td>
                 <td>@league.TownName</td>
                 <td>@league.Status</td>
-                <td><a asp-controller="Leagues" asp-action="Details" asp-route-id="@league.Id">Details</a></td>
+                <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
+                <td><a asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
             </tr>
         }
     </table>

@@ -77,6 +77,7 @@
             services.AddScoped<ITownsService, TownsService>();
             services.AddScoped<IFieldsService, FieldsService>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<ITeamLeaguesService, TeamLeaguesService>();
 
             services.AddAutoMapper();
 

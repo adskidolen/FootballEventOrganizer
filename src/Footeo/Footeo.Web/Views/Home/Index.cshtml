@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Footeo.Models;
+@using Footeo.Common;
 
 @inject SignInManager<FooteoUser> SignInManager
 
@@ -12,7 +13,7 @@
     {
         <h1 class="text-center">Welcome to your Football Event Organizer!</h1>
         <hr />
-        @if (User.IsInRole("Player"))
+        @if (User.IsInRole(GlobalConstants.PlayerRoleName))
         {
             <h1 class="text-center">Hello, Player @this.User.Identity.Name!</h1>
             <hr />
@@ -23,13 +24,13 @@
             </div>
         }
 
-        @if (User.IsInRole("PlayerInTeam"))
+        @if (User.IsInRole(GlobalConstants.PlayerInTeamRoleName))
         {
-            @if (User.IsInRole("Captain"))
+            @if (User.IsInRole(GlobalConstants.CaptainRoleName))
             {
                 <h1 class="text-center">Hello, Captain @this.User.Identity.Name!</h1>
                 <div class="container text-center">
-                    <a asp-controller="League" asp-action="Join" class="btn btn-dark">Join League</a>
+                    <a asp-controller="Leagues" asp-action="All" class="btn btn-dark">Join League</a>
                 </div>
             }
             else
@@ -43,7 +44,7 @@
         }
 
 
-        @if (User.IsInRole("Referee"))
+        @if (User.IsInRole(GlobalConstants.RefereeRoleName))
         {
             <h1 class="text-center">Hello, Referee @this.User.Identity.Name!</h1>
             <hr />
@@ -53,22 +54,9 @@
         }
 
 
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole(GlobalConstants.AdminRoleName))
         {
             <h1 class="text-center">Hello, Administrator @this.User.Identity.Name!</h1>
-            <hr />
-            <div class="container text-center">
-                <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
-                Or
-                <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
-            </div>
-            <hr />
-            <div class="container text-center">
-                <a asp-controller="League" asp-action="Join" class="btn btn-dark">Join League</a>
-            </div> <hr />
-            <div class="container text-center">
-                <a asp-controller="Matches" asp-action="Join" class="btn btn-dark">Join Match</a>
-            </div>
         }
     }
     else

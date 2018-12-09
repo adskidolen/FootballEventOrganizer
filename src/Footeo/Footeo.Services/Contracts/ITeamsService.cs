@@ -1,5 +1,6 @@
 ﻿namespace Footeo.Services.Contracts
 {
+    using Footeo.Models;
     using System.Linq;
 
     public interface ITeamsService
@@ -11,5 +12,7 @@
         TModel GetTeamByName<TModel>(string name);
         IQueryable<TModel> AllTeams<TModel>();
         int PlayersCount(int teamId);
+        bool IsTeamInLeague(int teamId);
+        Team GetUsersTeam(string userName);
     }
 }
