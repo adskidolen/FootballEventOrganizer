@@ -3,6 +3,7 @@
     using Footeo.Common;
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
+    using Footeo.Web.ViewModels;
     using Footeo.Web.ViewModels.Fields.Input;
 
     using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,12 @@
         [HttpPost]
         public IActionResult Add(FieldCreateInputModel model)
         {
+            var fieldExists = this.fieldsService.FieldExistsByName(model.Name);
+            if (!fieldExists)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+            }
+
             if (ModelState.IsValid)
             {
                 this.fieldsService.CreateField(model.Name, model.Address, model.IsIndoors, model.Town);

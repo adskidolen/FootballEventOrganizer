@@ -6,12 +6,12 @@
     using Footeo.Web.ViewModels.Teams.View;
     using Footeo.Web.ViewModels.Players;
     using Footeo.Common;
+    using Footeo.Web.ViewModels;
 
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    using Footeo.Web.ViewModels;
 
     public class TeamsController : BaseController
     {
@@ -32,6 +32,18 @@
         public IActionResult Create(TeamCreateInputModel model)
         {
             var currentUser = this.User.Identity.Name;
+
+            var playerHasATeam = this.usersService.PlayerHasATeam(currentUser);
+            if (playerHasATeam)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = currentUser + " player already has a team!" });
+            }
+
+            var teamExists = this.teamsService.TeamExistsByName(model.Name);
+            if (!teamExists)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+            }
 
             if (ModelState.IsValid)
             {
@@ -58,7 +70,25 @@
         [Authorize(Roles = GlobalConstants.AdminAndPlayerRoleName)]
         public IActionResult Join(int id)
         {
+            var teamExists = this.teamsService.TeamExistsById(id);
+            if (!teamExists)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = id + " team does not exists!" });
+            }
+
+            var playersCount = this.teamsService.PlayersCount(id);
+            if (playersCount == GlobalConstants.MaxPlayersInTeamCount)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = id + " team already full!" });
+            }
+
             var currentUser = this.User.Identity.Name;
+
+            var playerHasATeam = this.usersService.PlayerHasATeam(currentUser);
+            if (playerHasATeam)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = id + " player already has a team!" });
+            }
 
             this.usersService.JoinTeam(id, currentUser);
 
@@ -67,6 +97,12 @@
 
         public IActionResult Details(int id)
         {
+            var teamExists = this.teamsService.TeamExistsById(id);
+            if (!teamExists)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = id + " team does not exists" });
+            }
+
             var players = this.usersService.PlayersByTeam<PlayerViewModel>(id).ToList();
 
             var teamDetailsViewModel = new TeamDetailsViewModel

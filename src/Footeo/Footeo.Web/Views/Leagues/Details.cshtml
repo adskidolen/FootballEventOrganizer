@@ -1,0 +1,45 @@
+﻿@model Footeo.Web.ViewModels.Leagues.View.DetailsLeagueViewModel
+
+@{
+    ViewData["Title"] = "League Table";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Position</th>
+            <th>Team</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Drawn</th>
+            <th>Lost</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th>Points</th>
+            <th>Team Details</th>
+        </tr>
+        @foreach (var team in Model.Teams)
+        {
+            <tr>
+                <td>@team.Position</td>
+                <td>@team.TeamName</td>
+                <td>@team.PlayedMatches</td>
+                <td>@team.Won</td>
+                <td>@team.Drawn</td>
+                <td>@team.Lost</td>
+                <td>@team.GoalsFor</td>
+                <td>@team.GoalsAgainst</td>
+                <td>@team.GoalDifference</td>
+                <td>@team.Points</td>
+                <td><a asp-controller="Teams" asp-action="Details" asp-route-id="@team.TeamId">Details</a></td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

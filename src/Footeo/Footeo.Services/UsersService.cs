@@ -9,7 +9,6 @@
 
     using Microsoft.AspNetCore.Identity;
 
-    using System;
     using System.Linq;
 
     public class UsersService : IUsersService
@@ -48,7 +47,11 @@
 
         public void SetPlayersNickname(string userName, string nickname)
         {
-            var player = this.dbContext.Users.Where(u => u.UserName == userName).Select(p => p.Player).FirstOrDefault();
+            var player = this.dbContext.Users
+                                       .Where(u => u.UserName == userName)
+                                       .Select(p => p.Player)
+                                       .FirstOrDefault();
+
             player.Nickname = nickname;
 
             this.dbContext.SaveChanges();
@@ -64,17 +67,6 @@
 
             if (removeResult.Succeeded && addResult.Succeeded)
             {
-                if (team.Players.Count == 10)
-                {
-                    // TODO: stop adding players
-                    throw new InvalidOperationException();
-                }
-
-                if (this.PlayerHasATeam(user.UserName))
-                {
-                    throw new InvalidOperationException("User has a team!");
-                }
-
                 team.Players.Add(user.Player);
                 this.dbContext.SaveChanges();
             }

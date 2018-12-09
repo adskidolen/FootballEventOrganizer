@@ -11,5 +11,8 @@
         public const string RefereeRoleName = "Referee";
         public const string AdminAndPlayerRoleName = "Admin, Player";
         public const string AdminAndRefereeRoleName = "Admin, Referee";
+
+        public const int MaxPlayersInTeamCount = 10;
+        public const int MaxTeamsInLeagueCount = 10;
     }
 }

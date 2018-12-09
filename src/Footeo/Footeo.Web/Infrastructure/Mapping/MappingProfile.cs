@@ -15,12 +15,16 @@
             // ForMember(dest => dest.Property, opt => opt.MapFrom(src => src.Propery));
 
             this.CreateMap<Field, FieldViewModel>();
+            this.CreateMap<Field, Field>();
 
             this.CreateMap<League, LeagueViewModel>();
+            this.CreateMap<League, League>();
 
             this.CreateMap<Team, TeamViewModel>();
+            this.CreateMap<Team, Team>();
 
             this.CreateMap<Player, PlayerViewModel>();
+            this.CreateMap<Player, Player>();
 
             this.CreateMap<Town, Town>();
         }

@@ -17,17 +17,17 @@
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
-        //   private readonly IUsersService usersService;
+        private readonly ILeaguesService leaguesService;
         private readonly UserManager<FooteoUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public TeamsService(FooteoDbContext dbContext,
-            ITownsService townsService,
+            ITownsService townsService, ILeaguesService leaguesService,
             UserManager<FooteoUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
-            //  this.usersService = usersService;
+            this.leaguesService = leaguesService;
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
@@ -39,11 +39,6 @@
             if (town == null)
             {
                 town = this.townsService.CreateTown(townName);
-            }
-
-            if (this.TeamExistsByName(name))
-            {
-                throw new InvalidOperationException("Team already exists!");
             }
 
             var team = new Team
@@ -61,11 +56,6 @@
 
             if (removeResult.Succeeded && addPlayerInTeamResult.Succeeded && addCaptainResult.Succeeded)
             {
-                //if (this.usersService.PlayerHasATeam(user.UserName))
-                //{
-                //    throw new InvalidOperationException("User has a team!");
-                //}
-
                 user.Player.Team = team;
                 user.Player.IsCaptain = true;
 
@@ -93,5 +83,8 @@
 
         private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
           => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
+
+        public int PlayersCount(int teamId)
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Players.Count;
     }
 }

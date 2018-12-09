@@ -30,11 +30,6 @@
                 town = this.townsService.CreateTown(townName);
             }
 
-            if (this.FieldExistsByName(name))
-            {
-                // TODO: Error for existing field
-            }
-
             var field = new Field
             {
                 Name = name,

@@ -10,5 +10,6 @@
         TModel GetTeamById<TModel>(int id);
         TModel GetTeamByName<TModel>(string name);
         IQueryable<TModel> AllTeams<TModel>();
+        int PlayersCount(int teamId);
     }
 }

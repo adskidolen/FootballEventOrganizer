@@ -4,6 +4,7 @@
     using Footeo.Web.Controllers.Base;
     using Footeo.Web.ViewModels.Leagues.Input;
     using Footeo.Common;
+    using Footeo.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,12 @@
         [HttpPost]
         public IActionResult Create(LeagueCreateInputModel model)
         {
+            var leagueExists = this.leaguesService.LeagueExistsByName(model.Name);
+            if (!leagueExists)
+            {
+                return this.View("Error", new ErrorViewModel { RequestId = model.Name + " already exists!" });
+            }
+
             if (ModelState.IsValid)
             {
                 this.leaguesService.CreateLeague(model.Name, model.Description, model.StartDate, model.EndDate, model.Town);

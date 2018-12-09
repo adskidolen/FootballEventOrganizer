@@ -30,11 +30,6 @@
                 town = this.townsService.CreateTown(townName);
             }
 
-            if (this.LeagueExistsByName(name))
-            {
-                // TODO: Error for existing league
-            }
-
             var league = new League
             {
                 Name = name,
