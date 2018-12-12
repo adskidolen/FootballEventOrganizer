@@ -1,0 +1,34 @@
+﻿@model Footeo.Web.ViewModels.Fixtures.Output.AllFixturesViewModel
+
+@{
+    ViewData["Title"] = "Fixtures";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Date</th>
+            <th>Matches</th>
+            <th>Referee</th>
+            <th>Field</th>
+        </tr>
+        @foreach (var fixture in Model.Fixtures)
+        {
+            @foreach (var match in fixture.Matches)
+            {
+                <tr>
+                    <td>@fixture.Date</td>
+                    <td>@($"{match.HomeTeamName} vs {match.AwayTeamName}")</td>
+                    <td>@match.RefereeFullName</td>
+                    <td>@match.FieldName</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

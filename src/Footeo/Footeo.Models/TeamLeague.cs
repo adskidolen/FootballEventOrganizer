@@ -1,12 +1,17 @@
 ﻿namespace Footeo.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class TeamLeague
     {
+        [Required]
+        [ForeignKey(nameof(Team))]
         public int TeamId { get; set; }
         public virtual Team Team { get; set; }
 
+        [Required]
+        [ForeignKey(nameof(League))]
         public int LeagueId { get; set; }
         public virtual League League { get; set; }
 

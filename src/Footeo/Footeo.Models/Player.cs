@@ -11,8 +11,12 @@
         public int Id { get; set; }
 
         [StringLength(30, MinimumLength = 1)]
-        public string Nickname { get; set; }
 
+        [Required]
+        public string FullName { get; set; }
+
+        public string Nickname { get; set; }
+        
         [ForeignKey(nameof(Team))]
         public int? TeamId { get; set; }
         public virtual Team Team { get; set; }

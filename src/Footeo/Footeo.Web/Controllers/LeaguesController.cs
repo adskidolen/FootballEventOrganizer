@@ -2,8 +2,8 @@
 {
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
-    using Footeo.Web.ViewModels.Leagues.View;
-    using Footeo.Web.ViewModels.TeamLeagues.View;
+    using Footeo.Web.ViewModels.Leagues.Output;
+    using Footeo.Web.ViewModels.TeamLeagues.Output;
     using Footeo.Web.ViewModels;
     using Footeo.Common;
 
@@ -48,7 +48,7 @@
                     RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             var user = this.User.Identity.Name;
@@ -63,12 +63,14 @@
                     RequestId = string.Format(ErrorMessages.TeamJoinedLeagueErrorMessage, team.Name)
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             this.teamLeaguesService.JoinLeague(user, id);
 
-            return this.RedirectToAction(nameof(Table), routeValues: new { Id = id });
+            var routeValues = new { Id = id };
+
+            return this.RedirectToAction(actionName: nameof(Table), routeValues: routeValues);
         }
 
         public IActionResult Table(int id)
@@ -81,7 +83,7 @@
                     RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             var teams = this.teamLeaguesService.LeagueTable<TeamLeagueViewModel>(id).ToList();

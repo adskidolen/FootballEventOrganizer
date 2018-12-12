@@ -2,12 +2,16 @@
 {
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using Footeo.Models;
-    using Footeo.Web.ViewModels.Fields.View;
-    using Footeo.Web.ViewModels.Leagues.View;
-    using Footeo.Web.ViewModels.Players;
-    using Footeo.Web.ViewModels.TeamLeagues.View;
-    using Footeo.Web.ViewModels.Teams.View;
+
+    using Footeo.Web.ViewModels.Fields.Output;
+    using Footeo.Web.ViewModels.Leagues.Output;
+    using Footeo.Web.ViewModels.Players.Output;
+    using Footeo.Web.ViewModels.TeamLeagues.Output;
+    using Footeo.Web.ViewModels.Teams.Output;
+    using Footeo.Web.ViewModels.Fixtures.Output;
 
     public class MappingProfile : Profile
     {
@@ -17,9 +21,19 @@
 
             this.CreateMap<Field, FieldViewModel>();
             this.CreateMap<Field, Field>();
+            this.CreateMap<Field, SelectListItem>()
+                .ForMember(dest => dest.Value,
+                           opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text,
+                           opt => opt.MapFrom(src => src.Name));
 
             this.CreateMap<League, LeagueViewModel>();
             this.CreateMap<League, League>();
+            this.CreateMap<League, SelectListItem>()
+                .ForMember(dest => dest.Value,
+                           opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text,
+                           opt => opt.MapFrom(src => src.Name));
 
             this.CreateMap<Team, TeamViewModel>();
             this.CreateMap<Team, Team>();
@@ -30,6 +44,24 @@
             this.CreateMap<Town, Town>();
 
             this.CreateMap<TeamLeague, TeamLeagueViewModel>();
+            this.CreateMap<TeamLeague, SelectListItem>()
+                .ForMember(dest => dest.Value,
+                           opt => opt.MapFrom(src => src.TeamId))
+                .ForMember(dest => dest.Text,
+                           opt => opt.MapFrom(src => src.Team.Name));
+
+            this.CreateMap<Fixture, FixturesViewModel>();
+            this.CreateMap<Fixture, SelectListItem>()
+                .ForMember(dest => dest.Value,
+                           opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text,
+                           opt => opt.MapFrom(src => src.Date)); ;
+
+            this.CreateMap<Referee, SelectListItem>()
+                .ForMember(dest => dest.Value,
+                           opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text,
+                           opt => opt.MapFrom(src => src.FullName));
         }
     }
 }

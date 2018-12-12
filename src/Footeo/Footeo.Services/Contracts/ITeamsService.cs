@@ -1,11 +1,12 @@
 ﻿namespace Footeo.Services.Contracts
 {
     using Footeo.Models;
+
     using System.Linq;
 
     public interface ITeamsService
     {
-        void CreateTeam(string name, string initials, string townName, string userName);
+        void CreateTeam(string name, string initials, string userName);
         bool TeamExistsById(int id);
         bool TeamExistsByName(string name);
         TModel GetTeamById<TModel>(int id);

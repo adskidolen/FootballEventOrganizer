@@ -2,7 +2,7 @@
 {
     using Footeo.Services.Contracts;
     using Footeo.Web.Controllers.Base;
-    using Footeo.Web.ViewModels.Fields.View;
+    using Footeo.Web.ViewModels.Fields.Output;
 
     using Microsoft.AspNetCore.Mvc;
 

@@ -16,10 +16,15 @@
         public const string ErrorViewName = "Error";
 
         public const string AllActionName = "All";
+        public const string CreateActionName = "Create";
 
         public const string FieldsControllerName = "Fields";
         public const string LeaguesControllerName = "Leagues";
+        public const string FixturesControllerName = "Fixtures";
+        public const string MatchesControllerName = "Matches";
 
         public const string EmptyArea = "";
+
+        public const string ViewDataForLeagues = "Leagues";
     }
 }

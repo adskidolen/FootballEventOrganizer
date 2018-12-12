@@ -16,7 +16,6 @@
         public DbSet<Town> Towns { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<Trophy> Trophies { get; set; }
-        public DbSet<Leg> Legs { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Field> Fields { get; set; }

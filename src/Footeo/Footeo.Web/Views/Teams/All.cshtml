@@ -1,4 +1,4 @@
-﻿@model Footeo.Web.ViewModels.Teams.View.AllTeamsViewModel
+﻿@model Footeo.Web.ViewModels.Teams.Output.AllTeamsViewModel
 
 @{
     ViewData["Title"] = "All Teams";
@@ -14,7 +14,10 @@
             <th>Create On</th>
             <th>Town</th>
             <th>Players</th>
-            <th>Join Team</th>
+            @if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+            {
+                <th>Join Team</th>
+            }
         </tr>
         @foreach (var team in Model.Teams)
         {
@@ -24,7 +27,10 @@
                 <td>@team.CreatedOn</td>
                 <td>@team.TownName</td>
                 <td><a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">View</a></td>
-                <td><a asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
+                @if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+                {
+                    <td><a asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
+                }
             </tr>
         }
     </table>

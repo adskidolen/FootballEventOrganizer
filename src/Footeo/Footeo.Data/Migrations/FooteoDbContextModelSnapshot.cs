@@ -15,7 +15,7 @@ namespace Footeo.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -50,7 +50,7 @@ namespace Footeo.Data.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("LeagueId");
+                    b.Property<int>("LeagueId");
 
                     b.HasKey("Id");
 
@@ -173,32 +173,13 @@ namespace Footeo.Data.Migrations
                     b.ToTable("LeaguesTrophies");
                 });
 
-            modelBuilder.Entity("Footeo.Models.Leg", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("FixtureId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FixtureId");
-
-                    b.ToTable("Legs");
-                });
-
             modelBuilder.Entity("Footeo.Models.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AwayTeamGoals");
+                    b.Property<int?>("AwayTeamGoals");
 
                     b.Property<int>("AwayTeamId");
 
@@ -206,18 +187,15 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int>("FieldId");
 
-                    b.Property<int>("HomeTeamGoals");
+                    b.Property<int>("FixtureId");
+
+                    b.Property<int?>("HomeTeamGoals");
 
                     b.Property<int>("HomeTeamId");
 
-                    b.Property<int?>("LegId");
+                    b.Property<int?>("RefereeId");
 
-                    b.Property<int?>("RefereeId")
-                        .IsRequired();
-
-                    b.Property<string>("Result")
-                        .IsRequired()
-                        .HasMaxLength(7);
+                    b.Property<string>("Result");
 
                     b.HasKey("Id");
 
@@ -225,9 +203,9 @@ namespace Footeo.Data.Migrations
 
                     b.HasIndex("FieldId");
 
-                    b.HasIndex("HomeTeamId");
+                    b.HasIndex("FixtureId");
 
-                    b.HasIndex("LegId");
+                    b.HasIndex("HomeTeamId");
 
                     b.HasIndex("RefereeId");
 
@@ -240,10 +218,13 @@ namespace Footeo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
                     b.Property<bool>("IsCaptain");
 
-                    b.Property<string>("Nickname")
-                        .HasMaxLength(30);
+                    b.Property<string>("Nickname");
 
                     b.Property<int?>("Position");
 
@@ -282,6 +263,9 @@ namespace Footeo.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FullName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -498,9 +482,10 @@ namespace Footeo.Data.Migrations
 
             modelBuilder.Entity("Footeo.Models.Fixture", b =>
                 {
-                    b.HasOne("Footeo.Models.League")
+                    b.HasOne("Footeo.Models.League", "League")
                         .WithMany("Fixtures")
-                        .HasForeignKey("LeagueId");
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Footeo.Models.FooteoUser", b =>
@@ -540,13 +525,6 @@ namespace Footeo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Footeo.Models.Leg", b =>
-                {
-                    b.HasOne("Footeo.Models.Fixture")
-                        .WithMany("Legs")
-                        .HasForeignKey("FixtureId");
-                });
-
             modelBuilder.Entity("Footeo.Models.Match", b =>
                 {
                     b.HasOne("Footeo.Models.Team", "AwayTeam")
@@ -559,19 +537,19 @@ namespace Footeo.Data.Migrations
                         .HasForeignKey("FieldId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Footeo.Models.Fixture", "Fixture")
+                        .WithMany("Matches")
+                        .HasForeignKey("FixtureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Footeo.Models.Team", "HomeTeam")
                         .WithMany("HomeMatches")
                         .HasForeignKey("HomeTeamId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Footeo.Models.Leg")
-                        .WithMany("Matches")
-                        .HasForeignKey("LegId");
-
                     b.HasOne("Footeo.Models.Referee", "Referee")
                         .WithMany("Matches")
-                        .HasForeignKey("RefereeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RefereeId");
                 });
 
             modelBuilder.Entity("Footeo.Models.Player", b =>

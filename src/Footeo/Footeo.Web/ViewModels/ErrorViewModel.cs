@@ -1,5 +1,3 @@
-using System;
-
 namespace Footeo.Web.ViewModels
 {
     public class ErrorViewModel

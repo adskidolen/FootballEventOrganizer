@@ -26,8 +26,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account
         public void OnGet()
         {
         }
-
-        [Authorize]
+        
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();

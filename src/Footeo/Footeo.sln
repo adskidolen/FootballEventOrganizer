@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Footeo.Models", "Footeo.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Footeo.Services", "Footeo.Services\Footeo.Services.csproj", "{ED00DFA2-D6C5-48AD-B65B-AD664BDA8E86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Footeo.Common", "Footeo.Common\Footeo.Common.csproj", "{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Footeo.Common", "Footeo.Common\Footeo.Common.csproj", "{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

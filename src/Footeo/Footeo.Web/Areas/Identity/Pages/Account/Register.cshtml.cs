@@ -145,13 +145,20 @@
 
                         if (role == GlobalConstants.PlayerRoleName && _userManager.Users.Count() > 1)
                         {
-                            var player = new Player();
+                            var player = new Player
+                            {
+                                FullName = $"{user.FirstName} {user.LastName}"
+                            };
                             _usersService.CreatePlayer(user, player);
                         }
 
                         if (role == GlobalConstants.RefereeRoleName && _userManager.Users.Count() > 1)
                         {
-                            var referee = new Referee();
+                            var referee = new Referee
+                            {
+                                FullName = $"{user.FirstName} {user.LastName}"
+                            };
+
                             _usersService.CreateReferee(user, referee);
                         }
                     }

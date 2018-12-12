@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Fixture
     {
@@ -11,11 +12,16 @@
         [Required]
         public DateTime Date { get; set; }
 
-        public virtual ICollection<Leg> Legs { get; set; }
+        [Required]
+        [ForeignKey(nameof(League))]
+        public int LeagueId { get; set; }
+        public virtual League League { get; set; }
+
+        public virtual ICollection<Match> Matches { get; set; }
 
         public Fixture()
         {
-            this.Legs = new List<Leg>();
+            this.Matches = new List<Match>();
         }
     }
 }

@@ -5,9 +5,8 @@
 
     public class LeagueCreateInputModel
     {
-        // TODO: Validation for LeagueCreateInputModel
-
         [Required]
+        [StringLength(100, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]
@@ -22,6 +21,7 @@
         public DateTime EndDate { get; set; }
 
         [Required]
+        [StringLength(30, MinimumLength = 3)]
         public string Town { get; set; }
     }
 }

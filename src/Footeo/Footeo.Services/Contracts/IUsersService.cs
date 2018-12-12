@@ -12,5 +12,6 @@
         void SetPlayersNickname(string userName, string nickname);
         IQueryable<TModel> PlayersByTeam<TModel>(int teamId);
         void JoinTeam(int teamId, string userName);
+        IQueryable<TModel> Referees<TModel>();
     }
 }

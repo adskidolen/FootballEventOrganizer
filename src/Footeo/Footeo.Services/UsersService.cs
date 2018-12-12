@@ -78,5 +78,8 @@
                              .Players
                              .AsQueryable()
                              .ProjectTo<TModel>();
+
+        public IQueryable<TModel> Referees<TModel>()
+            => this.dbContext.Referees.AsQueryable().ProjectTo<TModel>();
     }
 }

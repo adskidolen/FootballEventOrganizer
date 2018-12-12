@@ -35,6 +35,9 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
         public string Username { get; set; }
 
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
         public bool IsEmailConfirmed { get; set; }
 
         [TempData]
@@ -70,8 +73,12 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+            if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
+                || this.User.IsInRole(GlobalConstants.PlayerInTeamRoleName)
+                || this.User.IsInRole(GlobalConstants.CaptainRoleName))
             {
+                this.FullName = $"{user.FirstName} {user.LastName}";
+
                 Input = new InputModel
                 {
                     Email = email,
@@ -79,8 +86,10 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                     Nickname = user.Player.Nickname
                 };
             }
-            else
+            if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
             {
+                this.FullName = $"{user.FirstName} {user.LastName}";
+
                 Input = new InputModel
                 {
                     Email = email,

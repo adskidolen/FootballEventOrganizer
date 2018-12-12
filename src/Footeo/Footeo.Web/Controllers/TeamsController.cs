@@ -3,8 +3,8 @@
     using Footeo.Web.Controllers.Base;
     using Footeo.Services.Contracts;
     using Footeo.Web.ViewModels.Teams.Input;
-    using Footeo.Web.ViewModels.Teams.View;
-    using Footeo.Web.ViewModels.Players;
+    using Footeo.Web.ViewModels.Teams.Output;
+    using Footeo.Web.ViewModels.Players.Output;
     using Footeo.Common;
     using Footeo.Web.ViewModels;
 
@@ -31,6 +31,11 @@
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             var currentUser = this.User.Identity.Name;
 
             var playerHasATeam = this.usersService.PlayerHasATeam(currentUser);
@@ -41,7 +46,7 @@
                     RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             var teamExists = this.teamsService.TeamExistsByName(model.Name);
@@ -52,17 +57,12 @@
                     RequestId = string.Format(ErrorMessages.TeamExistsErrorMessage, model.Name)
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            if (ModelState.IsValid)
-            {
-                this.teamsService.CreateTeam(model.Name, model.Initials, model.Town, currentUser);
+            this.teamsService.CreateTeam(model.Name, model.Initials, currentUser);
 
-                return this.RedirectToAction(nameof(All));
-            }
-
-            return this.View(model);
+            return this.RedirectToAction(nameof(All));
         }
 
         public IActionResult All()
@@ -88,7 +88,7 @@
                     RequestId = ErrorMessages.TeamExistsErrorMessage
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             var playersCount = this.teamsService.PlayersCount(id);
@@ -99,7 +99,7 @@
                     RequestId = string.Format(ErrorMessages.TeamIsFullErrorMessage, id)
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             var currentUser = this.User.Identity.Name;
@@ -112,12 +112,14 @@
                     RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             this.usersService.JoinTeam(id, currentUser);
 
-            return this.RedirectToAction(nameof(Details), new { Id = id });
+            var routeValues = new { Id = id };
+
+            return this.RedirectToAction(actionName: nameof(Details), routeValues: routeValues);
         }
 
         public IActionResult Details(int id)
@@ -130,7 +132,7 @@
                     RequestId = ErrorMessages.TeamDoesNotExistsErrorMessage
                 };
 
-                return this.View(GlobalConstants.ErrorViewName, errorModel);
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorModel);
             }
 
             var players = this.usersService.PlayersByTeam<PlayerViewModel>(id).ToList();

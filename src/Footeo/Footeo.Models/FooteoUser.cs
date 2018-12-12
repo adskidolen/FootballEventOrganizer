@@ -27,9 +27,11 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
+        [ForeignKey(nameof(Player))]
         public int? PlayerId { get; set; }
         public virtual Player Player { get; set; }
 
+        [ForeignKey(nameof(Referee))]
         public int? RefereeId { get; set; }
         public virtual Referee Referee { get; set; }
     }

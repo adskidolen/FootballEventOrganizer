@@ -32,23 +32,16 @@
             this.roleManager = roleManager;
         }
 
-        public void CreateTeam(string name, string initials, string townName, string userName)
+        public void CreateTeam(string name, string initials, string userName)
         {
-            var town = this.townsService.GetTownByName<Town>(townName);
-
-            if (town == null)
-            {
-                town = this.townsService.CreateTown(townName);
-            }
+            var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
 
             var team = new Team
             {
                 Name = name,
                 Initials = initials,
-                Town = town
+                Town = user.Town
             };
-
-            var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
 
             var removeResult = this.userManager.RemoveFromRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
             var addPlayerInTeamResult = this.userManager.AddToRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();

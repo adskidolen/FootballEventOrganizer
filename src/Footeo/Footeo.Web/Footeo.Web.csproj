@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Home\" />
+    <Folder Include="ViewModels\Players\Input\" />
   </ItemGroup>
 
   <ItemGroup>
