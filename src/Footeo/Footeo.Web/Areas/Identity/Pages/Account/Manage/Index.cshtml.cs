@@ -19,13 +19,13 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<FooteoUser> _userManager;
         private readonly SignInManager<FooteoUser> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly IUsersService _usersService;
+        private readonly IPlayersService _usersService;
 
         public IndexModel(
             UserManager<FooteoUser> userManager,
             SignInManager<FooteoUser> signInManager,
             IEmailSender emailSender,
-            IUsersService usersService)
+            IPlayersService usersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

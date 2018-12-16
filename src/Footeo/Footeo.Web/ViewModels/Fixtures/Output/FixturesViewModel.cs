@@ -7,7 +7,9 @@
 
     public class FixturesViewModel
     {
+        public string Name { get; set; }
         public DateTime Date { get; set; }
+        public string Info => $"{this.Name} - {this.Date}";
         public IEnumerable<MatchViewModel> Matches { get; set; }
     }
 }

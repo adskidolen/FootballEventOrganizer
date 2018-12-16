@@ -7,7 +7,7 @@
 
     [Area(GlobalConstants.AdminRoleName)]
     [Authorize(Roles = GlobalConstants.AdminRoleName)]
-    public class AdminBaseController : Controller
+    public abstract class AdminBaseController : Controller
     {
         protected AdminBaseController() { }
     }

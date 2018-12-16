@@ -13,5 +13,9 @@
         public const string LeagueExistsErrorMessage = "League {0} already exists!";
 
         public const string FieldExistsErrorMessage = "Field {0} already exists!";
+
+        public const string MatchDoesNotExistsErrorMessage = "Match does not exists!";
+        public const string MatchHasRefereeErrorMessage = "The Match already has a referee!";
+        public const string MatchHasResultErrorMessage = "The Match already has a result!";
     }
 }

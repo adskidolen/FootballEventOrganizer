@@ -1,0 +1,35 @@
+﻿@model Footeo.Web.Areas.Player.ViewModels.Teams.Input.TeamCreateInputModel
+
+@{
+    ViewData["Title"] = "Create Team";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<hr />
+<div class="w-50 mx-auto">
+    <form asp-controller="Teams" asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Real Madrid C.F" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Initials" class="control-label"></label>
+            <input asp-for="Initials" class="form-control" placeholder="RM" />
+            <span asp-validation-for="Initials" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

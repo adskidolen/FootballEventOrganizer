@@ -1,0 +1,43 @@
+﻿@using Footeo.Services.Contracts
+@model Footeo.Web.ViewModels.Matches.Output.AllMatchesViewModel
+
+@inject IMatchesService MatchesService
+@{
+    ViewData["Title"] = "Match Details";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Result</th>
+            <th>Field</th>
+            <th>Referee</th>
+            @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
+            {
+                @foreach (var match in Model.Matches)
+                {
+                    if (!this.MatchesService.MatchHasResult(match.Id)
+                        && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))
+                    {
+                        <th>Add Result</th>
+                    }
+                }
+            }
+        </tr>
+        @foreach (var match in Model.Matches)
+        {
+            <tr>
+                <td>@match.Result</td>
+                <td>@match.FieldName</td>
+                <td>@match.RefereeFullName</td>
+                @if (this.User.IsInRole(GlobalConstants.RefereeRoleName) && !this.MatchesService.MatchHasResult(match.Id)
+                     && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))
+                {
+                    <th><a asp-area="Referee" asp-controller="Matches" asp-action="Add" asp-route-id="@match.Id">Add</a></th>
+                }
+            </tr>
+        }
+    </table>
+</div>

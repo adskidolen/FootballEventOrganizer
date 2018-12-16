@@ -1,10 +1,9 @@
-﻿@model Footeo.Web.ViewModels.Matches.Input.CreateMatchInputModel
+﻿@model Footeo.Web.Areas.Admin.ViewModels.Matches.Input.CreateMatchInputModel
 
 @{
     ViewData["Title"] = "Create Match";
     var homeTeams = this.ViewData["HomeTeams"] as IEnumerable<SelectListItem>;
     var awayTeams = this.ViewData["AwayTeams"] as IEnumerable<SelectListItem>;
-    var referees = this.ViewData["Referees"] as IEnumerable<SelectListItem>;
     var fields = this.ViewData["Fields"] as IEnumerable<SelectListItem>;
     var fixtures = this.ViewData["Fixtures"] as IEnumerable<SelectListItem>;
 }
@@ -29,14 +28,6 @@
                 <option selected="selected" disabled="disabled">Choose Away Team</option>
             </select>
             <span asp-validation-for="AwayTeamId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="RefereeId" class="control-label">Referee</label>
-            <select asp-for="RefereeId" asp-items="referees" class="form-control">
-                <option selected="selected" disabled="disabled">Choose Referee</option>
-            </select>
-            <span asp-validation-for="RefereeId" class="text-danger"></span>
         </div>
 
         <div class="form-group">

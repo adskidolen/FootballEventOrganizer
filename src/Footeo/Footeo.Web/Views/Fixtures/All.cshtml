@@ -1,5 +1,8 @@
-﻿@model Footeo.Web.ViewModels.Fixtures.Output.AllFixturesViewModel
+﻿@using Footeo.Services.Contracts
 
+@model Footeo.Web.ViewModels.Fixtures.Output.AllFixturesViewModel
+
+@inject IMatchesService MatchesService
 @{
     ViewData["Title"] = "Fixtures";
 }
@@ -9,20 +12,30 @@
 <div class="mx-auto w-50">
     <table class="table-hover table table-striped">
         <tr>
-            <th>Date</th>
+            <th>Info</th>
             <th>Matches</th>
-            <th>Referee</th>
-            <th>Field</th>
+            <th>Match Details</th>
+            @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
+            {
+                <th>Join Match</th>
+            }
         </tr>
         @foreach (var fixture in Model.Fixtures)
         {
             @foreach (var match in fixture.Matches)
             {
                 <tr>
-                    <td>@fixture.Date</td>
+                    <td>@fixture.Info</td>
                     <td>@($"{match.HomeTeamName} vs {match.AwayTeamName}")</td>
-                    <td>@match.RefereeFullName</td>
-                    <td>@match.FieldName</td>
+                    <td><a asp-controller="Matches" asp-action="Details" asp-route-id="@match.Id">Details</a></td>
+                    @if (this.User.IsInRole(GlobalConstants.RefereeRoleName) && !this.MatchesService.MatchHasReferee(match.Id))
+                    {
+                        <td><a asp-area="Referee" asp-controller="Matches" asp-action="Join" asp-route-id="@match.Id">Join</a></td>
+                    }
+                    else
+                    {
+                        <td>Match has a referee</td>
+                    }
                 </tr>
             }
         }

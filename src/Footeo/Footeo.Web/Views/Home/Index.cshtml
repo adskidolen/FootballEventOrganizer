@@ -20,7 +20,7 @@
             <div class="container text-center">
                 <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
                 Or
-                <a asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
+                <a asp-area="Player" asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
             </div>
         }
 
@@ -49,7 +49,7 @@
             <h1 class="text-center">Hello, Referee @this.User.Identity.Name!</h1>
             <hr />
             <div class="container text-center">
-                <a asp-controller="Matches" asp-action="Join" class="btn btn-dark">Join Match</a>
+                <a asp-controller="Leagues" asp-action="All" class="btn btn-dark">Join Match</a>
             </div>
         }
 

@@ -10,19 +10,16 @@
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authorization;
 
     public class LeaguesController : BaseController
     {
         private readonly ILeaguesService leaguesService;
         private readonly ITeamLeaguesService teamLeaguesService;
-        private readonly ITeamsService teamsService;
 
-        public LeaguesController(ILeaguesService leaguesService, ITeamLeaguesService teamLeaguesService, ITeamsService teamsService)
+        public LeaguesController(ILeaguesService leaguesService, ITeamLeaguesService teamLeaguesService)
         {
             this.leaguesService = leaguesService;
             this.teamLeaguesService = teamLeaguesService;
-            this.teamsService = teamsService;
         }
 
         public IActionResult All()
@@ -35,42 +32,6 @@
             };
 
             return View(leagueViewModels);
-        }
-
-        [Authorize(Roles = GlobalConstants.CaptainRoleName)]
-        public IActionResult Join(int id)
-        {
-            var leagueExists = this.leaguesService.LeagueExistsById(id);
-            if (!leagueExists)
-            {
-                var errorViewModel = new ErrorViewModel
-                {
-                    RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
-                };
-
-                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
-            }
-
-            var user = this.User.Identity.Name;
-
-            var team = this.teamsService.GetUsersTeam(user);
-
-            var isTeamInLeague = this.teamsService.IsTeamInLeague(team.Id);
-            if (isTeamInLeague)
-            {
-                var errorViewModel = new ErrorViewModel
-                {
-                    RequestId = string.Format(ErrorMessages.TeamJoinedLeagueErrorMessage, team.Name)
-                };
-
-                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
-            }
-
-            this.teamLeaguesService.JoinLeague(user, id);
-
-            var routeValues = new { Id = id };
-
-            return this.RedirectToAction(actionName: nameof(Table), routeValues: routeValues);
         }
 
         public IActionResult Table(int id)

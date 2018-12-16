@@ -29,7 +29,7 @@
                 <td><a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">View</a></td>
                 @if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
                 {
-                    <td><a asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
+                    <td><a asp-area="Player" asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
                 }
             </tr>
         }

@@ -1,8 +1,11 @@
 ﻿@page
+@using Footeo.Common
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    var roles = new string[] { GlobalConstants.PlayerRoleName, GlobalConstants.RefereeRoleName };
 }
+@inject UserManager<FooteoUser> UserManger
 
 <div class="w-50 mx-auto">
     <h2 class="text-center">@this.ViewData["Title"]</h2>
@@ -74,19 +77,35 @@
                 <span asp-validation-for="Input.Town" class="text-danger"></span>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
-            <div class="form-group w-50">
-                <label class="font-weight-bold">Choose your role in the FootEO:</label>
-                @{ var roles = new string[] { "Player", "Referee" }; }
-                @foreach (var role in roles)
-                {
+        @if (UserManger.Users.Count() == GlobalConstants.UserCountCheck)
+        {
+            <div class="d-flex justify-content-center">
+                <div class="form-group w-50">
+                    <label class="font-weight-bold text-center">You will be the main admin at FootEO!</label>
                     <div class="d-flex justify-content-center">
-                        <label class="radio-inline" asp-for="Input.Role"><input asp-for="Input.Role" type="radio" value="@role" />@role</label>
+                        <label class="radio-inline" asp-for="Input.Role">
+                            <input asp-for="Input.Role" type="radio" checked="checked" value="@GlobalConstants.AdminRoleName" />@GlobalConstants.AdminRoleName
+                        </label>
                     </div>
-                }
-                <span asp-validation-for="Input.Role" class="text-danger"></span>
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center">
+                <div class="form-group w-50">
+                    <label class="font-weight-bold">Choose your role in the FootEO:</label>
+                    @foreach (var role in roles)
+                    {
+                        <div class="d-flex justify-content-center">
+                            <label class="radio-inline" asp-for="Input.Role"><input asp-for="Input.Role" type="radio" value="@role" />@role</label>
+                        </div>
+                    }
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
+            </div>
+        }
         <hr />
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" class="btn">Register</button>

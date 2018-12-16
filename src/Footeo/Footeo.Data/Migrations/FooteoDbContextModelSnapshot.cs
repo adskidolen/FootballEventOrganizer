@@ -52,6 +52,9 @@ namespace Footeo.Data.Migrations
 
                     b.Property<int>("LeagueId");
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
                     b.HasIndex("LeagueId");

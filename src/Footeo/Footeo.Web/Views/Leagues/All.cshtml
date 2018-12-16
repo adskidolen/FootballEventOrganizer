@@ -34,7 +34,7 @@
                 <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
                 @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
                 {
-                    <td><a asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
+                    <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
                 }
                 <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
             </tr>

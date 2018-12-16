@@ -4,7 +4,7 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.Areas.Admin.Controllers.Base;
     using Footeo.Web.ViewModels;
-    using Footeo.Web.ViewModels.Fields.Input;
+    using Footeo.Web.Areas.Admin.ViewModels.Fields.Input;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +28,7 @@
             }
 
             var fieldExists = this.fieldsService.FieldExistsByName(model.Name);
-            if (!fieldExists)
+            if (fieldExists)
             {
                 var errorViewModel = new ErrorViewModel
                 {

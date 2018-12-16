@@ -3,7 +3,7 @@
     using Footeo.Common;
     using Footeo.Services.Contracts;
     using Footeo.Web.Areas.Admin.Controllers.Base;
-    using Footeo.Web.ViewModels.Fixtures.Input;
+    using Footeo.Web.Areas.Admin.ViewModels.Fixtures.Input;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,7 +38,7 @@
                 return this.View(model);
             }
 
-            this.fixturesService.CreateFixture(model.Date, model.LeagueId);
+            this.fixturesService.CreateFixture(model.Name, model.Date, model.LeagueId);
 
             //var routeValues = new { Id = model.LeagueId, Area = GlobalConstants.EmptyArea };
 

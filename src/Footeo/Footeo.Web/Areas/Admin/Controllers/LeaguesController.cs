@@ -1,7 +1,7 @@
 ﻿namespace Footeo.Web.Areas.Admin.Controllers
 {
     using Footeo.Services.Contracts;
-    using Footeo.Web.ViewModels.Leagues.Input;
+    using Footeo.Web.Areas.Admin.ViewModels.Leagues.Input;
     using Footeo.Common;
     using Footeo.Web.ViewModels;
     using Footeo.Web.Areas.Admin.Controllers.Base;

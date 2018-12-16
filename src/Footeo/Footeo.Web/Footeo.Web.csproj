@@ -23,14 +23,13 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Home\" />
-    <Folder Include="ViewModels\Players\Input\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+    <Content Update="Areas\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+    <Content Update="Areas\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

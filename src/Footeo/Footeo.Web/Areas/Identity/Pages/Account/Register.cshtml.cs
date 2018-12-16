@@ -24,21 +24,23 @@
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ITownsService _townsService;
-        private readonly IUsersService _usersService;
+        private readonly IPlayersService _playersService;
+        private readonly IRefereesService _refereesService;
 
         public RegisterModel(
             UserManager<FooteoUser> userManager,
             SignInManager<FooteoUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ITownsService townsService, IUsersService usersService)
+            ITownsService townsService, IPlayersService playersService, IRefereesService refereesService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _townsService = townsService;
-            _usersService = usersService;
+            _playersService = playersService;
+            _refereesService = refereesService;
         }
 
         [BindProperty]
@@ -86,7 +88,7 @@
 
             [Required]
             public string Town { get; set; }
-
+            
             [Required]
             public string Role { get; set; }
         }
@@ -108,7 +110,6 @@
                     town = _townsService.CreateTown(Input.Town);
                 }
 
-                var role = Input.Role;
 
                 var user = new FooteoUser
                 {
@@ -135,7 +136,9 @@
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Users.Count() == 1)
+                    var role = Input.Role;
+
+                    if (_userManager.Users.Count() == GlobalConstants.UserCountCheckForAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, GlobalConstants.AdminRoleName);
                     }
@@ -143,23 +146,23 @@
                     {
                         await _userManager.AddToRoleAsync(user, role);
 
-                        if (role == GlobalConstants.PlayerRoleName && _userManager.Users.Count() > 1)
+                        if (role == GlobalConstants.PlayerRoleName)
                         {
                             var player = new Player
                             {
                                 FullName = $"{user.FirstName} {user.LastName}"
                             };
-                            _usersService.CreatePlayer(user, player);
+                            _playersService.CreatePlayer(user, player);
                         }
 
-                        if (role == GlobalConstants.RefereeRoleName && _userManager.Users.Count() > 1)
+                        if (role == GlobalConstants.RefereeRoleName)
                         {
                             var referee = new Referee
                             {
                                 FullName = $"{user.FirstName} {user.LastName}"
                             };
 
-                            _usersService.CreateReferee(user, referee);
+                            _refereesService.CreateReferee(user, referee);
                         }
                     }
 

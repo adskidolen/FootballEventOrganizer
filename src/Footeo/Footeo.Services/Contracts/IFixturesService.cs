@@ -7,7 +7,7 @@
 
     public interface IFixturesService
     {
-        void CreateFixture(DateTime date, int leagueId);
+        void CreateFixture(string name, DateTime date, int leagueId);
         IQueryable<TModel> AllFixtures<TModel>(int leagueId);
         League GetLeagueForFixture(int fixtureId);
         bool FixtureExistsById(int id);

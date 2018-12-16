@@ -20,12 +20,13 @@
             this.leaguesService = leaguesService;
         }
 
-        public void CreateFixture(DateTime date, int leagueId)
+        public void CreateFixture(string name, DateTime date, int leagueId)
         {
             var league = this.leaguesService.GetLeagueById<League>(leagueId);
 
             var fixture = new Fixture
             {
+                Name = name,
                 Date = date,
                 League = league
             };
