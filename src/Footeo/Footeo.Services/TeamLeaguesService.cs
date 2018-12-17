@@ -8,6 +8,8 @@
     using Footeo.Models.Enums;
     using Footeo.Services.Contracts;
 
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class TeamLeaguesService : ITeamLeaguesService
@@ -65,9 +67,12 @@
         }
 
         public IQueryable<TModel> LeagueTable<TModel>(int leagueId)
-            => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).AsQueryable().ProjectTo<TModel>();
+            => this.By<TModel>(l => l.LeagueId == leagueId).AsQueryable().ProjectTo<TModel>();
 
         public int TeamsCount(int leagueId)
             => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Count();
+
+        private IEnumerable<TModel> By<TModel>(Func<TeamLeague, bool> predicate)
+           => this.dbContext.TeamsLeagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

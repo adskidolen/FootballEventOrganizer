@@ -11,5 +11,6 @@
         IQueryable<TModel> AllFixtures<TModel>(int leagueId);
         League GetLeagueForFixture(int fixtureId);
         bool FixtureExistsById(int id);
+        TModel GetFixtureById<TModel>(int id);
     }
 }

@@ -18,5 +18,7 @@
         public const string MatchDoesNotExistsErrorMessage = "Match does not exists!";
         public const string MatchHasRefereeErrorMessage = "The Match already has a referee!";
         public const string MatchHasResultErrorMessage = "The Match already has a result!";
+
+        public const string FixtureDoesNotExistsErrorMessage = "Fixture does not exists!";
     }
 }

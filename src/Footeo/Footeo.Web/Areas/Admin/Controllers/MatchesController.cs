@@ -59,10 +59,10 @@
 
             this.matchesService.CreateMatch(model.HomeTeamId, model.AwayTeamId, model.FieldId, model.FixtureId);
 
-            var routeValues = new { fixtureLeague.Id };
+            var routeValues = new { Id = model.FixtureId, Area = GlobalConstants.EmptyArea };
 
             return this.RedirectToAction(controllerName: GlobalConstants.FixturesControllerName,
-                                         actionName: GlobalConstants.AllActionName,
+                                         actionName: GlobalConstants.DetailsActionName,
                                          routeValues: routeValues);
         }
     }

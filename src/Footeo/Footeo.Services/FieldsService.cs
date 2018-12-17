@@ -52,7 +52,7 @@
             => this.dbContext.Fields.AsQueryable().ProjectTo<TModel>();
 
         public TModel GetFieldById<TModel>(int id)
-            => By<TModel>(f => f.Id == id).SingleOrDefault();
+            => this.By<TModel>(f => f.Id == id).SingleOrDefault();
 
         public TModel GetFieldByName<TModel>(string name)
             => this.By<TModel>(f => f.Name == name).SingleOrDefault();

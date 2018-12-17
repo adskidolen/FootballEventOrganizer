@@ -44,10 +44,9 @@
             this.CreateMap<Player, Player>();
 
             this.CreateMap<Town, Town>();
-
+            
             this.CreateMap<TeamLeague, TeamLeagueViewModel>();
-                //.ForMember(dest => dest.GoalDifference,
-                //           opt => opt.MapFrom(src => src.GoalsFor - src.GoalsAgainst));
+            this.CreateMap<TeamLeagueViewModel, TeamLeagueViewModel>();
             this.CreateMap<TeamLeague, SelectListItem>()
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.TeamId))
@@ -59,7 +58,7 @@
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Text,
-                           opt => opt.MapFrom(src => src.Name)); ;
+                           opt => opt.MapFrom(src => $"{src.Name} {src.Date}"));
 
             this.CreateMap<Referee, SelectListItem>()
                 .ForMember(dest => dest.Value,

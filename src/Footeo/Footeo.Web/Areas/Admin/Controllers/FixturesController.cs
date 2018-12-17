@@ -23,6 +23,8 @@
 
         public IActionResult Create()
         {
+            // TODO: find other way without ViewData
+
             this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllLeagues<SelectListItem>().ToList();
 
             return View();
@@ -31,6 +33,8 @@
         [HttpPost]
         public IActionResult Create(FixtureCreateInputModel model)
         {
+            // TODO: find other way without ViewData
+
             this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllLeagues<SelectListItem>().ToList();
 
             if (!this.ModelState.IsValid)
@@ -40,16 +44,10 @@
 
             this.fixturesService.CreateFixture(model.Name, model.Date, model.LeagueId);
 
-            //var routeValues = new { Id = model.LeagueId, Area = GlobalConstants.EmptyArea };
+            var routeValues = new { Id = model.LeagueId, Area = GlobalConstants.EmptyArea };
 
-            //return this.RedirectToAction(actionName: GlobalConstants.AllActionName,
-            //                             controllerName: GlobalConstants.FixturesControllerName,
-            //                             routeValues: routeValues);
-
-            var routeValues = new { Id = model.LeagueId };
-
-            return this.RedirectToAction(actionName: GlobalConstants.CreateActionName,
-                                         controllerName: GlobalConstants.MatchesControllerName,
+            return this.RedirectToAction(actionName: GlobalConstants.AllActionName,
+                                         controllerName: GlobalConstants.FixturesControllerName,
                                          routeValues: routeValues);
         }
     }

@@ -24,37 +24,45 @@
                 <th>Join</th>
             }
             <th>Fixtures</th>
+            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+            {
+                <th>Create Match</th>
+            }
         </tr>
         @foreach (var league in Model.Leagues)
         {
-            <tr>
-                <td>@league.Name</td>
-                <td>@league.Description</td>
-                <td>@league.StartDate</td>
-                <td>@league.EndDate</td>
-                <td>@league.TownName</td>
-                <td>@league.Status</td>
-                <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
-                @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
+        <tr>
+            <td>@league.Name</td>
+            <td>@league.Description</td>
+            <td>@league.StartDate</td>
+            <td>@league.EndDate</td>
+            <td>@league.TownName</td>
+            <td>@league.Status</td>
+            <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
+            @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
+            {
+                @if (this.TeamLeaguesService.TeamsCount(league.Id) < GlobalConstants.MaxTeamsInLeagueCount)
                 {
-                    @if (this.TeamLeaguesService.TeamsCount(league.Id) < GlobalConstants.MaxTeamsInLeagueCount)
+                    @if (!this.TeamLeaguesService.IsTeamInLeague(league.Id, this.User.Identity.Name))
                     {
-                        @if (!this.TeamLeaguesService.IsTeamInLeague(league.Id, this.User.Identity.Name))
-                        {
-                            <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
-                        }
-                        else
-                        {
-                            <td>Team already in league</td>
-                        }
+                        <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
                     }
                     else
                     {
-                        <td>The league is full</td>
+                        <td>Team already in league</td>
                     }
                 }
-                <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
-            </tr>
+                else
+                {
+                    <td>The league is full</td>
+                }
+            }
+            <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
+            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+            {
+                <th><a asp-area="Admin" asp-controller="Matches" asp-action="Create" asp-route-id="@league.Id">Create</a></th>
+            }
+        </tr>
         }
     </table>
 </div>

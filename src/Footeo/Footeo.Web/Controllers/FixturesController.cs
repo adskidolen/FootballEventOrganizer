@@ -45,5 +45,23 @@
 
             return View(fixturesViewModel);
         }
+        
+        public IActionResult Details(int id)
+        {
+            var fixtureExists = this.fixturesService.FixtureExistsById(id);
+            if (!fixtureExists)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.FixtureDoesNotExistsErrorMessage
+                };
+
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
+            }
+
+            var fixture = this.fixturesService.GetFixtureById<FixtureDetailsViewModel>(id);
+
+            return this.View(fixture);
+        }
     }
 }

@@ -8,6 +8,7 @@
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
+    using System.Collections.Generic;
 
     public class FixturesService : IFixturesService
     {
@@ -43,5 +44,11 @@
 
         public bool FixtureExistsById(int id)
             => this.dbContext.Fixtures.Any(f => f.Id == id);
+
+        public TModel GetFixtureById<TModel>(int id)
+            => this.By<TModel>(f => f.Id == id).SingleOrDefault();
+
+        private IEnumerable<TModel> By<TModel>(Func<Fixture, bool> predicate)
+            => this.dbContext.Fixtures.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }
