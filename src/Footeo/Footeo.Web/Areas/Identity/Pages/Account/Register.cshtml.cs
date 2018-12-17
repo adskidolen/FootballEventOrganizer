@@ -82,10 +82,7 @@
             [Required]
             [Range(14, 50)]
             public int Age { get; set; }
-
-            //[Required]
-            //public IFormFile Picture { get; set; }
-
+            
             [Required]
             public string Town { get; set; }
             

@@ -26,15 +26,18 @@
             {
                 <tr>
                     <td>@fixture.Info</td>
-                    <td>@($"{match.HomeTeamName} vs {match.AwayTeamName}")</td>
+                    <td>@match.Rivals</td>
                     <td><a asp-controller="Matches" asp-action="Details" asp-route-id="@match.Id">Details</a></td>
-                    @if (this.User.IsInRole(GlobalConstants.RefereeRoleName) && !this.MatchesService.MatchHasReferee(match.Id))
+                    @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
                     {
-                        <td><a asp-area="Referee" asp-controller="Matches" asp-action="Join" asp-route-id="@match.Id">Join</a></td>
-                    }
-                    else
-                    {
-                        <td>Match has a referee</td>
+                        @if (!this.MatchesService.MatchHasReferee(match.Id))
+                        {
+                            <td><a asp-area="Referee" asp-controller="Matches" asp-action="Join" asp-route-id="@match.Id">Join</a></td>
+                        }
+                        else
+                        {
+                            <td>Match has a referee</td>
+                        }
                     }
                 </tr>
             }

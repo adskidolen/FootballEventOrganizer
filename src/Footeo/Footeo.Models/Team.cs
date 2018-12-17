@@ -17,9 +17,6 @@
         [StringLength(5, MinimumLength = 1)]
         public string Initials { get; set; }
 
-        //[Required]
-        //public byte[] Logo { get; set; }
-
         [Required]
         public DateTime CreatedOn { get; set; }
 
@@ -27,9 +24,6 @@
         [ForeignKey(nameof(Town))]
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
-
-        //[Required]
-        //public byte[] Picture { get; set; }
 
         public virtual ICollection<TeamLeague> Leagues { get; set; }
         public virtual ICollection<Player> Players { get; set; }

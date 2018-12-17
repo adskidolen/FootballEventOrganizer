@@ -47,7 +47,11 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            var teams = this.teamLeaguesService.LeagueTable<TeamLeagueViewModel>(id).ToList();
+            var teams = this.teamLeaguesService.LeagueTable<TeamLeagueViewModel>(id)
+                                               .OrderByDescending(p => p.Points)
+                                               .ThenByDescending(gd => gd.GoalDifference)
+                                               .ThenByDescending(gf => gf.GoalsFor)
+                                               .ToList();
 
             var leagueTableViewModel = new LeagueTableViewModel
             {

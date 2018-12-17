@@ -2,8 +2,10 @@
 {
     using AutoMapper.QueryableExtensions;
 
+    using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
+    using Footeo.Models.Enums;
     using Footeo.Services.Contracts;
 
     using System.Linq;
@@ -21,6 +23,23 @@
             this.leaguesService = leaguesService;
         }
 
+        public TeamLeague GetTeamLeague(int teamId)
+            => this.dbContext.TeamsLeagues.FirstOrDefault(t => t.TeamId == teamId);
+
+        public bool IsTeamInLeague(int leagueId, string userName)
+        {
+            var league = this.leaguesService.GetLeagueById<League>(leagueId);
+            var team = this.teamsService.GetUsersTeam(userName);
+
+            var teamInCurrentLeague = league.Teams.Any(t => t.TeamId == team.Id);
+            if (!teamInCurrentLeague)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void JoinLeague(string userName, int leagueId)
         {
             var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
@@ -36,11 +55,19 @@
                 League = league
             };
 
+            if (this.TeamsCount(league.Id) == GlobalConstants.MaxTeamsInLeagueCount)
+            {
+                league.Status = Status.InProgress;
+            }
+
             this.dbContext.TeamsLeagues.Add(teamLeague);
             this.dbContext.SaveChanges();
         }
 
         public IQueryable<TModel> LeagueTable<TModel>(int leagueId)
             => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).AsQueryable().ProjectTo<TModel>();
+
+        public int TeamsCount(int leagueId)
+            => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Count();
     }
 }

@@ -1,5 +1,8 @@
-﻿@model Footeo.Web.ViewModels.Leagues.Output.AllLeaguesViewModel
+﻿@using Footeo.Services.Contracts
 
+@model Footeo.Web.ViewModels.Leagues.Output.AllLeaguesViewModel
+
+@inject ITeamLeaguesService TeamLeaguesService
 @{
     ViewData["Title"] = "All Leagues";
 }
@@ -34,7 +37,21 @@
                 <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
                 @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
                 {
-                    <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
+                    @if (this.TeamLeaguesService.TeamsCount(league.Id) < GlobalConstants.MaxTeamsInLeagueCount)
+                    {
+                        @if (!this.TeamLeaguesService.IsTeamInLeague(league.Id, this.User.Identity.Name))
+                        {
+                            <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
+                        }
+                        else
+                        {
+                            <td>Team already in league</td>
+                        }
+                    }
+                    else
+                    {
+                        <td>The league is full</td>
+                    }
                 }
                 <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
             </tr>

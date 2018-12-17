@@ -11,6 +11,7 @@
 
         public const string LeagueDoesNotExistsErrorMessage = "League does not exists!";
         public const string LeagueExistsErrorMessage = "League {0} already exists!";
+        public const string MaxTeamsInLeagueErrorMessage = "The maximum teams in the leage is 10!";
 
         public const string FieldExistsErrorMessage = "Field {0} already exists!";
 

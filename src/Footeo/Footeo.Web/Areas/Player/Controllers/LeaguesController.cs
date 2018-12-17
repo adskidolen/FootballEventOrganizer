@@ -33,6 +33,17 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
+            var teamsCount = this.teamLeaguesService.TeamsCount(id);
+            if (teamsCount == GlobalConstants.MaxTeamsInLeagueCount)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.MaxTeamsInLeagueErrorMessage
+                };
+
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
+            }
+
             var user = this.User.Identity.Name;
 
             var team = this.teamsService.GetUsersTeam(user);

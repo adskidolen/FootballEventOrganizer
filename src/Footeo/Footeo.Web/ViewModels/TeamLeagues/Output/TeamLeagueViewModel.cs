@@ -14,7 +14,7 @@
 
         public int GoalsAgainst { get; set; }
 
-        public int GoalDifference { get; set; }
+        public int GoalDifference => this.GoalsFor - this.GoalsAgainst;
 
         public int PlayedMatches { get; set; }
 
