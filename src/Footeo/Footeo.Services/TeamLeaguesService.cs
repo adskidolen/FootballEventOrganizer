@@ -37,6 +37,21 @@
                    .ToList()
                    .First();
 
+        public bool HasTeamAlreadyCurrentTrophy(int leagueId)
+        {
+            var teamLeague = this.GetTeamLeagueWinner(leagueId);
+            var team = teamLeague.Team;
+            var leagueName = teamLeague.League.Name;
+
+            var hasTeamAlreadyCurrentTrophy = team.Trophies.Any(t => t.Name == leagueName);
+            if (hasTeamAlreadyCurrentTrophy)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool IsTeamInLeague(int leagueId, string userName)
         {
             var league = this.leaguesService.GetLeagueById<League>(leagueId);

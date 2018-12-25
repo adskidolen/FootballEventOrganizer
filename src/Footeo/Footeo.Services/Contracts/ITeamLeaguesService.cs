@@ -12,5 +12,6 @@
         int TeamsCount(int leagueId);
         TeamLeague GetTeamLeague(int teamId);
         TeamLeague GetTeamLeagueWinner(int leagueId);
+        bool HasTeamAlreadyCurrentTrophy(int leagueId);
     }
 }

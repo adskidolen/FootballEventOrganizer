@@ -3,6 +3,7 @@
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
+    using System.Linq;
 
     public class TrophiesService : ITrophiesService
     {
@@ -22,7 +23,7 @@
             var teamLeague = this.teamLeaguesService.GetTeamLeagueWinner(leagueId);
             var team = teamLeague.Team;
             var leagueName = teamLeague.League.Name;
-
+            
             var trophy = new Trophy
             {
                 Name = leagueName,

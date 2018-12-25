@@ -1,0 +1,35 @@
+﻿@model Footeo.Web.ViewModels.Matches.Output.AllTeamMatchesViewModel
+
+@{
+    ViewData["Title"] = "Matches";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Home Matches</th>
+        </tr>
+        @foreach (var homeMatch in Model.HomeMatches)
+        {
+            <tr>
+                <td>@homeMatch.Result</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Away Matches</th>
+        </tr>
+        @foreach (var awayMatch in Model.AwayMatches)
+        {
+            <tr>
+                <td>@awayMatch.Result</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,5 +1,8 @@
-﻿@model Footeo.Web.Areas.Admin.ViewModels.Leagues.Output.AllLeaguesViewModel
+﻿@using Footeo.Services.Contracts
 
+@model Footeo.Web.Areas.Admin.ViewModels.Leagues.Output.AllLeaguesViewModel
+
+@inject ITeamLeaguesService TeamLeaguesService
 @{
     ViewData["Title"] = "All Completed Leagues";
 }
@@ -16,7 +19,14 @@
         {
             <tr>
                 <td>@league.Name</td>
-                <td><a asp-area="Admin" asp-controller="Trophies" asp-action="GenerateWinner" asp-route-id="@league.Id">Generate</a></td>
+                @if (!this.TeamLeaguesService.HasTeamAlreadyCurrentTrophy(league.Id))
+                {
+                    <td><a asp-area="Admin" asp-controller="Trophies" asp-action="GenerateWinner" asp-route-id="@league.Id">Generate</a></td>
+                }
+                else
+                {
+                    <td>Winner has been genereted</td>
+                }
             </tr>
         }
     </table>

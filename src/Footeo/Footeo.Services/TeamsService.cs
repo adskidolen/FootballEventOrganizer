@@ -85,5 +85,14 @@
 
         private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
         => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
+
+        public IQueryable<TModel> AllTrophiesByTeamId<TModel>(int teamId)
+            => this.dbContext.Trophies.Where(t => t.TeamId == teamId).AsQueryable().ProjectTo<TModel>();
+
+        public IEnumerable<Match> AllHomeMatchesByTeamId(int teamId)
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).HomeMatches.Where(r => r.Result != null);
+
+        public IEnumerable<Match> AllAwayMatchesByTeamId(int teamId)
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).AwayMatches.Where(r => r.Result != null);
     }
 }

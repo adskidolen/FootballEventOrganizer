@@ -8,6 +8,7 @@
         public const string TeamDoesNotExistsErrorMessage = "Team does not exists!";
         public const string TeamIsFullErrorMessage = "Team with id {0} already full!";
         public const string TeamJoinedLeagueErrorMessage = "Team {0} already joined a league!";
+        public static string TeamTrophyErrorMessage = "Team already has that trophy!";
 
         public const string LeagueDoesNotExistsErrorMessage = "League does not exists!";
         public const string LeagueExistsErrorMessage = "League {0} already exists!";
@@ -23,5 +24,6 @@
         public const string FixtureDoesNotExistsErrorMessage = "Fixture does not exists!";
 
         public const string SquadNumberErrorMessage = "Squad Number is taken!";
+
     }
 }

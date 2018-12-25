@@ -4,14 +4,14 @@
     ViewData["Title"] = "All Fields";
 }
 
-<h2 class="text-center">All Fields</h2>
+<h2 class="text-center">@this.ViewData["Title"]</h2>
 
 <div class="mx-auto w-50">
     <table class="table-hover table table-striped">
         <tr>
             <th>Name</th>
             <th>Address</th>
-            <th>Indoor or Outdoor</th>
+            <th>Indoors/Outdoors</th>
             <th>Town</th>
         </tr>
         @foreach (var field in Model.Fields)
@@ -19,14 +19,7 @@
             <tr>
                 <td>@field.Name</td>
                 <td>@field.Address</td>
-                @if (field.IsIndoors)
-                {
-                    <td>Indoor</td>
-                }
-                else
-                {
-                    <td>Outdoor</td>
-                }
+                <td>@field.ShowIsIndoor</td>
                 <td>@field.TownName</td>
             </tr>
         }

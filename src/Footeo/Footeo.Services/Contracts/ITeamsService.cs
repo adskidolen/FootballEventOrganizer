@@ -2,6 +2,7 @@
 {
     using Footeo.Models;
 
+    using System.Collections.Generic;
     using System.Linq;
 
     public interface ITeamsService
@@ -15,5 +16,8 @@
         int PlayersCount(int teamId);
         bool IsTeamInLeague(int teamId);
         Team GetUsersTeam(string userName);
+        IQueryable<TModel> AllTrophiesByTeamId<TModel>(int teamId);
+        IEnumerable<Match> AllHomeMatchesByTeamId(int teamId);
+        IEnumerable<Match> AllAwayMatchesByTeamId(int teamId);
     }
 }

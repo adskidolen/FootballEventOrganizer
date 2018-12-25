@@ -7,7 +7,7 @@
     ViewData["Title"] = "All Teams";
 }
 
-<h2 class="text-center">All Teams</h2>
+<h2 class="text-center">@this.ViewData["Title"]</h2>
 
 <div class="mx-auto w-50">
     <table class="table-hover table table-striped">
@@ -16,9 +16,11 @@
             <th>Initials</th>
             <th>Create On</th>
             <th>Town</th>
+            <th>Trophies</th>
             <th>Players</th>
+            <th>Matches</th>
             @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-               && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+              && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
             {
                 <th>Join Team</th>
             }
@@ -30,9 +32,11 @@
                 <td>@team.Initials</td>
                 <td>@team.CreatedOn</td>
                 <td>@team.TownName</td>
-                <td><a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">View</a></td>
+                <td>@(team.TrophiesCount) - <a asp-controller="Teams" asp-action="Trophies" asp-route-id="@team.Id">Check</a></td>
+                <td><a asp-controller="Teams" asp-action="Players" asp-route-id="@team.Id">View</a></td>
+                <td><a asp-controller="Teams" asp-action="Matches" asp-route-id="@team.Id">View</a></td>
                 @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-                   && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+                  && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
                 {
                     <td><a asp-area="Player" asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
                 }

@@ -12,6 +12,8 @@
     using Footeo.Web.ViewModels.TeamLeagues.Output;
     using Footeo.Web.ViewModels.Teams.Output;
     using Footeo.Web.ViewModels.Fixtures.Output;
+    using Footeo.Web.ViewModels.Referees.Output;
+    using Footeo.Web.ViewModels.Matches.Output;
 
     public class MappingProfile : Profile
     {
@@ -71,6 +73,10 @@
             this.CreateMap<Match, Match>();
 
             this.CreateMap<SelectListItem, SelectListItem>();
+
+            this.CreateMap<Referee, RefereeViewModel>()
+                .ForMember(dest => dest.MatchAttendances,
+                           opt => opt.MapFrom(src => src.Matches.Count));
         }
     }
 }

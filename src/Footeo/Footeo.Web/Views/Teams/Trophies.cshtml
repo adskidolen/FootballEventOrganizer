@@ -1,0 +1,21 @@
+﻿@model Footeo.Web.ViewModels.Trophies.Output.AllTrophiesViewModel
+
+@{
+    ViewData["Title"] = "All Trophies";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (var team in Model.Trophies)
+        {
+        <tr>
+            <td>@team.ShowName</td>
+        </tr>
+        }
+    </table>
+</div>

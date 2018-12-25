@@ -14,11 +14,13 @@
     {
         private readonly ILeaguesService leaguesService;
         private readonly ITrophiesService trophiesService;
+        private readonly ITeamLeaguesService teamLeaguesService;
 
-        public TrophiesController(ILeaguesService leaguesService, ITrophiesService trophiesService)
+        public TrophiesController(ILeaguesService leaguesService, ITrophiesService trophiesService, ITeamLeaguesService teamLeaguesService)
         {
             this.leaguesService = leaguesService;
             this.trophiesService = trophiesService;
+            this.teamLeaguesService = teamLeaguesService;
         }
 
         public IActionResult TrophiesForLeagues()
@@ -40,6 +42,17 @@
                 var errorViewModel = new ErrorViewModel
                 {
                     RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
+                };
+
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
+            }
+
+            var hasTeamAlreadyCurrentTrophy = this.teamLeaguesService.HasTeamAlreadyCurrentTrophy(id);
+            if (hasTeamAlreadyCurrentTrophy)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.TeamTrophyErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

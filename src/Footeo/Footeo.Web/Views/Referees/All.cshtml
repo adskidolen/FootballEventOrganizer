@@ -1,0 +1,27 @@
+﻿@model Footeo.Web.ViewModels.Referees.Output.AllRefereesViewModel
+
+@{
+    ViewData["Title"] = "All Referees";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Match Attendances</th>
+        </tr>
+        @foreach (var referee in Model.Referees)
+        {
+            <tr>
+                <td>@referee.FullName</td>
+                <td>@referee.MatchAttendances</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>
