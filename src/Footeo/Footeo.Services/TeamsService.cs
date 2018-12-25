@@ -5,6 +5,7 @@
     using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
+    using Footeo.Models.Enums;
     using Footeo.Services.Contracts;
 
     using Microsoft.AspNetCore.Identity;
@@ -78,7 +79,8 @@
             => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Players.Count;
 
         public bool IsTeamInLeague(int teamId)
-            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Leagues.Any(l => l.League != null);
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Leagues
+                                   .Any(l => l.League != null && l.League.Status != LeagueStatus.Completed);
 
         public Team GetUsersTeam(string userName)
             => this.dbContext.Users.FirstOrDefault(u => u.UserName == userName).Player.Team;
