@@ -22,6 +22,8 @@
         public const string CreateActionName = "Create";
         public const string DetailsActionName = "Details";
         public const string TableActionName = "Table";
+        public const string PendingActionName = "Pending";
+        public const string CompletedActionName = "Completed";
 
         public const string FieldsControllerName = "Fields";
         public const string LeaguesControllerName = "Leagues";
@@ -32,5 +34,13 @@
         public const string EmptyArea = "";
 
         public const string ViewDataForLeagues = "Leagues";
+
+        public const string None = "N/A";
+
+        public const string HomeTeamsViewDataName = "HomeTeams";
+        public const string AwayTeamsViewDataName = "AwayTeams";
+        public const string FieldsViewDataName = "Fields";
+        public const string FixturesViewDataName = "Fixtures";
+        public const string LeaguesViewDataName = "Leagues";
     }
 }

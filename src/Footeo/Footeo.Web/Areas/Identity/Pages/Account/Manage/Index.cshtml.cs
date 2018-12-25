@@ -6,11 +6,13 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Footeo.Common;
 using Footeo.Models;
+using Footeo.Models.Enums;
 using Footeo.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -19,18 +21,18 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<FooteoUser> _userManager;
         private readonly SignInManager<FooteoUser> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly IPlayersService _usersService;
+        private readonly IPlayersService _playersService;
 
         public IndexModel(
             UserManager<FooteoUser> userManager,
             SignInManager<FooteoUser> signInManager,
             IEmailSender emailSender,
-            IPlayersService usersService)
+            IPlayersService playersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
-            _usersService = usersService;
+            _playersService = playersService;
         }
 
         public string Username { get; set; }
@@ -56,7 +58,12 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
+            // Player properties
             public string Nickname { get; set; }
+
+            public int SquadNumber { get; set; }
+
+            public string Position { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -83,7 +90,9 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                 {
                     Email = email,
                     PhoneNumber = phoneNumber,
-                    Nickname = user.Player.Nickname
+                    Nickname = user.Player.Nickname,
+                    SquadNumber = user.Player.SquadNumber.GetValueOrDefault(),
+                    Position = user.Player.Position.ToString()
                 };
             }
             if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
@@ -95,7 +104,6 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                     Email = email,
                     PhoneNumber = phoneNumber
                 };
-
             }
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -138,9 +146,27 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+            if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
+                || this.User.IsInRole(GlobalConstants.PlayerInTeamRoleName)
+                || this.User.IsInRole(GlobalConstants.CaptainRoleName))
             {
-                _usersService.SetPlayersNickname(user.UserName, Input.Nickname);
+                _playersService.SetPlayersNickname(user.UserName, Input.Nickname);
+
+                var isSquadNumberTaken = _playersService.IsSquadNumberTaken(Input.SquadNumber);
+                if (isSquadNumberTaken)
+                {
+                    return this.RedirectToPage();
+                }
+
+                _playersService.SetSquadNumber(user.UserName, Input.SquadNumber);
+
+                var isPositionValid = Enum.TryParse(typeof(PlayerPosition), Input.Position, out object position);
+                if (!isPositionValid)
+                {
+                    return this.RedirectToPage();
+                }
+
+                _playersService.SetPosition(user.UserName, (PlayerPosition)position);
             }
 
             await _signInManager.RefreshSignInAsync(user);
@@ -160,7 +186,6 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
 
             var userId = await _userManager.GetUserIdAsync(user);
             var email = await _userManager.GetEmailAsync(user);

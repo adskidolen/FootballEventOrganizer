@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Create Match";
 
-    var homeTeams = this.ViewData["HomeTeams"] as IEnumerable<SelectListItem>;
-    var awayTeams = this.ViewData["AwayTeams"] as IEnumerable<SelectListItem>;
-    var fields = this.ViewData["Fields"] as IEnumerable<SelectListItem>;
-    var fixtures = this.ViewData["Fixtures"] as IEnumerable<SelectListItem>;
+    var homeTeams = this.ViewData[GlobalConstants.HomeTeamsViewDataName] as IEnumerable<SelectListItem>;
+    var awayTeams = this.ViewData[GlobalConstants.AwayTeamsViewDataName] as IEnumerable<SelectListItem>;
+    var fields = this.ViewData[GlobalConstants.FieldsViewDataName] as IEnumerable<SelectListItem>;
+    var fixtures = this.ViewData[GlobalConstants.FixturesViewDataName] as IEnumerable<SelectListItem>;
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>

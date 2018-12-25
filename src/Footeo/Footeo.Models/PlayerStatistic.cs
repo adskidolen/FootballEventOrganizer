@@ -5,6 +5,12 @@
 
     public class PlayerStatistic
     {
+        private const int MaxGoalsValue = 20;
+        private const int MinGoalsValue = 0;
+
+        private const int MaxAssistsValue = 20;
+        private const int MinAssistsValue = 0;
+
         [Required]
         [ForeignKey(nameof(Player))]
         public int PlayerId { get; set; }
@@ -16,17 +22,17 @@
         public virtual Match Match { get; set; }
 
         [Required]
-        [Range(0, 20)]
+        [Range(MinGoalsValue, MaxGoalsValue)]
         public int GoalsScored { get; set; }
 
         [Required]
-        [Range(0, 20)]
+        [Range(MinAssistsValue, MaxAssistsValue)]
         public int Assists { get; set; }
 
         public PlayerStatistic()
         {
-            this.GoalsScored = 0;
-            this.Assists = 0;
+            this.GoalsScored = MinGoalsValue;
+            this.Assists = MinAssistsValue;
         }
     }
 }

@@ -163,19 +163,6 @@ namespace Footeo.Data.Migrations
                     b.ToTable("Leagues");
                 });
 
-            modelBuilder.Entity("Footeo.Models.LeagueTrophy", b =>
-                {
-                    b.Property<int>("LeagueId");
-
-                    b.Property<int>("TrophyId");
-
-                    b.HasKey("LeagueId", "TrophyId");
-
-                    b.HasIndex("TrophyId");
-
-                    b.ToTable("LeaguesTrophies");
-                });
-
             modelBuilder.Entity("Footeo.Models.Match", b =>
                 {
                     b.Property<int>("Id")
@@ -230,8 +217,6 @@ namespace Footeo.Data.Migrations
                     b.Property<string>("Nickname");
 
                     b.Property<int?>("Position");
-
-                    b.Property<int>("Rating");
 
                     b.Property<int?>("SquadNumber");
 
@@ -512,19 +497,6 @@ namespace Footeo.Data.Migrations
                     b.HasOne("Footeo.Models.Town", "Town")
                         .WithMany("Leagues")
                         .HasForeignKey("TownId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Footeo.Models.LeagueTrophy", b =>
-                {
-                    b.HasOne("Footeo.Models.League", "League")
-                        .WithMany("Trophies")
-                        .HasForeignKey("LeagueId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Footeo.Models.Trophy", "Trophy")
-                        .WithMany("Leagues")
-                        .HasForeignKey("TrophyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

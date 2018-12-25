@@ -74,9 +74,6 @@
         public IQueryable<TModel> AllTeams<TModel>()
             => this.dbContext.Teams.AsQueryable().ProjectTo<TModel>();
 
-        private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
-          => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
-
         public int PlayersCount(int teamId)
             => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).Players.Count;
 
@@ -85,5 +82,8 @@
 
         public Team GetUsersTeam(string userName)
             => this.dbContext.Users.FirstOrDefault(u => u.UserName == userName).Player.Team;
+
+        private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
+        => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

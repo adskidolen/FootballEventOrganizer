@@ -22,11 +22,35 @@
             this.teamLeaguesService = teamLeaguesService;
         }
 
-        public IActionResult All()
+        public IActionResult Pending()
         {
-            var leagues = this.leaguesService.AllLeagues<LeagueViewModel>().ToList();
+            var leagues = this.leaguesService.AllPendingLeagues<PendingLeagueViewModel>().ToList();
 
-            var leagueViewModels = new AllLeaguesViewModel
+            var leagueViewModels = new AllPendingLeaguesViewModel
+            {
+                Leagues = leagues
+            };
+
+            return View(leagueViewModels);
+        }
+
+        public IActionResult InProgress()
+        {
+            var leagues = this.leaguesService.AllInProgressLeagues<InProgressLeagueViewModel>().ToList();
+
+            var leagueViewModels = new AllInProgressLeaguesViewModel
+            {
+                Leagues = leagues
+            };
+
+            return View(leagueViewModels);
+        }
+
+        public IActionResult Completed()
+        {
+            var leagues = this.leaguesService.AllCompletedLeagues<CompletedLeagueViewModel>().ToList();
+
+            var leagueViewModels = new AllCompletedLeaguesViewModel
             {
                 Leagues = leagues
             };

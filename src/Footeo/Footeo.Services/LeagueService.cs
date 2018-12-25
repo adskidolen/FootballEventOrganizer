@@ -4,6 +4,7 @@
 
     using Footeo.Data;
     using Footeo.Models;
+    using Footeo.Models.Enums;
     using Footeo.Services.Contracts;
 
     using System;
@@ -55,10 +56,16 @@
         public TModel GetLeagueByName<TModel>(string name)
             => this.By<TModel>(l => l.Name == name).SingleOrDefault();
 
-        public IQueryable<TModel> AllLeagues<TModel>()
-            => this.dbContext.Leagues.AsQueryable().ProjectTo<TModel>();
+        public IQueryable<TModel> AllPendingLeagues<TModel>()
+            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Pending).AsQueryable().ProjectTo<TModel>();
+
+        public IQueryable<TModel> AllInProgressLeagues<TModel>()
+            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.InProgress).AsQueryable().ProjectTo<TModel>();
+
+        public IQueryable<TModel> AllCompletedLeagues<TModel>()
+            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Completed).AsQueryable().ProjectTo<TModel>();
 
         private IEnumerable<TModel> By<TModel>(Func<League, bool> predicate)
-           => this.dbContext.Leagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
+          => this.dbContext.Leagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

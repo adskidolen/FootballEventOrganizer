@@ -7,20 +7,23 @@
 
     public class FooteoUser : IdentityUser
     {
+        private const int NameMaxLength = 30;
+        private const int NameMinLength = 3;
+
+        private const int AgeMaxLength = 50;
+        private const int AgeMinLength = 14;
+
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string LastName { get; set; }
 
         [Required]
-        [Range(14, 50)]
+        [Range(AgeMinLength, AgeMaxLength)]
         public int Age { get; set; }
-
-        //[Required]
-        //public byte[] Picture { get; set; }
 
         [Required]
         [ForeignKey(nameof(Town))]

@@ -1,0 +1,27 @@
+﻿@model Footeo.Web.Areas.Admin.ViewModels.Leagues.Output.AllLeaguesViewModel
+
+@{
+    ViewData["Title"] = "All Completed Leagues";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Generate Winner</th>
+        </tr>
+        @foreach (var league in Model.Leagues)
+        {
+            <tr>
+                <td>@league.Name</td>
+                <td><a asp-area="Admin" asp-controller="Trophies" asp-action="GenerateWinner" asp-route-id="@league.Id">Generate</a></td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

@@ -4,12 +4,18 @@
 
     public class TeamCreateInputModel
     {
+        private const int MaxNameLength = 30;
+        private const int MinNameLength = 1;
+
+        private const int MaxInitialsLength = 5;
+        private const int MinInitialsLength = 1;
+
         [Required]
-        [StringLength(30, MinimumLength = 1)]
+        [StringLength(MaxNameLength, MinimumLength = MinNameLength)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(5, MinimumLength = 2)]
+        [StringLength(MaxInitialsLength, MinimumLength = MinInitialsLength)]
         public string Initials { get; set; }
     }
 }

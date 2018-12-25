@@ -30,7 +30,7 @@
             {
                 <h1 class="text-center">Hello, Captain @this.User.Identity.Name!</h1>
                 <div class="container text-center">
-                    <a asp-controller="Leagues" asp-action="All" class="btn btn-dark">Join League</a>
+                    <a asp-controller="Leagues" asp-action="Pending" class="btn btn-dark">Join League</a>
                 </div>
             }
             else
@@ -49,7 +49,7 @@
             <h1 class="text-center">Hello, Referee @this.User.Identity.Name!</h1>
             <hr />
             <div class="container text-center">
-                <a asp-controller="Leagues" asp-action="All" class="btn btn-dark">Join Match</a>
+                <a asp-controller="Leagues" asp-action="InProgress" class="btn btn-dark">Join Match</a>
             </div>
         }
 

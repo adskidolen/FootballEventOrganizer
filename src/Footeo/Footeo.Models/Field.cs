@@ -22,8 +22,6 @@
         public int TownId { get; set; }
         public virtual Town Town { get; set; }
 
-        //public byte[] Picture { get; set; }
-
         public virtual ICollection<Match> Matches { get; set; }
 
         public Field()

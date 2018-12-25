@@ -28,6 +28,15 @@
         public TeamLeague GetTeamLeague(int teamId)
             => this.dbContext.TeamsLeagues.FirstOrDefault(t => t.TeamId == teamId);
 
+        public TeamLeague GetTeamLeagueWinner(int leagueId)
+            => this.LeagueTable<TeamLeague>(leagueId)
+                   .Where(l => l.League.Status == LeagueStatus.Completed)
+                   .OrderByDescending(p => p.Points)
+                   .ThenByDescending(gd => gd.GoalDifference)
+                   .ThenByDescending(gf => gf.GoalsFor)
+                   .ToList()
+                   .First();
+
         public bool IsTeamInLeague(int leagueId, string userName)
         {
             var league = this.leaguesService.GetLeagueById<League>(leagueId);
@@ -59,7 +68,7 @@
 
             if (this.TeamsCount(league.Id) == GlobalConstants.MaxTeamsInLeagueCount)
             {
-                league.Status = Status.InProgress;
+                league.Status = LeagueStatus.InProgress;
             }
 
             this.dbContext.TeamsLeagues.Add(teamLeague);

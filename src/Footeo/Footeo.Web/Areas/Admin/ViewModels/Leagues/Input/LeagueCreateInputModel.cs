@@ -5,8 +5,14 @@
 
     public class LeagueCreateInputModel
     {
+        private const int NameMaxLength = 100;
+        private const int NameMinLength = 3;
+
+        private const int TownMaxLength = 30;
+        private const int TownMinLength = 3;
+
         [Required]
-        [StringLength(100, MinimumLength = 3)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; }
 
         [Required]
@@ -21,7 +27,7 @@
         public DateTime EndDate { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(TownMaxLength, MinimumLength = TownMinLength)]
         public string Town { get; set; }
     }
 }

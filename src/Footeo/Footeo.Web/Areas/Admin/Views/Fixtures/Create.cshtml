@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create Fixtures";
-    var leagues = this.ViewData["Leagues"] as IEnumerable<SelectListItem>;
+    var leagues = this.ViewData[GlobalConstants.LeaguesViewDataName] as IEnumerable<SelectListItem>;
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>

@@ -9,13 +9,19 @@
 <div class="mx-auto w-50">
     <table class="table-hover table table-striped">
         <tr>
-            <th>Players</th>
+            <th>Full Name</th>
+            <th>Nickname</th>
+            <th>Position</th>
+            <th>Squad Number</th>
             <th>Role</th>
         </tr>
         @foreach (var player in Model.Players)
         {
             <tr>
+                <td>@player.FullName</td>
                 <td>@player.Nickname</td>
+                <td>@player.ShowPosition</td>
+                <td>@player.ShowSquadNumber</td>
                 <td>@player.Captain</td>
             </tr>
         }

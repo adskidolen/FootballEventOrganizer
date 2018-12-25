@@ -11,5 +11,6 @@
         bool IsTeamInLeague(int leagueId, string userName);
         int TeamsCount(int leagueId);
         TeamLeague GetTeamLeague(int teamId);
+        TeamLeague GetTeamLeagueWinner(int leagueId);
     }
 }

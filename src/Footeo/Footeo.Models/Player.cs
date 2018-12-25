@@ -8,41 +8,32 @@
 
     public class Player
     {
-        public int Id { get; set; }
+        private const int MaxSquadNumberValue = 99;
+        private const int MinSquadNumberValue = 1;
 
-        [StringLength(30, MinimumLength = 1)]
+        public int Id { get; set; }
 
         [Required]
         public string FullName { get; set; }
 
         public string Nickname { get; set; }
-        
+
         [ForeignKey(nameof(Team))]
         public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
 
         public bool IsCaptain { get; set; }
 
-        public Position? Position { get; set; }
+        public PlayerPosition? Position { get; set; }
 
-        [Range(1, 99)]
+        [Range(MinSquadNumberValue, MaxSquadNumberValue)]
         public int? SquadNumber { get; set; }
-
-        [Range(0, 10)]
-        public int Rating { get; set; }
-
-        //[Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        //public double Height { get; set; }
-
-        //[Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        //public double Weight { get; set; }
 
         public virtual ICollection<PlayerStatistic> Statistics { get; set; }
 
         public Player()
         {
             this.IsCaptain = false;
-            this.Rating = 0;
             this.Statistics = new List<PlayerStatistic>();
         }
     }

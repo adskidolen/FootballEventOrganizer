@@ -1,6 +1,7 @@
 ﻿namespace Footeo.Services.Contracts
 {
     using Footeo.Models;
+    using Footeo.Models.Enums;
 
     using System.Linq;
 
@@ -11,5 +12,9 @@
         void SetPlayersNickname(string userName, string nickname);
         IQueryable<TModel> PlayersByTeam<TModel>(int teamId);
         void JoinTeam(int teamId, string userName);
+        TModel GetPlayerByName<TModel>(string playerName);
+        void SetSquadNumber(string userName, int squadNumber);
+        void SetPosition(string userName, PlayerPosition position);
+        bool IsSquadNumberTaken(int squadNumber);
     }
 }

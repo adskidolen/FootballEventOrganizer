@@ -1,6 +1,6 @@
 ﻿namespace Footeo.Models.Enums
 {
-    public enum Position
+    public enum PlayerPosition
     {
         Goalkeeper = 0,
         Defender = 1,

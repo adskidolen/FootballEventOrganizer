@@ -1,0 +1,60 @@
+﻿@using Footeo.Services.Contracts
+
+@model Footeo.Web.ViewModels.Leagues.Output.AllPendingLeaguesViewModel
+
+@inject ITeamLeaguesService TeamLeaguesService
+@{
+    ViewData["Title"] = "All Leagues";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Town</th>
+            <th>Details</th>
+            @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
+            {
+                <th>Join</th>
+            }
+        </tr>
+        @foreach (var league in Model.Leagues)
+        {
+            <tr>
+                <td>@league.Name</td>
+                <td>@league.Description</td>
+                <td>@league.StartDate</td>
+                <td>@league.EndDate</td>
+                <td>@league.TownName</td>
+                <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
+                @if (this.User.IsInRole(GlobalConstants.CaptainRoleName))
+                {
+                    @if (this.TeamLeaguesService.TeamsCount(league.Id) < GlobalConstants.MaxTeamsInLeagueCount)
+                    {
+                        @if (!this.TeamLeaguesService.IsTeamInLeague(league.Id, this.User.Identity.Name))
+                        {
+                            <td><a asp-area="Player" asp-controller="Leagues" asp-action="Join" asp-route-id="@league.Id">Join</a></td>
+                        }
+                        else
+                        {
+                            <td>Team already in league</td>
+                        }
+                    }
+                    else
+                    {
+                        <td>The league is full</td>
+                    }
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

@@ -5,10 +5,13 @@
     using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
+    using Footeo.Models.Enums;
     using Footeo.Services.Contracts;
 
     using Microsoft.AspNetCore.Identity;
 
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class PlayersService : IPlayersService
@@ -35,16 +38,12 @@
         }
 
         public bool PlayerHasATeam(string userName)
-      => this.dbContext.Users
-                       .Where(u => u.UserName == userName)
-                       .Any(p => p.Player.TeamId != null);
+            => this.dbContext.Users.Where(u => u.UserName == userName).Any(p => p.Player.TeamId != null);
 
         public void SetPlayersNickname(string userName, string nickname)
         {
-            var player = this.dbContext.Users
-                                       .Where(u => u.UserName == userName)
-                                       .Select(p => p.Player)
-                                       .FirstOrDefault();
+            var user = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault();
+            var player = user.Player;
 
             player.Nickname = nickname;
 
@@ -72,5 +71,34 @@
                              .Players
                              .AsQueryable()
                              .ProjectTo<TModel>();
+
+        public TModel GetPlayerByName<TModel>(string playerName)
+            => this.By<TModel>(p => p.FullName == playerName).SingleOrDefault();
+
+        private IEnumerable<TModel> By<TModel>(Func<Player, bool> predicate)
+       => this.dbContext.Players.Where(predicate).AsQueryable().ProjectTo<TModel>();
+
+        public void SetSquadNumber(string userName, int squadNumber)
+        {
+            var user = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault();
+            var player = user.Player;
+
+            player.SquadNumber = squadNumber;
+
+            this.dbContext.SaveChanges();
+        }
+
+        public void SetPosition(string userName, PlayerPosition position)
+        {
+            var user = this.dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault();
+            var player = user.Player;
+
+            player.Position = position;
+
+            this.dbContext.SaveChanges();
+        }
+
+        public bool IsSquadNumberTaken(int squadNumber)
+            => this.dbContext.Players.Any(sn => sn.SquadNumber == squadNumber);
     }
 }

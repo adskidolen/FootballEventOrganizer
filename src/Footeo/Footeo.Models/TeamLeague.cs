@@ -5,6 +5,14 @@
 
     public class TeamLeague
     {
+        private const int MaxPointsValue = 150;
+        private const int MinPointsValue = 0;
+
+        private const int HighestPositionVaue = 1;
+        private const int LowestPositionValue = 10;
+
+        private const int MinValue = 0;
+
         [Required]
         [ForeignKey(nameof(Team))]
         public int TeamId { get; set; }
@@ -15,42 +23,42 @@
         public int LeagueId { get; set; }
         public virtual League League { get; set; }
 
-        [Range(0, 150)]
+        [Range(MinPointsValue, MaxPointsValue)]
         public int Points { get; set; }
         
-        [Range(1, 20)]
+        [Range(HighestPositionVaue, LowestPositionValue)]
         public int Position { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int GoalsFor { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int GoalsAgainst { get; set; }
 
         public int GoalDifference { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int PlayedMatches { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int Won { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int Drawn { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(MinValue, int.MaxValue)]
         public int Lost { get; set; }
 
         public TeamLeague()
         {
-            this.Points = 0;
-            this.GoalsFor = 0;
-            this.GoalsAgainst = 0;
-            this.GoalDifference = 0;
-            this.PlayedMatches = 0;
-            this.Won = 0;
-            this.Drawn = 0;
-            this.Lost = 0;
+            this.Points = MinValue;
+            this.GoalsFor = MinValue;
+            this.GoalsAgainst = MinValue;
+            this.GoalDifference = MinValue;
+            this.PlayedMatches = MinValue;
+            this.Won = MinValue;
+            this.Drawn = MinValue;
+            this.Lost = MinValue;
         }
     }
 }

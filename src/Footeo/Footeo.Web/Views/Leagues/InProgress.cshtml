@@ -1,0 +1,46 @@
+﻿@using Footeo.Services.Contracts
+
+@model Footeo.Web.ViewModels.Leagues.Output.AllInProgressLeaguesViewModel
+
+@inject ITeamLeaguesService TeamLeaguesService
+@{
+    ViewData["Title"] = "All Leagues";
+}
+
+<h2 class="text-center">@this.ViewData["Title"]</h2>
+
+<div class="mx-auto w-50">
+    <table class="table-hover table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Town</th>
+            <th>Details</th>
+            <th>Fixtures</th>
+            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+            {
+                <th>Create Match</th>
+            }
+        </tr>
+        @foreach (var league in Model.Leagues)
+        {
+            <tr>
+                <td>@league.Name</td>
+                <td>@league.StartDate</td>
+                <td>@league.EndDate</td>
+                <td>@league.TownName</td>
+                <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
+                <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
+                @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+                {
+                    <th><a asp-area="Admin" asp-controller="Matches" asp-action="Create" asp-route-id="@league.Id">Create</a></th>
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+</div>

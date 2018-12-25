@@ -1,6 +1,6 @@
 ﻿namespace Footeo.Models.Enums
 {
-    public enum Status
+    public enum LeagueStatus
     {
         Pending = 0,
         InProgress = 1,

@@ -4,6 +4,9 @@
 
     public class FieldCreateInputModel
     {
+        private const int TownMaxLength = 30;
+        private const int TownMinLength = 3;
+
         [Required]
         public string Name { get; set; }
 
@@ -14,7 +17,7 @@
         public bool IsIndoors { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(TownMaxLength, MinimumLength = TownMinLength)]
         public string Town { get; set; }
     }
 }

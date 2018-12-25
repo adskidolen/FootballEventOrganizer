@@ -22,7 +22,7 @@
         [HttpPost]
         public IActionResult Create(LeagueCreateInputModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
@@ -38,11 +38,11 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            this.leaguesService.CreateLeague(model.Name, model.Description, model.StartDate, model.EndDate, model.Town);
+            this.leaguesService.CreateLeague(model.Name.Trim(), model.Description.Trim(), model.StartDate, model.EndDate, model.Town.Trim());
 
             var routeValues = new { Area = GlobalConstants.EmptyArea };
 
-            return this.RedirectToAction(actionName: GlobalConstants.AllActionName,
+            return this.RedirectToAction(actionName: GlobalConstants.PendingActionName,
                                          controllerName: GlobalConstants.LeaguesControllerName,
                                          routeValues: routeValues);
         }

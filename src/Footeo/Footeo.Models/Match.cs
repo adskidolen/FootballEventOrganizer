@@ -7,25 +7,31 @@
 
     public class Match
     {
+        private const string HomeTeamProperyName = "HomeTeam";
+        private const string AwayTeamProperyName = "AwayTeam";
+
+        private const int GoalsMinValue = 0;
+        private const int GoalsMaxValue = 30;
+
         public int Id { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
-        [ForeignKey("HomeTeam")]
+        [ForeignKey(HomeTeamProperyName)]
         public int HomeTeamId { get; set; }
         public virtual Team HomeTeam { get; set; }
 
-        [Range(0, 30)]
+        [Range(GoalsMinValue, GoalsMaxValue)]
         public int? HomeTeamGoals { get; set; }
 
         [Required]
-        [ForeignKey("AwayTeam")]
+        [ForeignKey(AwayTeamProperyName)]
         public int AwayTeamId { get; set; }
         public virtual Team AwayTeam { get; set; }
 
-        [Range(0, 30)]
+        [Range(GoalsMinValue, GoalsMaxValue)]
         public int? AwayTeamGoals { get; set; }
 
         public string Result { get; set; }

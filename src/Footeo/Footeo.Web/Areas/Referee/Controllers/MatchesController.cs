@@ -6,25 +6,63 @@
     using Footeo.Web.Areas.Referee.Controllers.Base;
     using Footeo.Web.ViewModels;
     using Footeo.Web.Areas.Referee.ViewModels.Matches.Input;
+    using Footeo.Web.Areas.Referee.ViewModels.Players.Input;
+    using Footeo.Web.Areas.Referee.ViewModels.Players.Output;
 
     using Microsoft.AspNetCore.Mvc;
+
+    using System.Linq;
+    using System.Collections.Generic;
 
     public class MatchesController : RefereeBaseController
     {
         private readonly IMatchesService matchesService;
         private readonly IRefereesService refereesService;
+        private readonly IPlayersService playersService;
+        private readonly IPlayersStatisticsService playersStatisticsService;
 
-        public MatchesController(IMatchesService matchesService, IRefereesService refereesService)
+        public MatchesController(IMatchesService matchesService, IRefereesService refereesService,
+            IPlayersService playersService, IPlayersStatisticsService playersStatisticsService)
         {
             this.matchesService = matchesService;
             this.refereesService = refereesService;
+            this.playersService = playersService;
+            this.playersStatisticsService = playersStatisticsService;
         }
 
-        public IActionResult Add() => this.View();
+        public IActionResult Add(int id)
+        {
+            var match = this.matchesService.GetMatchById<Match>(id);
+            var homeTeam = match.HomeTeam;
+            var awayTeam = match.AwayTeam;
+
+            this.ViewData["HomeTeamPlayers"] = homeTeam.Players.Select(p => new PlayerViewModel
+            {
+                Id = p.Id,
+                Name = p.FullName
+            })
+            .ToList();
+
+            this.ViewData["AwayTeamPlayers"] = awayTeam.Players.Select(p => new PlayerViewModel
+            {
+                Id = p.Id,
+                Name = p.FullName
+            })
+            .ToList();
+
+            var model = new AddMatchInfoInputModel();
+
+            return this.View(model);
+        }
 
         [HttpPost]
         public IActionResult Add(int id, AddMatchInfoInputModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             var matchExists = this.matchesService.MatchExistsById(id);
             if (!matchExists)
             {
@@ -48,13 +86,44 @@
             }
 
             var match = this.matchesService.GetMatchById<Match>(id);
-            this.refereesService.AddResultToMatch(match.Id, model.HomeTeamGoals, model.AwayTeamGoals);
+
+            // this.refereesService.AddResultToMatch(match.Id, model.HomeTeamGoals, model.AwayTeamGoals);
+
+            var homeTeam = match.HomeTeam;
+            var awayTeam = match.AwayTeam;
+
+            this.ViewData["HomeTeamPlayers"] = homeTeam.Players.Select(p => new PlayerViewModel
+            {
+                Id = p.Id,
+                Name = p.FullName
+            })
+          .ToList();
+
+            this.ViewData["AwayTeamPlayers"] = awayTeam.Players.Select(p => new PlayerViewModel
+            {
+                Id = p.Id,
+                Name = p.FullName
+            })
+            .ToList();
+
+            //var players = new List<Player>();
+            //players.AddRange(hometeam.Players);
+            //players.AddRange(awayteam.Players);
+
+            //foreach (var player in players)
+            //{
+            //    foreach (var stat in model.Stats)
+            //    {
+            //        // this.PlayersStatisticsService.CreatePlayerStatistics(match.Id, player.Id, stat.GoalsScored, stat.Assists);
+            //    }
+            //}
 
             var routeValues = new { match.Id };
 
             return this.RedirectToAction(controllerName: GlobalConstants.MatchesControllerName,
                                          actionName: GlobalConstants.DetailsActionName,
                                          routeValues: routeValues);
+
         }
 
         public IActionResult Join(int id)

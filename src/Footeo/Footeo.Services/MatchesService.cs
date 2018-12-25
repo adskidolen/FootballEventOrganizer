@@ -26,8 +26,11 @@
 
         public void CreateMatch(int homeTeamId, int awayTeamId, int fieldId, int fixtureId)
         {
+            var fixture = this.fixturesService.GetFixtureById<Fixture>(fixtureId);
+
             var match = new Match
             {
+                Date = fixture.Date,
                 HomeTeamId = homeTeamId,
                 AwayTeamId = awayTeamId,
                 FieldId = fieldId,

@@ -82,6 +82,8 @@
             services.AddScoped<IFixturesService, FixturesService>();
             services.AddScoped<IMatchesService, MatchesService>();
             services.AddScoped<IRefereesService, RefereesService>();
+            services.AddScoped<IPlayersStatisticsService, PlayersStatisticsService>();
+            services.AddScoped<ITrophiesService, TrophiesService>();
 
             services.AddAutoMapper();
 

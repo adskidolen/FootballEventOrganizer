@@ -32,10 +32,10 @@
         {
             // TODO: find other way without ViewData
 
-            this.ViewData["HomeTeams"] = this.teamLeaguesService.LeagueTable<SelectListItem>(id).ToList();
-            this.ViewData["AwayTeams"] = this.teamLeaguesService.LeagueTable<SelectListItem>(id).ToList();
-            this.ViewData["Fields"] = this.fieldsService.AllFields<SelectListItem>().ToList();
-            this.ViewData["Fixtures"] = this.fixturesService.AllFixtures<SelectListItem>(id).ToList();
+            this.ViewData[GlobalConstants.HomeTeamsViewDataName] = this.teamLeaguesService.LeagueTable<SelectListItem>(id).ToList();
+            this.ViewData[GlobalConstants.AwayTeamsViewDataName] = this.teamLeaguesService.LeagueTable<SelectListItem>(id).ToList();
+            this.ViewData[GlobalConstants.FieldsViewDataName] = this.fieldsService.AllFields<SelectListItem>().ToList();
+            this.ViewData[GlobalConstants.FixturesViewDataName] = this.fixturesService.AllFixtures<SelectListItem>(id).ToList();
 
             return this.View();
         }
@@ -47,10 +47,10 @@
 
             // TODO: find other way without ViewData
 
-            this.ViewData["HomeTeams"] = this.teamLeaguesService.LeagueTable<SelectListItem>(fixtureLeague.Id).ToList();
-            this.ViewData["AwayTeams"] = this.teamLeaguesService.LeagueTable<SelectListItem>(fixtureLeague.Id).ToList();
-            this.ViewData["Fields"] = this.fieldsService.AllFields<SelectListItem>().ToList();
-            this.ViewData["Fixtures"] = this.fixturesService.AllFixtures<SelectListItem>(fixtureLeague.Id).ToList();
+            this.ViewData[GlobalConstants.HomeTeamsViewDataName] = this.teamLeaguesService.LeagueTable<SelectListItem>(fixtureLeague.Id).ToList();
+            this.ViewData[GlobalConstants.AwayTeamsViewDataName] = this.teamLeaguesService.LeagueTable<SelectListItem>(fixtureLeague.Id).ToList();
+            this.ViewData[GlobalConstants.FieldsViewDataName] = this.fieldsService.AllFields<SelectListItem>().ToList();
+            this.ViewData[GlobalConstants.FixturesViewDataName] = this.fixturesService.AllFixtures<SelectListItem>(fixtureLeague.Id).ToList();
 
             if (!this.ModelState.IsValid)
             {

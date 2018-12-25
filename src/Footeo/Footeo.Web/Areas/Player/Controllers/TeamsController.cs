@@ -24,7 +24,7 @@
         [HttpPost]
         public IActionResult Create(TeamCreateInputModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
@@ -53,7 +53,7 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            this.teamsService.CreateTeam(model.Name, model.Initials, currentUser);
+            this.teamsService.CreateTeam(model.Name.Trim(), model.Initials.Trim(), currentUser);
 
             var routeValues = new { Area = GlobalConstants.EmptyArea };
 

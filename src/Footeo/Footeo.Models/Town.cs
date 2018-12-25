@@ -5,10 +5,13 @@
 
     public class Town
     {
+        private const int NameMaxLength = 30;
+        private const int NameMinLength = 3;
+
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; }
 
         public virtual ICollection<FooteoUser> FooteoUsers { get; set; }

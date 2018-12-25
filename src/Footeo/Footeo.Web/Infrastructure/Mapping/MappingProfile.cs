@@ -12,8 +12,6 @@
     using Footeo.Web.ViewModels.TeamLeagues.Output;
     using Footeo.Web.ViewModels.Teams.Output;
     using Footeo.Web.ViewModels.Fixtures.Output;
-    using System.Linq;
-    using Footeo.Web.ViewModels.Matches.Output;
 
     public class MappingProfile : Profile
     {
@@ -29,7 +27,9 @@
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => src.Name));
 
-            this.CreateMap<League, LeagueViewModel>();
+            this.CreateMap<League, PendingLeagueViewModel>();
+            this.CreateMap<League, CompletedLeagueViewModel>();
+            this.CreateMap<League, InProgressLeagueViewModel>();
             this.CreateMap<League, League>();
             this.CreateMap<League, SelectListItem>()
                 .ForMember(dest => dest.Value,
@@ -44,7 +44,8 @@
             this.CreateMap<Player, Player>();
 
             this.CreateMap<Town, Town>();
-            
+
+            this.CreateMap<TeamLeague, TeamLeague>();
             this.CreateMap<TeamLeague, TeamLeagueViewModel>();
             this.CreateMap<TeamLeagueViewModel, TeamLeagueViewModel>();
             this.CreateMap<TeamLeague, SelectListItem>()
@@ -53,6 +54,7 @@
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => src.Team.Name));
 
+            this.CreateMap<Fixture, Fixture>();
             this.CreateMap<Fixture, FixturesViewModel>();
             this.CreateMap<Fixture, SelectListItem>()
                 .ForMember(dest => dest.Value,
@@ -67,6 +69,8 @@
                            opt => opt.MapFrom(src => src.FullName));
 
             this.CreateMap<Match, Match>();
+
+            this.CreateMap<SelectListItem, SelectListItem>();
         }
     }
 }

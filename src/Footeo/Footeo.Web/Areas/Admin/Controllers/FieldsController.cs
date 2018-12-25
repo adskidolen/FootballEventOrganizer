@@ -22,7 +22,7 @@
         [HttpPost]
         public IActionResult Add(FieldCreateInputModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
@@ -38,7 +38,7 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            this.fieldsService.CreateField(model.Name, model.Address, model.IsIndoors, model.Town);
+            this.fieldsService.CreateField(model.Name.Trim(), model.Address.Trim(), model.IsIndoors, model.Town.Trim());
 
             var routeValues = new { Area = GlobalConstants.EmptyArea };
 

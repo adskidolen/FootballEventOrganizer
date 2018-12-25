@@ -12,6 +12,7 @@
         public const string LeagueDoesNotExistsErrorMessage = "League does not exists!";
         public const string LeagueExistsErrorMessage = "League {0} already exists!";
         public const string MaxTeamsInLeagueErrorMessage = "The maximum teams in the leage is 10!";
+        public const string NotEnoughTeamsInLeagueErrorMessage = "The league does not reached 10 teams for creating fixtures!";
 
         public const string FieldExistsErrorMessage = "Field {0} already exists!";
 
@@ -20,5 +21,7 @@
         public const string MatchHasResultErrorMessage = "The Match already has a result!";
 
         public const string FixtureDoesNotExistsErrorMessage = "Fixture does not exists!";
+
+        public const string SquadNumberErrorMessage = "Squad Number is taken!";
     }
 }

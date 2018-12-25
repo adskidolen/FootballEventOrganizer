@@ -25,7 +25,7 @@
         {
             // TODO: find other way without ViewData
 
-            this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllLeagues<SelectListItem>().ToList();
+            this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllInProgressLeagues<SelectListItem>().ToList();
 
             return View();
         }
@@ -35,14 +35,14 @@
         {
             // TODO: find other way without ViewData
 
-            this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllLeagues<SelectListItem>().ToList();
+            this.ViewData[GlobalConstants.ViewDataForLeagues] = this.leaguesService.AllInProgressLeagues<SelectListItem>().ToList();
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            this.fixturesService.CreateFixture(model.Name, model.Date, model.LeagueId);
+            this.fixturesService.CreateFixture(model.Name.Trim(), model.Date, model.LeagueId);
 
             var routeValues = new { Id = model.LeagueId, Area = GlobalConstants.EmptyArea };
 

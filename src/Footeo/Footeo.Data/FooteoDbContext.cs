@@ -20,7 +20,6 @@
         public DbSet<Match> Matches { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<TeamLeague> TeamsLeagues { get; set; }
-        public DbSet<LeagueTrophy> LeaguesTrophies { get; set; }
 
         public FooteoDbContext() { }
 
@@ -30,11 +29,10 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.ApplyConfiguration(new MatchEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerStatisticsEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TeamLeagueEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new LeagueTrophyEntityConfiguration());
         }
     }
 }

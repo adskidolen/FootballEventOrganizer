@@ -9,10 +9,13 @@
 
     public class League
     {
+        private const int NameMaxLength = 100;
+        private const int NameMinLength = 3;
+
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 3)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; }
 
         [Required]
@@ -25,7 +28,7 @@
         public DateTime EndDate { get; set; }
 
         [Required]
-        public Status Status { get; set; }
+        public LeagueStatus Status { get; set; }
 
         [Required]
         [ForeignKey(nameof(Town))]
@@ -34,15 +37,13 @@
 
         public virtual ICollection<TeamLeague> Teams { get; set; }
         public virtual ICollection<Fixture> Fixtures { get; set; }
-        public virtual ICollection<LeagueTrophy> Trophies { get; set; }
 
         public League()
         {
-            this.Status = Status.Pending;
+            this.Status = LeagueStatus.Pending;
 
             this.Teams = new List<TeamLeague>();
             this.Fixtures = new List<Fixture>();
-            this.Trophies = new List<LeagueTrophy>();
         }
     }
 }

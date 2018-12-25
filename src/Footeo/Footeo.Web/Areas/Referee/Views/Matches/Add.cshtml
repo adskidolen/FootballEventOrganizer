@@ -1,7 +1,13 @@
-﻿@model Footeo.Web.Areas.Referee.ViewModels.Matches.Input.AddMatchInfoInputModel
+﻿@using Footeo.Web.Areas.Referee.ViewModels.Players.Output
+@using Footeo.Web.Areas.Referee.ViewModels.Players.Input
+
+@model Footeo.Web.Areas.Referee.ViewModels.Matches.Input.AddMatchInfoInputModel
 
 @{
     ViewData["Title"] = "Add Match Info";
+
+    var homeTeamPlayers = this.ViewData["HomeTeamPlayers"] as IEnumerable<PlayerViewModel>;
+    var awayTeamPlayers = this.ViewData["AwayTeamPlayers"] as IEnumerable<PlayerViewModel>;
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>
@@ -18,6 +24,51 @@
             <label asp-for="AwayTeamGoals" class="control-label">Away Team Goals</label>
             <input asp-for="AwayTeamGoals" class="form-control" />
             <span asp-validation-for="AwayTeamGoals" class="text-danger"></span>
+        </div>
+
+        <div class="container">
+            <h5 class="text-center">Home Team Players</h5>
+            @foreach (var player in homeTeamPlayers)
+            {
+                <div class="form-row">
+                    <div class="col-md-4 mt-2">
+                        <label class="control-label">@player.Name</label>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input class="form-control" placeholder="Goals scored..." />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input class="form-control" placeholder="Assists made..." />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr />
+
+        <div class="container">
+            <h5 class="text-center">Away Team Players</h5>
+            @foreach (var player in awayTeamPlayers)
+            {
+                <div class="form-row">
+                    <div class="col-md-4 mt-2">
+                        <label class="control-label">@player.Name</label>
+                    </div>
+                    @*@for (int i = 0; i < Model.Stats.Count(); i++)
+                        {*@
+                    <div class="col-md-4 mt-2">
+                        <input class="form-control" placeholder="Goals scored..." />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input name="Assists" class="form-control" placeholder="Assists made..." />
+                        <span class="text-danger"></span>
+                    </div>
+                    @*}*@
+                </div>
+            }
         </div>
 
         <div class="form-group">
