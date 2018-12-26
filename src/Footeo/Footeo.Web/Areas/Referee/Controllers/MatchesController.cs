@@ -68,7 +68,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MatchDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.MatchDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -79,7 +79,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MatchHasResultErrorMessage
+                    ErrorMessage = ErrorMessages.MatchHasResultErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -126,14 +126,14 @@
 
         }
 
-        public IActionResult Join(int id)
+        public IActionResult Attend(int id)
         {
             var matchExists = this.matchesService.MatchExistsById(id);
             if (!matchExists)
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MatchDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.MatchDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -144,7 +144,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MatchHasRefereeErrorMessage
+                    ErrorMessage = ErrorMessages.MatchHasRefereeErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -152,7 +152,7 @@
 
             var user = this.User.Identity.Name;
 
-            this.refereesService.JoinMatch(user, id);
+            this.refereesService.AttendAMatch(user, id);
 
             var routeValues = new { Id = id };
 

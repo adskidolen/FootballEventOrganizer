@@ -4,40 +4,48 @@
     ViewData["Title"] = "Add Field";
 }
 
-<h2>@this.ViewData["Title"]</h2>
-<hr />
-<div class="w-50 mx-auto">
+<div style="width:50%" class="d-flex justify-content-center align-items-center container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
     <form asp-area="Admin" asp-controller="Fields" asp-action="Add" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Name" class="control-label"></label>
+            </div>
             <input asp-for="Name" class="form-control" placeholder="Estadio Santiago Bernabeu" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Address" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Address" class="control-label"></label>
+            </div>
             <input asp-for="Address" class="form-control" placeholder="Av. de Concha Espina, 1, 28036 Madrid" />
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
         <div class="form-group">
             <div class="checkbox">
-                <label>
-                    <input asp-for="IsIndoors" /> @Html.DisplayNameFor(model => model.IsIndoors)
-                </label>
+                <div style="color:darkgray" class="text-center">
+                    <label asp-for="IsIndoors">
+                        <input asp-for="IsIndoors" />
+                        @Html.DisplayNameFor(m => m.IsIndoors)
+                        <span asp-validation-for="IsIndoors" class="text-danger"></span>
+                    </label>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Town" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Town" class="control-label"></label>
+            </div>
             <input asp-for="Town" class="form-control" placeholder="Madrid" />
             <span asp-validation-for="Town" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Add Field" class="btn btn-default" />
+        <hr class="hr-2" />
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Add" style="background-color:#00a78e" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
-

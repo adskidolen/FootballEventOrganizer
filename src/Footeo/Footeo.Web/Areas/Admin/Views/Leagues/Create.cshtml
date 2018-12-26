@@ -4,46 +4,51 @@
     ViewData["Title"] = "Create League";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-<hr />
-<div class="w-50 mx-auto">
+<div style="width:50%" class="d-flex justify-content-center align-items-center container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
     <form asp-area="Admin" asp-controller="Leagues" asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Name" class="control-label"></label>
+            </div>
             <input asp-for="Name" class="form-control" placeholder="Premier League" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Description" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Description" class="control-label"></label>
+            </div>
             <input asp-for="Description" class="form-control" placeholder="The Premier League is a private company..." />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="StartDate" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="StartDate" class="control-label"></label>
+            </div>
             <input asp-for="StartDate" class="form-control" />
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EndDate" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="EndDate" class="control-label"></label>
+            </div>
             <input asp-for="EndDate" class="form-control" />
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Town" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Town" class="control-label"></label>
+            </div>
             <input asp-for="Town" class="form-control" placeholder="Sofia" />
             <span asp-validation-for="Town" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <hr class="hr-2" />
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Create" style="background-color:#00a78e" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
-
-<div>
-    <a asp-area="" asp-controller="Leagues" asp-action="All">Back to Leagues</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

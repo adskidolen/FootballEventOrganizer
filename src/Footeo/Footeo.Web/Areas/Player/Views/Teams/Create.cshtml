@@ -4,32 +4,30 @@
     ViewData["Title"] = "Create Team";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<hr />
-<div class="w-50 mx-auto">
+<div style="width:50%" class="d-flex justify-content-center align-items-center container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
     <form asp-controller="Teams" asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Name" class="control-label"></label>
+            </div>
             <input asp-for="Name" class="form-control" placeholder="Real Madrid C.F" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Initials" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Initials" class="control-label"></label>
+            </div>
             <input asp-for="Initials" class="form-control" placeholder="RM" />
             <span asp-validation-for="Initials" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <hr class="hr-2" />
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Create" style="background-color:#00a78e" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
-
-<div>
-    <a asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

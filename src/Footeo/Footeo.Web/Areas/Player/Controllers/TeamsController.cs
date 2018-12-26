@@ -36,7 +36,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
+                    ErrorMessage = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -47,7 +47,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.TeamExistsErrorMessage, model.Name)
+                    ErrorMessage = string.Format(ErrorMessages.TeamExistsErrorMessage, model.Name)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -69,7 +69,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.TeamExistsErrorMessage
+                    ErrorMessage = ErrorMessages.TeamExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -80,7 +80,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.TeamIsFullErrorMessage, id)
+                    ErrorMessage = string.Format(ErrorMessages.TeamIsFullErrorMessage, id)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -93,7 +93,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
+                    ErrorMessage = string.Format(ErrorMessages.PlayerInTeamErrorMessage, currentUser)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -104,7 +104,7 @@
             var routeValues = new { Id = id, Area = GlobalConstants.EmptyArea };
 
             return this.RedirectToAction(controllerName: GlobalConstants.TeamsControllerName,
-                                         actionName: GlobalConstants.DetailsActionName,
+                                         actionName: GlobalConstants.PlayersActionName,
                                          routeValues: routeValues);
         }
     }

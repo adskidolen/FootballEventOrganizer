@@ -9,14 +9,16 @@
     var fixtures = this.ViewData[GlobalConstants.FixturesViewDataName] as IEnumerable<SelectListItem>;
 }
 
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<hr />
-<div class="w-50 mx-auto">
+<div style="width:50%" class="d-flex justify-content-center align-items-center container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
     <form asp-area="Admin" asp-controller="Matches" asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
-            <label asp-for="HomeTeamId" class="control-label">Home Team</label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="HomeTeamId" class="control-label">Home Team</label>
+            </div>
             <select asp-for="HomeTeamId" asp-items="homeTeams" class="form-control">
                 <option selected="selected" disabled="disabled">Choose Home Team</option>
             </select>
@@ -24,7 +26,9 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="AwayTeamId" class="control-label">Away Team</label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="AwayTeamId" class="control-label">Away Team</label>
+            </div>
             <select asp-for="AwayTeamId" asp-items="awayTeams" class="form-control">
                 <option selected="selected" disabled="disabled">Choose Away Team</option>
             </select>
@@ -32,7 +36,9 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="FieldId" class="control-label">Field</label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="FieldId" class="control-label">Field</label>
+            </div>
             <select asp-for="FieldId" asp-items="fields" class="form-control">
                 <option selected="selected" disabled="disabled">Choose Field</option>
             </select>
@@ -40,20 +46,21 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="FixtureId" class="control-label">Fixture</label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="FixtureId" class="control-label">Fixture</label>
+            </div>
             <select asp-for="FixtureId" asp-items="fixtures" class="form-control">
                 <option selected="selected" disabled="disabled">Choose Fixture</option>
             </select>
             <span asp-validation-for="FixtureId" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <hr class="hr-2" />
+
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Create"style="background-color:#00a78e" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
-

@@ -27,7 +27,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -38,7 +38,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MaxTeamsInLeagueErrorMessage
+                    ErrorMessage = ErrorMessages.MaxTeamsInLeagueErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -53,7 +53,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.TeamJoinedLeagueErrorMessage, team.Name)
+                    ErrorMessage = string.Format(ErrorMessages.TeamJoinedLeagueErrorMessage, team.Name)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

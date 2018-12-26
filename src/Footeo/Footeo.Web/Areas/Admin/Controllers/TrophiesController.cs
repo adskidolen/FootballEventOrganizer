@@ -41,7 +41,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -52,7 +52,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.TeamTrophyErrorMessage
+                    ErrorMessage = ErrorMessages.TeamTrophyErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

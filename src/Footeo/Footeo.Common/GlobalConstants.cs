@@ -24,6 +24,7 @@
         public const string TableActionName = "Table";
         public const string PendingActionName = "Pending";
         public const string CompletedActionName = "Completed";
+        public const string PlayersActionName = "Players";
 
         public const string FieldsControllerName = "Fields";
         public const string LeaguesControllerName = "Leagues";
@@ -42,5 +43,8 @@
         public const string FieldsViewDataName = "Fields";
         public const string FixturesViewDataName = "Fixtures";
         public const string LeaguesViewDataName = "Leagues";
+
+        public const int NextPageValue = 1;
+        public const int MaxElementsOnPage = 10;
     }
 }

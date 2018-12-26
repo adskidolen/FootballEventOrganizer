@@ -15,6 +15,8 @@
 
     using AutoMapper;
 
+    using X.PagedList;
+
     public class TeamsController : BaseController
     {
         private readonly ITeamsService teamsService;
@@ -28,16 +30,20 @@
             this.mapper = mapper;
         }
 
-        public IActionResult All()
+        public IActionResult All(int? pageNumber)
         {
+            var nextPage = pageNumber ?? GlobalConstants.NextPageValue;
+
             var teams = this.teamsService.AllTeams<TeamViewModel>()
                                          .OrderByDescending(t => t.TrophiesCount)
                                          .ThenBy(n => n.Name)
                                          .ToList();
 
+            var pagedteams = teams.ToPagedList(nextPage, GlobalConstants.MaxElementsOnPage);
+
             var teamViewModels = new AllTeamsViewModel
             {
-                Teams = teams
+                Teams = pagedteams
             };
 
             return View(teamViewModels);
@@ -50,7 +56,7 @@
             {
                 var errorModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.TeamDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.TeamDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorModel);
@@ -73,7 +79,7 @@
             {
                 var errorModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.TeamDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.TeamDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorModel);
@@ -96,7 +102,7 @@
             {
                 var errorModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.TeamDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.TeamDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorModel);

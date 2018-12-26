@@ -26,7 +26,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.MatchDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.MatchDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

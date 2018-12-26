@@ -7,6 +7,8 @@
         private const int TownMaxLength = 30;
         private const int TownMinLength = 3;
 
+        private const string IsIndoorsDisplayName = "Indoor";
+
         [Required]
         public string Name { get; set; }
 
@@ -14,6 +16,7 @@
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = IsIndoorsDisplayName)]
         public bool IsIndoors { get; set; }
 
         [Required]

@@ -72,11 +72,11 @@
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [StringLength(30, MinimumLength = 1)]
+            [StringLength(30, MinimumLength = 2)]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(30, MinimumLength = 1)]
+            [StringLength(30, MinimumLength = 2)]
             public string LastName { get; set; }
 
             [Required]
@@ -106,7 +106,6 @@
                 {
                     town = _townsService.CreateTown(Input.Town);
                 }
-
 
                 var user = new FooteoUser
                 {

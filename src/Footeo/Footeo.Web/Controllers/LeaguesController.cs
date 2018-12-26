@@ -65,7 +65,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

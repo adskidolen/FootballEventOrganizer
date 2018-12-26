@@ -2,120 +2,129 @@
 @using Footeo.Common
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Sign Up";
     var roles = new string[] { GlobalConstants.PlayerRoleName, GlobalConstants.RefereeRoleName };
 }
 @inject UserManager<FooteoUser> UserManger
 
-<div class="w-50 mx-auto">
-    <h2 class="text-center">@this.ViewData["Title"]</h2>
-    <hr />
-    <form class="mx-auto half-width" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="d-flex justify-content-between">
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.Username"></label>
+<div class="container">
+    <div id="signupbox" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">@this.ViewData["Title"]</div>
+                    <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" asp-area="Identity" asp-page="/Account/Login">Sign In</a></div>
                 </div>
-                <input asp-for="Input.Username" class="form-control" placeholder="adskidolen">
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.Email"></label>
-                </div>
-                <input asp-for="Input.Email" class="form-control" placeholder="adskidolen@@mail.bg">
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.Password"></label>
-                </div>
-                <input asp-for="Input.Password" class="form-control" placeholder="Password...">
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.ConfirmPassword"></label>
-                </div>
-                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password...">
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-        </div>
-        <hr class="hr-2 bg-eventures" />
-        <div class="d-flex justify-content-between">
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.FirstName"></label>
-                </div>
-                <input asp-for="Input.FirstName" class="form-control" placeholder="Alexander">
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.LastName"></label>
-                </div>
-                <input asp-for="Input.LastName" class="form-control" placeholder="Paunski">
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.Age"></label>
-                </div>
-                <input asp-for="Input.Age" class="form-control" placeholder="22">
-                <span asp-validation-for="Input.Age" class="text-danger"></span>
-            </div>
-            <div class="form-group w-50">
-                <div class="d-flex justify-content-center">
-                    <label class="font-weight-bold" asp-for="Input.Town"></label>
-                </div>
-                <input asp-for="Input.Town" class="form-control" placeholder="Sofia">
-                <span asp-validation-for="Input.Town" class="text-danger"></span>
-            </div>
-        </div>
-        @if (UserManger.Users.Count() == GlobalConstants.UserCountCheck)
-        {
-            <div class="d-flex justify-content-center">
-                <div class="form-group w-50">
-                    <label class="font-weight-bold text-center">You will be the main admin at FootEO!</label>
-                    <div class="d-flex justify-content-center">
-                        <label class="radio-inline" asp-for="Input.Role">
-                            <input asp-for="Input.Role" type="radio" checked="checked" value="@GlobalConstants.AdminRoleName" />@GlobalConstants.AdminRoleName
-                        </label>
-                    </div>
-                    <span asp-validation-for="Input.Role" class="text-danger"></span>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="d-flex justify-content-center">
-                <div class="form-group w-50">
-                    <label class="font-weight-bold">Choose your role in the FootEO:</label>
-                    @foreach (var role in roles)
-                    {
-                        <div class="d-flex justify-content-center">
-                            <label class="radio-inline" asp-for="Input.Role"><input asp-for="Input.Role" type="radio" value="@role" />@role</label>
+                <div class="panel-body">
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="signupform" class="form-horizontal" role="form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div id="signupalert" style="display:none" class="alert alert-danger">
+                            <p>Error:</p>
+                            <span></span>
                         </div>
-                    }
-                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Username" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.Username" class="form-control" placeholder="Username...">
+                                <span asp-validation-for="Input.Username" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Email" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.Email" class="form-control" placeholder="example@email.com">
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Password" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.Password" class="form-control" placeholder="Password...">
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.ConfirmPassword" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password...">
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.FirstName" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.FirstName" class="form-control" placeholder="First Name...">
+                                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.LastName" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.LastName" class="form-control" placeholder="Last Name...">
+                                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Input.Age" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.Age" class="form-control" placeholder="Age...">
+                                <span asp-validation-for="Input.Age" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Town" class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input asp-for="Input.Town" class="form-control" placeholder="Town Name...">
+                                <span asp-validation-for="Input.Town" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        @if (UserManger.Users.Count() == GlobalConstants.UserCountCheck)
+                        {
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">You will be the main admin at FootEO!</label>
+                                <div class="col-md-9">
+                                    <label class="radio-inline" asp-for="Input.Role">
+                                        <input asp-for="Input.Role" type="radio" checked="checked" value="@GlobalConstants.AdminRoleName" />@GlobalConstants.AdminRoleName
+                                    </label>
+                                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Choose your role in the FootEO:</label>
+                                <div class="col-md-9">
+                                    @foreach (var role in roles)
+                                    {
+                                        <label class="radio-inline" asp-for="Input.Role"><input asp-for="Input.Role" type="radio" value="@role" />@role</label>
+                                    }
+                                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Sign Up</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        }
-        <hr />
-        <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn">Register</button>
         </div>
-    </form>
-</div>
+    </div>
 
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

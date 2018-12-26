@@ -1,4 +1,7 @@
-﻿@using Footeo.Services.Contracts
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@using Footeo.Services.Contracts
 
 @model Footeo.Web.ViewModels.Teams.Output.AllTeamsViewModel
 
@@ -20,7 +23,7 @@
             <th>Players</th>
             <th>Matches</th>
             @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-              && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+             && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
             {
                 <th>Join Team</th>
             }
@@ -36,11 +39,12 @@
                 <td><a asp-controller="Teams" asp-action="Players" asp-route-id="@team.Id">View</a></td>
                 <td><a asp-controller="Teams" asp-action="Matches" asp-route-id="@team.Id">View</a></td>
                 @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-                  && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+                     && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
                 {
                     <td><a asp-area="Player" asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
                 }
             </tr>
         }
     </table>
+    @Html.PagedListPager((IPagedList)Model.Teams, pageNumber => Url.Action("All", new { pageNumber }));
 </div>

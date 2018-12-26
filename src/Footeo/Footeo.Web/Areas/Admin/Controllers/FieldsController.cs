@@ -32,7 +32,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.FieldExistsErrorMessage, model.Name)
+                    ErrorMessage = string.Format(ErrorMessages.FieldExistsErrorMessage, model.Name)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

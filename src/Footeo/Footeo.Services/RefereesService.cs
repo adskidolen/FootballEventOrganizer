@@ -47,7 +47,7 @@
             this.dbContext.SaveChanges();
         }
 
-        public void JoinMatch(string userName, int matchId)
+        public void AttendAMatch(string userName, int matchId)
         {
             var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
             var match = this.dbContext.Matches.FirstOrDefault(m => m.Id == matchId);

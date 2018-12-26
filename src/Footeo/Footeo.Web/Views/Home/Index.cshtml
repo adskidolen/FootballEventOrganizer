@@ -1,71 +1,113 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Footeo.Models;
-@using Footeo.Common;
-
-@inject SignInManager<FooteoUser> SignInManager
-
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="container">
-    @if (this.SignInManager.IsSignedIn(this.User))
-    {
-        <h1 class="text-center">Welcome to your Football Event Organizer!</h1>
-        <hr />
-        @if (User.IsInRole(GlobalConstants.PlayerRoleName))
-        {
-            <h1 class="text-center">Hello, Player @this.User.Identity.Name!</h1>
-            <hr />
-            <div class="container text-center">
-                <a asp-controller="Teams" asp-action="All" class="btn btn-dark">Join Team</a>
-                Or
-                <a asp-area="Player" asp-controller="Teams" asp-action="Create" class="btn btn-dark">Create One</a>
-            </div>
-        }
-
-        @if (User.IsInRole(GlobalConstants.PlayerInTeamRoleName))
-        {
-            @if (User.IsInRole(GlobalConstants.CaptainRoleName))
-            {
-                <h1 class="text-center">Hello, Captain @this.User.Identity.Name!</h1>
-                <div class="container text-center">
-                    <a asp-controller="Leagues" asp-action="Pending" class="btn btn-dark">Join League</a>
+﻿<div class="how">
+    <!-- container -->
+    <div class="container">
+        <div class="how-top-grids">
+            <div class="col-md-7 how-left">
+                <h3>How the people like to play</h3>
+                <img src="~/images/4.jpg" alt="" />
+                <a class="play-icon popup-with-zoom-anim" href="#small-dialog">
+                    <span> </span>
+                </a>
+                <!-- pop-up-box -->
+                <script type="text/javascript" src="~/js/modernizr.custom.min.js"></script>
+                <link href="~/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+                <script src="~/js/jquery.magnific-popup.js" type="text/javascript"></script>
+                <!--//pop-up-box -->
+                <div id="small-dialog" class="mfp-hide">
+                    <iframe src="//player.vimeo.com/video/37369607" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
-            }
-            else
-            {
-                <h1 class="text-center">Hello, Player @this.User.Identity.Name!</h1>
-                <hr />
-                <div class="container text-center">
-                    Wait for the start of the season
-                </div>
-            }
-        }
 
-
-        @if (User.IsInRole(GlobalConstants.RefereeRoleName))
-        {
-            <h1 class="text-center">Hello, Referee @this.User.Identity.Name!</h1>
-            <hr />
-            <div class="container text-center">
-                <a asp-controller="Leagues" asp-action="InProgress" class="btn btn-dark">Join Match</a>
+                <h4>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                </h4>
+                <p>
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen
+                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                    heets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                    like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
             </div>
-        }
-
-
-        @if (User.IsInRole(GlobalConstants.AdminRoleName))
-        {
-            <h1 class="text-center">Hello, Administrator @this.User.Identity.Name!</h1>
-        }
-    }
-    else
-    {
-        <h1 class="text-center">Join our Football Event Organizer platform now!</h1>
-        <div class="container text-center">
-            <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-            Or
-            <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <div class="col-md-5 how-right">
+                <h3>League Dates</h3>
+                <div class="tournament">
+                    <div class="how-right-left">
+                        <img src="images/5.jpg" alt="" />
+                    </div>
+                    <div class="how-right-right">
+                        <h4>Aug 12</h4>
+                        <P>
+                            Lorem Ipsum is simply dummy text
+                            of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's
+                            dummy text ever since the 1500s,
+                        </P>
+                        <div class="more">
+                            <a href="single.html">MORE</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="tournament t-middle">
+                    <div class="how-right-left">
+                        <img src="images/6.jpg" alt="" />
+                    </div>
+                    <div class="how-right-right">
+                        <h4>Aug 12</h4>
+                        <P>
+                            Lorem Ipsum is simply dummy text
+                            of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's
+                            dummy text ever since the 1500s,
+                        </P>
+                        <div class="more">
+                            <a href="single.html">MORE</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="tournament t-middle">
+                    <div class="how-right-left">
+                        <img src="images/7.jpg" alt="" />
+                    </div>
+                    <div class="how-right-right">
+                        <h4>Aug 12</h4>
+                        <P>
+                            Lorem Ipsum is simply dummy text
+                            of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's
+                            dummy text ever since the 1500s,
+                        </P>
+                        <div class="more">
+                            <a href="single.html">MORE</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
         </div>
-    }
+    </div>
+    <!-- //container -->
 </div>
+<!-- //how -->
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+}

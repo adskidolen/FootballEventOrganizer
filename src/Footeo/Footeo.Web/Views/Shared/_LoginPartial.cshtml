@@ -6,33 +6,55 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav">
-            @if (User.IsInRole(GlobalConstants.AdminRoleName))
+    var user = this.UserManager.GetUserAsync(this.User).GetAwaiter().GetResult();
+    var adminResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.AdminRoleName).GetAwaiter().GetResult();
+    var captainResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.CaptainRoleName).GetAwaiter().GetResult();
+    var playerInTeamResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
+    var playerResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
+    var refereeResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.RefereeRoleName).GetAwaiter().GetResult();
+
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
+        <ul>
+            <li>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            @if (adminResult)
             {
                 <partial name="_AdminNavbarPartial" />
             }
-            else
+            @if (playerResult)
             {
-                <partial name="_UsersNavbarPartial" />
+                <partial name="_PlayerNavbarPartial" />
             }
-            <li class="nav-item active">
-                <a class="nav-link font-weight-bold" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            @if (captainResult)
+            {
+                <partial name="_CaptainNavbarPartial" />
+            }
+            @if (playerInTeamResult)
+            {
+                <partial name="_PlayerInTeamPartial" />
+            }
+            @if (refereeResult)
+            {
+                <partial name="_RefereeNavbarPartial" />
+            }
+            <li>
+                <a class="nav-link font-weight-bold" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @UserManager.GetUserName(User)!</a>
             </li>
-            <li class="nav-item active">
-                <button type="submit" class="btn btn-link navbar-btn nav-link font-weight-bold">Logout</button>
+            <li>
+                <button type="submit" style="color:#00a78e" class="btn-link">Logout</button>
             </li>
         </ul>
     </form>
 }
 else
 {
-    <ul class="navbar-nav right">
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <ul>
+        <li>
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <li>
+            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
     </ul>
 }

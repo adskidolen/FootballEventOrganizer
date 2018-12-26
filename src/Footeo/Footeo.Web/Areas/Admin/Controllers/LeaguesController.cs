@@ -32,7 +32,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = string.Format(ErrorMessages.LeagueExistsErrorMessage, model.Name)
+                    ErrorMessage = string.Format(ErrorMessages.LeagueExistsErrorMessage, model.Name)
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

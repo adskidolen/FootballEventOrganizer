@@ -1,80 +1,15 @@
-﻿<li class="nav-item">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Leagues
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="Admin" asp-controller="Leagues" asp-action="Create">Create League</a>
-            <a class="dropdown-item" asp-area="" asp-controller="Leagues" asp-action="Pending">Pending Leagues</a>
-            <a class="dropdown-item" asp-area="" asp-controller="Leagues" asp-action="InProgress">In Progress Leagues</a>
-            <a class="dropdown-item" asp-area="" asp-controller="Leagues" asp-action="Completed">Completed Leagues</a>
-        </div>
-    </div>
+﻿<li>
+    <a asp-area="Admin" asp-controller="Leagues" asp-action="Create">League</a>
 </li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Fixtures
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="Admin" asp-controller="Fixtures" asp-action="Create">Create Fixture</a>
-        </div>
-    </div>
+<li>
+    <a asp-area="Admin" asp-controller="Fixtures" asp-action="Create">Fixture</a>
 </li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Matches
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="" asp-controller="Leagues" asp-action="All">Create Match</a>
-        </div>
-    </div>
+<li>
+    <a asp-area="" asp-controller="Leagues" asp-action="All">Match</a>
 </li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Trophies
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="Admin" asp-controller="Trophies" asp-action="TrophiesForLeagues">Generate Trophy</a>
-        </div>
-    </div>
+<li>
+    <a asp-area="Admin" asp-controller="Trophies" asp-action="TrophiesForLeagues">Generate Trophy</a>
 </li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Teams
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="" asp-controller="Teams" asp-action="All">All Teams</a>
-        </div>
-    </div>
-</li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Fields
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="" asp-controller="Fields" asp-action="All">All Fields</a>
-            <a class="dropdown-item" asp-area="Admin" asp-controller="Fields" asp-action="Add">Add Field</a>
-        </div>
-    </div>
-</li>
-
-<li class="nav-item active">
-    <div class="dropdown">
-        <button class="btn nav-link bg-dark dropdown-toggle font-weight-bold" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Referees
-        </button>
-        <div class="dropdown-menu" aria-label="dropdownMenuButton">
-            <a class="dropdown-item" asp-area="" asp-controller="Referees" asp-action="All">All Referees</a>
-        </div>
-    </div>
+<li>
+    <a asp-area="Admin" asp-controller="Fields" asp-action="Add">Field</a>
 </li>

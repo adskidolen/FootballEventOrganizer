@@ -40,6 +40,9 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
+        [Display(Name = "Team Name")]
+        public string TeamName { get; set; }
+
         public bool IsEmailConfirmed { get; set; }
 
         [TempData]
@@ -59,6 +62,8 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
 
             // Player properties
+            public string TeamName { get; set; }
+
             public string Nickname { get; set; }
 
             public int SquadNumber { get; set; }
@@ -85,6 +90,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                 || this.User.IsInRole(GlobalConstants.CaptainRoleName))
             {
                 this.FullName = $"{user.FirstName} {user.LastName}";
+                this.TeamName = user.Player.Team.Name;
 
                 Input = new InputModel
                 {

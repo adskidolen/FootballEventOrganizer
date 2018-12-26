@@ -58,10 +58,16 @@
                     .AddDefaultTokenProviders()
                     .AddEntityFrameworkStores<FooteoDbContext>();
 
+            //services.AddAuthentication().AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //});
+
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.Cookie.Name = "FooteoCookie";
                 options.Cookie.HttpOnly = true;

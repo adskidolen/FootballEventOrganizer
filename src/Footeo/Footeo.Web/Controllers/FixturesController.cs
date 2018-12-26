@@ -28,7 +28,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.LeagueDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.LeagueDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
@@ -53,7 +53,7 @@
             {
                 var errorViewModel = new ErrorViewModel
                 {
-                    RequestId = ErrorMessages.FixtureDoesNotExistsErrorMessage
+                    ErrorMessage = ErrorMessages.FixtureDoesNotExistsErrorMessage
                 };
 
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);

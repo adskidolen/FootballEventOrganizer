@@ -16,7 +16,7 @@
             <th>Match Details</th>
             @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
             {
-                <th>Join Match</th>
+                <th>Attend a Match</th>
             }
         </tr>
         @foreach (var match in Model.Matches)
@@ -28,7 +28,7 @@
                 {
                     @if (!this.MatchesService.MatchHasReferee(match.Id))
                     {
-                        <td><a asp-area="Referee" asp-controller="Matches" asp-action="Join" asp-route-id="@match.Id">Join</a></td>
+                        <td><a asp-area="Referee" asp-controller="Matches" asp-action="Attend" asp-route-id="@match.Id">Attend</a></td>
                     }
                     else
                     {

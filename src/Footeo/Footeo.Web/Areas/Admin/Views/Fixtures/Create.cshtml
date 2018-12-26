@@ -1,38 +1,43 @@
 ﻿@model Footeo.Web.Areas.Admin.ViewModels.Fixtures.Input.FixtureCreateInputModel
 
 @{
-    ViewData["Title"] = "Create Fixtures";
+    ViewData["Title"] = "Create Fixture";
     var leagues = this.ViewData[GlobalConstants.LeaguesViewDataName] as IEnumerable<SelectListItem>;
 }
 
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<hr />
-<div class="w-50 mx-auto">
+<div style="width:50%" class="d-flex justify-content-center align-items-center container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
     <form asp-area="Admin" asp-controller="Fixtures" asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" placeholder="Matchday ..."/>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Name" class="control-label"></label>
+            </div>
+            <input asp-for="Name" class="form-control" placeholder="Matchday ..." />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Date" class="control-label"></label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="Date" class="control-label"></label>
+            </div>
             <input asp-for="Date" class="form-control" />
             <span asp-validation-for="Date" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="LeagueId" class="control-label">League</label>
+            <div style="color:#00a78e" class="text-center">
+                <label asp-for="LeagueId" class="control-label">League</label>
+            </div>
             <select asp-for="LeagueId" asp-items="leagues" class="form-control">
                 <option selected="selected" disabled="disabled">Choose League</option>
             </select>
             <span asp-validation-for="LeagueId" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <hr class="hr-2" />
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Create" style="background-color:#00a78e" class="btn btn-primary" />
+            </div>
         </div>
     </form>
-</div>
-
-<div>
-    <a asp-area="" asp-controller="Leagues" asp-action="All">Back to Leagues</a>
 </div>
