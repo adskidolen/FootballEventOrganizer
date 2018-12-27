@@ -39,10 +39,11 @@
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => src.Name));
 
-            this.CreateMap<Team, TeamViewModel>();
             this.CreateMap<Team, Team>();
+            this.CreateMap<Team, TeamViewModel>();
+            this.CreateMap<Team, TeamMatchViewModel>();
 
-            this.CreateMap<Player, PlayerViewModel>();
+            this.CreateMap<Player, PlayerTeamViewModel>();
             this.CreateMap<Player, Player>();
 
             this.CreateMap<Town, Town>();

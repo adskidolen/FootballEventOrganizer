@@ -1,29 +1,27 @@
-﻿@model Footeo.Web.ViewModels.Teams.Output.TeamDetailsViewModel
+﻿@model Footeo.Web.ViewModels.Teams.Output.TeamPlayersViewModel
 
 @{
-    ViewData["Title"] = "Team Details";
+    ViewData["Title"] = "Team Players";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Full Name</th>
-            <th>Nickname</th>
-            <th>Position</th>
-            <th>Squad Number</th>
-            <th>Role</th>
-        </tr>
-        @foreach (var player in Model.Players)
-        {
-            <tr>
-                <td>@player.FullName</td>
-                <td>@player.Nickname</td>
-                <td>@player.ShowPosition</td>
-                <td>@player.ShowSquadNumber</td>
-                <td>@player.Captain</td>
-            </tr>
-        }
-    </table>
+<div class="container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
+    <div class="table-responsive-lg">
+        <table class="table-hover table">
+            <tbody>
+                <tr class="active">
+                    <th>Player</th>
+                    <th>Details</th>
+                </tr>
+                @foreach (var player in Model.Players)
+                {
+                    <tr>
+                        <td>@player.ShowPlayerName</td>
+                        <td><a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@player.Id">Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

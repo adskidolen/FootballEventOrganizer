@@ -25,5 +25,7 @@
 
         public const string SquadNumberErrorMessage = "Squad Number is taken!";
 
+        public const string PlayerDoesNotExistsErrorMessage = "Player does not exists!";
+
     }
 }

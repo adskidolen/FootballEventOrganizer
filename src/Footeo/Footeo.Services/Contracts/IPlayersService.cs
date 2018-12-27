@@ -13,8 +13,10 @@
         IQueryable<TModel> PlayersByTeam<TModel>(int teamId);
         void JoinTeam(int teamId, string userName);
         TModel GetPlayerByName<TModel>(string playerName);
+        TModel GetPlayerById<TModel>(int id);
         void SetSquadNumber(string userName, int squadNumber);
         void SetPosition(string userName, PlayerPosition position);
         bool IsSquadNumberTaken(int squadNumber);
+        bool PlayerExistsById(int id);
     }
 }

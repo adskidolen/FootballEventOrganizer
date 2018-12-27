@@ -1,0 +1,15 @@
+﻿@model Footeo.Web.ViewModels.Players.Output.PlayerDetailsViewModel
+
+@{
+    ViewData["Title"] = $"Player - {Model.FullName}";
+}
+
+<div class="container text-center">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
+    <div class="row" style="color:#8d9293; font-size:30px">
+        <div class="col-lg-4">Nickname: @Model.Nickname</div>
+        <div class="col-lg-4">Squad number: @Model.ShowSquadNumber</div>
+        <div class="col-lg-4">Position: @Model.ShowPosition</div>
+    </div>
+</div>

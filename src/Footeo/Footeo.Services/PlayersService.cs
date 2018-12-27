@@ -75,8 +75,8 @@
         public TModel GetPlayerByName<TModel>(string playerName)
             => this.By<TModel>(p => p.FullName == playerName).SingleOrDefault();
 
-        private IEnumerable<TModel> By<TModel>(Func<Player, bool> predicate)
-       => this.dbContext.Players.Where(predicate).AsQueryable().ProjectTo<TModel>();
+        public TModel GetPlayerById<TModel>(int id)
+            => this.By<TModel>(p => p.Id == id).SingleOrDefault();
 
         public void SetSquadNumber(string userName, int squadNumber)
         {
@@ -100,5 +100,11 @@
 
         public bool IsSquadNumberTaken(int squadNumber)
             => this.dbContext.Players.Any(sn => sn.SquadNumber == squadNumber);
+
+        public bool PlayerExistsById(int id)
+            => this.dbContext.Players.Any(p => p.Id == id);
+
+        private IEnumerable<TModel> By<TModel>(Func<Player, bool> predicate)
+       => this.dbContext.Players.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

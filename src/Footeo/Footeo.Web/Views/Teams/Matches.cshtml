@@ -1,35 +1,123 @@
 ﻿@model Footeo.Web.ViewModels.Matches.Output.AllTeamMatchesViewModel
 
 @{
-    ViewData["Title"] = "Matches";
+    ViewData["Title"] = "All Team Matches";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Home Matches</th>
-        </tr>
-        @foreach (var homeMatch in Model.HomeMatches)
-        {
-            <tr>
-                <td>@homeMatch.Result</td>
-            </tr>
-        }
-    </table>
-</div>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Away Matches</th>
-        </tr>
-        @foreach (var awayMatch in Model.AwayMatches)
-        {
-            <tr>
-                <td>@awayMatch.Result</td>
-            </tr>
-        }
-    </table>
-</div>
+<h1 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h1>
+<hr />
+@if (!Model.HomeMatches.Any() && !Model.AwayMatches.Any())
+{
+    <h1 class="text-center" style="color:#8d9293">No Matches are played yet</h1>
+}
+else
+{
+    @if (!Model.HomeMatches.Any())
+    {
+        <h1 class="text-center" style="color:#8d9293">No Home Matches are played yet</h1>
+    }
+    else
+    {
+        <div class="container">
+            <hr class="hr-2" />
+            <h2 class="text-center" style="color:#00a78e">Home Matches</h2>
+            <!-- match -->
+            <div class="match">
+                <!-- container -->
+                <div class="container">
+                    <div class="match-table">
+                        <div class="table-rows">
+                            @foreach (var match in Model.HomeMatches)
+                            {
+                                <div class="table-hedding">
+                                    <h3>@match.FixtureName</h3>
+                                </div>
+                                <div class="table-row">
+                                    <div class="t-match">
+                                        <div class="col-md-4 table-address">
+                                            <div class="list-hedding">
+                                                <h4>Date</h4>
+                                            </div>
+                                            <ul>
+                                                <li>@match.ShowDate</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 table-country">
+                                            <div class="list-hedding">
+                                                <h4>Rivals</h4>
+                                            </div>
+                                            <h5>@match.ShowRivals<h5>
+                                        </div>
+                                        <div class="col-md-4 table-result">
+                                            <div class="list-hedding">
+                                                <h4>Result</h4>
+                                            </div>
+                                            <p><span>@match.ShowResult</span></p>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- //container -->
+            </div>
+            <!-- //match -->
+        </div>
+    }
+    <hr class="hr-2" />
+    @if (!Model.AwayMatches.Any())
+    {
+        <h1 class="text-center" style="color:#8d9293">No Away Matches are played yet</h1>
+    }
+    else
+    {
+        <div class="container">
+            <h2 class="text-center" style="color:#00a78e">Away Matches</h2>
+            <!-- match -->
+            <div class="match">
+                <!-- container -->
+                <div class="container">
+                    <div class="match-table">
+                        <div class="table-rows">
+                            @foreach (var match in Model.AwayMatches)
+                            {
+                                <div class="table-hedding">
+                                    <h3>@match.FixtureName</h3>
+                                </div>
+                                <div class="table-row">
+                                    <div class="t-match">
+                                        <div class="col-md-4 table-address">
+                                            <div class="list-hedding">
+                                                <h4>Date</h4>
+                                            </div>
+                                            <ul>
+                                                <li>@match.ShowDate</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 table-country">
+                                            <div class="list-hedding">
+                                                <h4>Rivals</h4>
+                                            </div>
+                                            <h5>@match.ShowRivals<h5>
+                                        </div>
+                                        <div class="col-md-4 table-result">
+                                            <div class="list-hedding">
+                                                <h4>Result</h4>
+                                            </div>
+                                            <p><span>@match.ShowResult</span></p>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- //container -->
+            </div>
+            <!-- //match -->
+        </div>
+    }
+}

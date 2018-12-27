@@ -1,0 +1,22 @@
+﻿@model Footeo.Web.ViewModels.Teams.Output.TeamDetailsViewModel
+
+@{
+    ViewData["Title"] = $"Team - {Model.ShowTeamName}";
+}
+
+<div class="container text-center">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
+    <div class="row" style="color:#8d9293; font-size:20px">
+        <div class="col-lg-4">Date of Creation: @Model.ShowDateOfCreation</div>
+        <div class="col-lg-4">
+            Trophies won: @Model.TrophiesCount - <a style="background-color:#00a78e" class="btn btn-info" asp-controller="Teams" asp-action="Trophies" asp-route-id="@Model.Id">View</a>
+        </div>
+        <div class="col-lg-2">
+            Players: <a style="background-color:#00a78e" class="btn btn-info" asp-controller="Teams" asp-action="Players" asp-route-id="@Model.Id">View</a>
+        </div>
+        <div class="col-lg-2">
+            Matches: <a style="background-color:#00a78e" class="btn btn-info" asp-controller="Teams" asp-action="Matches" asp-route-id="@Model.Id">View</a>
+        </div>
+    </div>
+</div>
