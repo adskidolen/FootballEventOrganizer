@@ -4,34 +4,26 @@
 
 @inject ITeamLeaguesService TeamLeaguesService
 @{
-    ViewData["Title"] = "All Completed Leagues";
+    ViewData["Title"] = "Completed Leagues";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Name</th>
-            <th>Generate Winner</th>
-        </tr>
+<div class="container">
+    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+    <hr class="hr-2" />
+    <div class="row" style="color:#8d9293; font-size:30px">
         @foreach (var league in Model.Leagues)
         {
-            <tr>
-                <td>@league.Name</td>
+            <div style="color:#00a78e" class="col-lg-6">@league.Name</div>
+            <div class="col-lg-6">
                 @if (!this.TeamLeaguesService.HasTeamAlreadyCurrentTrophy(league.Id))
                 {
-                    <td><a asp-area="Admin" asp-controller="Trophies" asp-action="GenerateWinner" asp-route-id="@league.Id">Generate</a></td>
+                    <a style="background-color:#00a78e" class="btn btn-primary" asp-area="Admin" asp-controller="Trophies" asp-action="GenerateWinner" asp-route-id="@league.Id">Generate</a>
                 }
                 else
                 {
-                    <td>Winner has been genereted</td>
+                    <span>Winner has been genereted</span>
                 }
-            </tr>
+            </div>
         }
-    </table>
-</div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
+    </div>
 </div>

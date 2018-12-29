@@ -8,8 +8,6 @@
 
         public int Points { get; set; }
 
-        public int Position { get; set; }
-
         public int GoalsFor { get; set; }
 
         public int GoalsAgainst { get; set; }

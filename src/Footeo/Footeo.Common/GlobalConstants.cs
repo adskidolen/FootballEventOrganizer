@@ -46,5 +46,7 @@
 
         public const int NextPageValue = 1;
         public const int MaxElementsOnPage = 10;
+
+        public const int LeaguesIndexCount = 3;
     }
 }

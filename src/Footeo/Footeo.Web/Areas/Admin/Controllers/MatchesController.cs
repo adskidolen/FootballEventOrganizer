@@ -4,7 +4,7 @@
     using Footeo.Services.Contracts;
     using Footeo.Web.Areas.Admin.Controllers.Base;
     using Footeo.Web.Areas.Admin.ViewModels.Matches.Input;
-
+    using Footeo.Web.ViewModels;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -55,6 +55,16 @@
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
+            }
+
+            if (model.HomeTeamId == model.AwayTeamId)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    ErrorMessage = ErrorMessages.TeamVsTeamErrorMessage
+                };
+
+                return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
             this.matchesService.CreateMatch(model.HomeTeamId, model.AwayTeamId, model.FieldId, model.FixtureId);

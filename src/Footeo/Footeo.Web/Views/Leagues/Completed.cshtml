@@ -1,37 +1,40 @@
-﻿@using Footeo.Services.Contracts
-
-@model Footeo.Web.ViewModels.Leagues.Output.AllCompletedLeaguesViewModel
+﻿@model Footeo.Web.ViewModels.Leagues.Output.AllCompletedLeaguesViewModel
 
 @{
-    ViewData["Title"] = "All Leagues";
+    ViewData["Title"] = "Completed Leagues";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Town</th>
-            <th>Details</th>
-            <th>Fixtures</th>
-        </tr>
-        @foreach (var league in Model.Leagues)
-        {
-            <tr>
-                <td>@league.Name</td>
-                <td>@league.StartDate</td>
-                <td>@league.EndDate</td>
-                <td>@league.TownName</td>
-                <td><a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
-                <td><a asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">View</a></td>
-            </tr>
-        }
-    </table>
-</div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
+@if (!Model.Leagues.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No completed leagues yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <div class="table-responsive-lg">
+            <table class="table-hover table">
+                <tbody>
+                    <tr class="active">
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    @foreach (var league in Model.Leagues)
+                    {
+                        <tr>
+                            <td>@league.Name</td>
+                            <td>@league.TownName</td>
+                            <td><a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">League Table</a></td>
+                            <td><a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Fixtures" asp-action="All" asp-route-id="@league.Id">Fixtures</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

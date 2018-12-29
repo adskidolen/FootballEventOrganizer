@@ -73,19 +73,22 @@
 
             [Required]
             [StringLength(30, MinimumLength = 2)]
+            [RegularExpression(@"[A-Z]{1}[a-z]+")]
             public string FirstName { get; set; }
 
             [Required]
             [StringLength(30, MinimumLength = 2)]
+            [RegularExpression(@"[A-Z]{1}[a-z]+")]
             public string LastName { get; set; }
 
             [Required]
             [Range(14, 50)]
             public int Age { get; set; }
-            
+
             [Required]
+            [RegularExpression(@"[A-Z]{1}[a-z]+")]
             public string Town { get; set; }
-            
+
             [Required]
             public string Role { get; set; }
         }

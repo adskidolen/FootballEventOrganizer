@@ -1,7 +1,7 @@
 ﻿namespace Footeo.Services
 {
     using AutoMapper.QueryableExtensions;
-
+    using Footeo.Common;
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Models.Enums;
@@ -60,12 +60,21 @@
             => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Pending).AsQueryable().ProjectTo<TModel>();
 
         public IQueryable<TModel> AllInProgressLeagues<TModel>()
-            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.InProgress).AsQueryable().ProjectTo<TModel>();
+            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.InProgress && s.Teams.Count == GlobalConstants.MaxTeamsInLeagueCount).AsQueryable().ProjectTo<TModel>();
 
         public IQueryable<TModel> AllCompletedLeagues<TModel>()
             => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Completed).AsQueryable().ProjectTo<TModel>();
 
         private IEnumerable<TModel> By<TModel>(Func<League, bool> predicate)
           => this.dbContext.Leagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
+
+        public void SetLeagueStatusToInProgress(int id)
+        {
+            var league = this.dbContext.Leagues.FirstOrDefault(l => l.Id == id);
+
+            league.Status = LeagueStatus.InProgress;
+
+            this.dbContext.SaveChanges();
+        }
     }
 }

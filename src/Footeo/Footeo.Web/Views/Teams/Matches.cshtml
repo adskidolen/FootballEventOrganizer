@@ -5,16 +5,15 @@
 }
 
 <h1 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h1>
-<hr />
 @if (!Model.HomeMatches.Any() && !Model.AwayMatches.Any())
 {
-    <h1 class="text-center" style="color:#8d9293">No Matches are played yet</h1>
+    <h1 class="text-center" style="color:#8d9293">No matches are played yet</h1>
 }
 else
 {
     @if (!Model.HomeMatches.Any())
     {
-        <h1 class="text-center" style="color:#8d9293">No Home Matches are played yet</h1>
+        <h1 class="text-center" style="color:#8d9293">No matches are played yet at home</h1>
     }
     else
     {
@@ -69,7 +68,7 @@ else
     <hr class="hr-2" />
     @if (!Model.AwayMatches.Any())
     {
-        <h1 class="text-center" style="color:#8d9293">No Away Matches are played yet</h1>
+        <h1 class="text-center" style="color:#8d9293">No matches are played yet as guests</h1>
     }
     else
     {

@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Home\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Areas\Admin\Views\Trophies\TrophiesForLeagues.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

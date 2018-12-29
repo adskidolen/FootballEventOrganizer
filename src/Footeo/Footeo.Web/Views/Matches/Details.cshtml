@@ -7,37 +7,69 @@
     ViewData["Title"] = "Match Details";
 }
 
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Result</th>
-            <th>Field</th>
-            <th>Referee</th>
-            @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
-            {
-                @foreach (var match in Model.Matches)
-                {
-                    if (!this.MatchesService.MatchHasResult(match.Id)
-                        && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))
-                    {
-                        <th>Add Result</th>
-                    }
-                }
-            }
-        </tr>
-        @foreach (var match in Model.Matches)
-        {
-            <tr>
-                <td>@match.Result</td>
-                <td>@match.FieldName</td>
-                <td>@match.RefereeFullName</td>
-                @if (this.User.IsInRole(GlobalConstants.RefereeRoleName) && !this.MatchesService.MatchHasResult(match.Id)
-                     && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))
-                {
-                    <th><a asp-area="Referee" asp-controller="Matches" asp-action="Add" asp-route-id="@match.Id">Add</a></th>
-                }
-            </tr>
-        }
-    </table>
-</div>
+@if (!Model.Matches.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No matches are created yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr />
+        <!-- match -->
+        <div class="match">
+            <!-- container -->
+            <div class="container">
+                <div class="match-table">
+                    <div class="table-rows">
+                        @foreach (var match in Model.Matches)
+                        {
+                            <div class="table-hedding">
+                                <h3>@match.ShowRivals</h3>
+                            </div>
+                            <div class="table-row">
+                                <div class="t-match">
+                                    <div class="col-md-4 table-address">
+                                        <div class="list-hedding">
+                                            <h4>Field</h4>
+                                        </div>
+                                        <ul>
+                                            <li>@match.FieldName</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4 table-country">
+                                        <div class="list-hedding">
+                                            <h4>Referee</h4>
+                                        </div>
+                                        <h5>@match.RefereeFullName<h5>
+                                    </div>
+                                    <div class="col-md-4 table-result">
+                                        <div class="list-hedding">
+                                            <h4>Result</h4>
+                                        </div>
+                                        <p>
+                                            <span>@match.Result</span>
+                                            @if (this.User.IsInRole(GlobalConstants.RefereeRoleName)
+                                                && !this.MatchesService.MatchHasResult(match.Id)
+                                                && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))
+                                            {
+                                                <span>
+                                                    <a style="background-color:#00a78e" class="btn btn-primary" asp-area="Referee" asp-controller="Matches" asp-action="Add" asp-route-id="@match.Id">Add</a>
+                                                </span>
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- //container -->
+        </div>
+        <!-- //match -->
+    </div>
+}

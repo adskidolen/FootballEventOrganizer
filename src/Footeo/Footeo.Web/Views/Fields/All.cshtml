@@ -1,31 +1,45 @@
-﻿@model Footeo.Web.ViewModels.Fields.Output.AllFieldsViewModel
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model Footeo.Web.ViewModels.Fields.Output.AllFieldsViewModel
 
 @{
-    ViewData["Title"] = "All Fields";
+    ViewData["Title"] = "Fields";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Indoors/Outdoors</th>
-            <th>Town</th>
-        </tr>
-        @foreach (var field in Model.Fields)
-        {
-            <tr>
-                <td>@field.Name</td>
-                <td>@field.Address</td>
-                <td>@field.ShowIsIndoor</td>
-                <td>@field.TownName</td>
-            </tr>
-        }
-    </table>
-</div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
+@if (!Model.Fields.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No fields are added yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <div class="table-responsive-lg">
+            <table class="table-hover table">
+                <tbody>
+                    <tr class="active">
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                    </tr>
+                    @foreach (var field in Model.Fields)
+                    {
+                        <tr>
+                            <td>@field.Name</td>
+                            <td>@field.ShowLocation</td>
+                            <td>@field.ShowIsIndoor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="text-center">
+            @Html.PagedListPager((IPagedList)Model.Fields, pageNumber => Url.Action("All", new { pageNumber }));
+        </div>
+    </div>
+}

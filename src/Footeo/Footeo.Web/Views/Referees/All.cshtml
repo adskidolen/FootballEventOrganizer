@@ -1,27 +1,43 @@
-﻿@model Footeo.Web.ViewModels.Referees.Output.AllRefereesViewModel
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model Footeo.Web.ViewModels.Referees.Output.AllRefereesViewModel
 
 @{
-    ViewData["Title"] = "All Referees";
+    ViewData["Title"] = "Referees";
 }
 
-<h2 class="text-center">@this.ViewData["Title"]</h2>
-
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Name</th>
-            <th>Match Attendances</th>
-        </tr>
-        @foreach (var referee in Model.Referees)
-        {
-            <tr>
-                <td>@referee.FullName</td>
-                <td>@referee.MatchAttendances</td>
-            </tr>
-        }
-    </table>
-</div>
-
-<div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Back to Home Page</a>
-</div>
+@if (!Model.Referees.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No referees have joined yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <div class="table-responsive-lg">
+            <table class="table-hover table">
+                <tbody>
+                    <tr class="active">
+                        <th>Referee</th>
+                        <th>Match Attendances</th>
+                    </tr>
+                    @foreach (var referee in Model.Referees)
+                    {
+                        <tr>
+                            <td>@referee.FullName</td>
+                            <td>@referee.ShowMatchAttendances</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="text-center">
+            @Html.PagedListPager((IPagedList)Model.Referees, pageNumber => Url.Action("All", new { pageNumber }));
+        </div>
+    </div>
+}

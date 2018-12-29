@@ -85,13 +85,23 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-                || this.User.IsInRole(GlobalConstants.PlayerInTeamRoleName)
+            if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+            {
+                this.FullName = $"{user.FirstName} {user.LastName}";
+
+                Input = new InputModel
+                {
+                    Email = email,
+                    PhoneNumber = phoneNumber
+                };
+            }
+
+            if (this.User.IsInRole(GlobalConstants.PlayerInTeamRoleName)
                 || this.User.IsInRole(GlobalConstants.CaptainRoleName))
             {
                 this.FullName = $"{user.FirstName} {user.LastName}";
-                this.TeamName = user.Player.Team.Name;
 
+                this.TeamName = user.Player.Team.Name;
                 Input = new InputModel
                 {
                     Email = email,
@@ -101,6 +111,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
                     Position = user.Player.Position.ToString()
                 };
             }
+
             if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
             {
                 this.FullName = $"{user.FirstName} {user.LastName}";

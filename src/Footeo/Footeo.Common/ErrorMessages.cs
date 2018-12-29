@@ -3,12 +3,14 @@
     public static class ErrorMessages
     {
         public const string PlayerInTeamErrorMessage = "Player {0} already has a team!";
+        public const string PlayerDoesNotExistsErrorMessage = "Player does not exists!";
 
         public const string TeamExistsErrorMessage = "Team {0} already exists!";
         public const string TeamDoesNotExistsErrorMessage = "Team does not exists!";
         public const string TeamIsFullErrorMessage = "Team with id {0} already full!";
         public const string TeamJoinedLeagueErrorMessage = "Team {0} already joined a league!";
         public static string TeamTrophyErrorMessage = "Team already has that trophy!";
+        public static string TeamVsTeamErrorMessage = "Team cannot play with itself";
 
         public const string LeagueDoesNotExistsErrorMessage = "League does not exists!";
         public const string LeagueExistsErrorMessage = "League {0} already exists!";
@@ -24,8 +26,5 @@
         public const string FixtureDoesNotExistsErrorMessage = "Fixture does not exists!";
 
         public const string SquadNumberErrorMessage = "Squad Number is taken!";
-
-        public const string PlayerDoesNotExistsErrorMessage = "Player does not exists!";
-
     }
 }

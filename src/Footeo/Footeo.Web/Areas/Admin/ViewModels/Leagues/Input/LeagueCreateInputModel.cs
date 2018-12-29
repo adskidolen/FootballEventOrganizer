@@ -10,6 +10,7 @@
 
         private const int TownMaxLength = 30;
         private const int TownMinLength = 3;
+        private const string RegexForTownName = @"[A-Z]{1}[a-z]+";
 
         private const string StartDateDisplayName = "Date of Start";
         private const string EndDateDisplayName = "Date of End";
@@ -33,6 +34,7 @@
 
         [Required]
         [StringLength(TownMaxLength, MinimumLength = TownMinLength)]
+        [RegularExpression(RegexForTownName)]
         public string Town { get; set; }
     }
 }

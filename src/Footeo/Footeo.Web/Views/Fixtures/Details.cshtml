@@ -5,37 +5,59 @@
 @inject IMatchesService MatchesService
 
 @{
-    ViewData["Title"] = "Matches";
+    ViewData["Title"] = "Match";
 }
 
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<div class="mx-auto w-50">
-    <table class="table-hover table table-striped">
-        <tr>
-            <th>Rivals</th>
-            <th>Match Details</th>
-            @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
-            {
-                <th>Attend a Match</th>
-            }
-        </tr>
-        @foreach (var match in Model.Matches)
-        {
-            <tr>
-                <td>@match.Rivals</td>
-                <td><a asp-controller="Matches" asp-action="Details" asp-route-id="@match.Id">Details</a></td>
-                @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
-                {
-                    @if (!this.MatchesService.MatchHasReferee(match.Id))
-                    {
-                        <td><a asp-area="Referee" asp-controller="Matches" asp-action="Attend" asp-route-id="@match.Id">Attend</a></td>
-                    }
-                    else
-                    {
-                        <td>Match has a referee</td>
-                    }
-                }
-            </tr>
-        }
-    </table>
-</div>
+@if (!Model.Matches.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No matchees for the fixture are created yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <!-- match -->
+        <div class="match">
+            <!-- container -->
+            <div class="container">
+                <div class="match-table">
+                    <div class="table-rows text-center">
+                        @if (!Model.Matches.Any())
+                        {
+                            <h2 class="text-center" style="color:#8d9293">No match created</h2>
+                        }
+                        else
+                        {
+                            @foreach (var match in Model.Matches)
+                            {
+                                <div class="table-hedding">
+                                    <h3>
+                                        @match.Rivals
+                                        <a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Matches" asp-action="Details" asp-route-id="@match.Id">Details</a>
+                                        @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
+                                        {
+                                            @if (!this.MatchesService.MatchHasReferee(match.Id))
+                                            {
+                                                <a style="background-color:#00a78e" class="btn btn-primary" asp-area="Referee" asp-controller="Matches" asp-action="Attend" asp-route-id="@match.Id">Attend</a>
+                                            }
+                                            else
+                                            {
+                                                <span>(Match has a referee)</span>
+                                            }
+                                        }
+                                    </h3>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- //container -->
+        </div>
+        <!-- //match -->
+    </div>
+}

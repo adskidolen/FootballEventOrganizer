@@ -1,10 +1,12 @@
-﻿<div class="how">
+﻿@model Footeo.Web.ViewModels.Home.IndexViewModel
+
+<div class="how">
     <!-- container -->
     <div class="container">
         <div class="how-top-grids">
             <div class="col-md-7 how-left">
-                <h3>How the people like to play</h3>
-                <img src="~/images/4.jpg" alt="" />
+                <h3>UEFA Champions League News</h3>
+                <img src="~/images/ucl.jpg" alt="" />
                 <a class="play-icon popup-with-zoom-anim" href="#small-dialog">
                     <span> </span>
                 </a>
@@ -14,76 +16,40 @@
                 <script src="~/js/jquery.magnific-popup.js" type="text/javascript"></script>
                 <!--//pop-up-box -->
                 <div id="small-dialog" class="mfp-hide">
-                    <iframe src="//player.vimeo.com/video/37369607" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/X3Zs-HZczUM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
                 <h4>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    "European Champions League" and "European Cup" redirect here. For the table tennis competition, see European Champions League (table tennis). For the trophy, see European Champion Clubs' Cup. For other uses, see European Cup (disambiguation).
+                    This article is about the men's competition. For the women's competition, see UEFA Women's Champions League.
                 </h4>
                 <p>
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                    heets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
+                    The UEFA Champions League (abbreviated as UCL) is an annual club football competition organised by
+                    the Union of European Football Associations (UEFA) and contested by top-division European clubs. 
+                    It is one of the most prestigious tournaments in the world and the most prestigious club competition
+                    in European football, played by the national league champions (and, for some nations, one or more runners-up)
+                    of the strongest UEFA national associations.
                 </p>
             </div>
             <div class="col-md-5 how-right">
                 <h3>League Dates</h3>
                 <div class="tournament">
-                    <div class="how-right-left">
-                        <img src="images/5.jpg" alt="" />
-                    </div>
-                    <div class="how-right-right">
-                        <h4>Aug 12</h4>
-                        <P>
-                            Lorem Ipsum is simply dummy text
-                            of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's
-                            dummy text ever since the 1500s,
-                        </P>
-                        <div class="more">
-                            <a href="single.html">MORE</a>
+                    @foreach (var league in Model.Leagues)
+                    {
+                        <div class="how-right-left">
+                            <img src="images/rms.jpg" alt="" />
                         </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="tournament t-middle">
-                    <div class="how-right-left">
-                        <img src="images/6.jpg" alt="" />
-                    </div>
-                    <div class="how-right-right">
-                        <h4>Aug 12</h4>
-                        <P>
-                            Lorem Ipsum is simply dummy text
-                            of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's
-                            dummy text ever since the 1500s,
-                        </P>
-                        <div class="more">
-                            <a href="single.html">MORE</a>
+                        <div class="how-right-right">
+                            <h4>@league.ShowTitle</h4>
+                            <P>
+                                @league.Description
+                            </P>
+                            <div class="more">
+                                <a asp-controller="Leagues" asp-action="Table" asp-route-id="@league.Id">MORE</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="tournament t-middle">
-                    <div class="how-right-left">
-                        <img src="images/7.jpg" alt="" />
-                    </div>
-                    <div class="how-right-right">
-                        <h4>Aug 12</h4>
-                        <P>
-                            Lorem Ipsum is simply dummy text
-                            of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's
-                            dummy text ever since the 1500s,
-                        </P>
-                        <div class="more">
-                            <a href="single.html">MORE</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
+                        <div class="clearfix"> </div>
+                    }
                 </div>
             </div>
             <div class="clearfix"> </div>

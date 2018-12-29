@@ -58,7 +58,7 @@
                            opt => opt.MapFrom(src => src.Team.Name));
 
             this.CreateMap<Fixture, Fixture>();
-            this.CreateMap<Fixture, FixturesViewModel>();
+            this.CreateMap<Fixture, FixtureViewModel>();
             this.CreateMap<Fixture, SelectListItem>()
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.Id))

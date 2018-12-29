@@ -4,6 +4,8 @@
 
     public class FieldCreateInputModel
     {
+        private const string RegexForTownName = @"[A-Z]{1}[a-z]+";
+
         private const int TownMaxLength = 30;
         private const int TownMinLength = 3;
 
@@ -21,6 +23,7 @@
 
         [Required]
         [StringLength(TownMaxLength, MinimumLength = TownMinLength)]
+        [RegularExpression(RegexForTownName)]
         public string Town { get; set; }
     }
 }

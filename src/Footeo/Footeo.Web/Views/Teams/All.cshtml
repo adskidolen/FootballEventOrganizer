@@ -7,43 +7,52 @@
 
 @inject IPlayersService PlayersService
 @{
-    ViewData["Title"] = "All Teams";
+    ViewData["Title"] = "Teams";
 }
 
-<div class="container">
-    <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
-    <hr class="hr-2" />
-    <div class="table-responsive-lg">
-        <table class="table-hover table">
-            <tbody>
-                <tr class="active">
-                    <th>Team</th>
-                    <th>Location</th>
-                    <th>Details</th>
-                    @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-                    && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
-                    {
-                        <th>Join Team</th>
-                    }
-                </tr>
-                @foreach (var team in Model.Teams)
-                {
-                    <tr>
-                        <td>@team.Name</td>
-                        <td>@team.TownName</td>
-                        <td><a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">Details</a></td>
+@if (!Model.Teams.Any())
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">No teams are created yet</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h2 class="text-center" style="color:#00a78e">@this.ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <div class="table-responsive-lg">
+            <table class="table-hover table">
+                <tbody>
+                    <tr class="active">
+                        <th>Team</th>
+                        <th>Location</th>
+                        <th></th>
                         @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
-                         && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+&& !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
                         {
-                            <td><a style="background-color:#00a78e" class="btn btn-primary" asp-area="Player" asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join</a></td>
+                            <th></th>
                         }
                     </tr>
-                }
-            </tbody>
-        </table>
+                    @foreach (var team in Model.Teams)
+                    {
+                        <tr>
+                            <td>@team.Name</td>
+                            <td>@team.TownName</td>
+                            <td><a style="background-color:#00a78e" class="btn btn-primary" asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">Details</a></td>
+                            @if (this.User.IsInRole(GlobalConstants.PlayerRoleName)
+                            && !this.PlayersService.PlayerHasATeam(this.User.Identity.Name))
+                            {
+                                <td><a style="background-color:#00a78e" class="btn btn-primary" asp-area="Player" asp-controller="Teams" asp-action="Join" asp-route-id="@team.Id">Join Team</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="text-center">
+            @Html.PagedListPager((IPagedList)Model.Teams, pageNumber => Url.Action("All", new { pageNumber }));
+        </div>
     </div>
-    <hr />
-    <div class="text-center">
-        @Html.PagedListPager((IPagedList)Model.Teams, pageNumber => Url.Action("All", new { pageNumber }));
-    </div>
-</div>
+}

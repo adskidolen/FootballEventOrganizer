@@ -36,6 +36,8 @@
             var teamsCount = this.teamLeaguesService.TeamsCount(id);
             if (teamsCount == GlobalConstants.MaxTeamsInLeagueCount)
             {
+                this.leaguesService.SetLeagueStatusToInProgress(id);
+
                 var errorViewModel = new ErrorViewModel
                 {
                     ErrorMessage = ErrorMessages.MaxTeamsInLeagueErrorMessage

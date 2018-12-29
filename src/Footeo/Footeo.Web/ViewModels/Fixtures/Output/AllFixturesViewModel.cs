@@ -4,6 +4,6 @@
 
     public class AllFixturesViewModel
     {
-        public IEnumerable<FixturesViewModel> Fixtures { get; set; }
+        public IEnumerable<FixtureViewModel> Fixtures { get; set; }
     }
 }

@@ -13,5 +13,6 @@
         IQueryable<TModel> AllPendingLeagues<TModel>();
         IQueryable<TModel> AllInProgressLeagues<TModel>();
         IQueryable<TModel> AllCompletedLeagues<TModel>();
+        void SetLeagueStatusToInProgress(int id);
     }
 }

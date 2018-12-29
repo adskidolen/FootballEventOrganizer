@@ -7,7 +7,7 @@
     using Footeo.Web.Controllers.Base;
     using Footeo.Web.ViewModels;
     using Footeo.Web.ViewModels.Fixtures.Output;
-
+    using Footeo.Web.ViewModels.Matches.Output;
     using Microsoft.AspNetCore.Mvc;
 
     public class FixturesController : BaseController
@@ -34,8 +34,8 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            var fixtures = this.fixturesService.AllFixtures<FixturesViewModel>(id)
-                                               .OrderBy(d => d.Date)
+            var fixtures = this.fixturesService.AllFixtures<FixtureViewModel>(id)
+                                               .OrderBy(f => f.Name)
                                                .ToList();
 
             var fixturesViewModel = new AllFixturesViewModel
@@ -45,7 +45,7 @@
 
             return View(fixturesViewModel);
         }
-        
+
         public IActionResult Details(int id)
         {
             var fixtureExists = this.fixturesService.FixtureExistsById(id);
