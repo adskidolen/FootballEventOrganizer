@@ -11,7 +11,6 @@
         public DbSet<FooteoUser> FooteoUsers { get; set; }
         public DbSet<Referee> Referees { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<PlayerStatistic> PlayersStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Town> Towns { get; set; }
         public DbSet<League> Leagues { get; set; }
@@ -31,7 +30,6 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new MatchEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerStatisticsEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TeamLeagueEntityConfiguration());
         }
     }

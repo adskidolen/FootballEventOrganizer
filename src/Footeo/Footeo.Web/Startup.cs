@@ -66,9 +66,9 @@
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Identity/Account/Login";
-                options.LogoutPath = "/Identity/Account/Logout";
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
                 options.Cookie.Name = "FooteoCookie";
                 options.Cookie.HttpOnly = true;
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
@@ -88,7 +88,6 @@
             services.AddScoped<IFixturesService, FixturesService>();
             services.AddScoped<IMatchesService, MatchesService>();
             services.AddScoped<IRefereesService, RefereesService>();
-            services.AddScoped<IPlayersStatisticsService, PlayersStatisticsService>();
             services.AddScoped<ITrophiesService, TrophiesService>();
 
             services.AddAutoMapper();

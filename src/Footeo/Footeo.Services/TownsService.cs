@@ -32,15 +32,6 @@
             return town;
         }
 
-        public bool TownExistsByName(string name)
-            => this.dbContext.Towns.Any(t => t.Name == name);
-
-        public bool TownExistsById(int id)
-            => this.dbContext.Towns.Any(t => t.Id == id);
-
-        public TModel GetTownById<TModel>(int id)
-            => this.By<TModel>(t => t.Id == id).SingleOrDefault();
-
         public TModel GetTownByName<TModel>(string name)
             => this.By<TModel>(t => t.Name == name).SingleOrDefault();
 

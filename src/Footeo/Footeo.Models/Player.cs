@@ -29,12 +29,9 @@
         [Range(MinSquadNumberValue, MaxSquadNumberValue)]
         public int? SquadNumber { get; set; }
 
-        public virtual ICollection<PlayerStatistic> Statistics { get; set; }
-
         public Player()
         {
             this.IsCaptain = false;
-            this.Statistics = new List<PlayerStatistic>();
         }
     }
 }

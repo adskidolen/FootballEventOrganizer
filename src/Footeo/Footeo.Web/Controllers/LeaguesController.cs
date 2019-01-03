@@ -77,6 +77,12 @@
                                                .ThenByDescending(gf => gf.GoalsFor)
                                                .ToList();
 
+            var allPlayedMatches = this.teamLeaguesService.AllPlayedMatchesCount(id);
+            if (allPlayedMatches == GlobalConstants.AllPlayedMatchesInLeague)
+            {
+                this.leaguesService.SetLeagueStatusToCompleted(id);
+            }
+
             var leagueTableViewModel = new LeagueTableViewModel
             {
                 Teams = teams

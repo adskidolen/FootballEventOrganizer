@@ -10,7 +10,13 @@
     ViewData["Title"] = "Pending Leagues";
 
     var user = this.UserManager.GetUserAsync(this.User).GetAwaiter().GetResult();
-    var captainResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.CaptainRoleName).GetAwaiter().GetResult();
+    bool captainResult = false;
+
+    if (user != null)
+    {
+        captainResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.CaptainRoleName).GetAwaiter().GetResult();
+    }
+
 }
 
 @if (!Model.Leagues.Any())

@@ -9,7 +9,6 @@
     {
         void CreateFixture(string name, DateTime date, int leagueId);
         IQueryable<TModel> AllFixtures<TModel>(int leagueId);
-        //IQueryable<TModel> AllMatchesByFixture<TModel>(int leagueId);
         League GetLeagueForFixture(int fixtureId);
         bool FixtureExistsById(int id);
         TModel GetFixtureById<TModel>(int id);

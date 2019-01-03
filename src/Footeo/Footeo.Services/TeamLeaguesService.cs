@@ -96,6 +96,9 @@
         public int TeamsCount(int leagueId)
             => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Count();
 
+        public int AllPlayedMatchesCount(int leagueId) 
+            => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Sum(p => p.PlayedMatches);
+
         private IEnumerable<TModel> By<TModel>(Func<TeamLeague, bool> predicate)
            => this.dbContext.TeamsLeagues.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }

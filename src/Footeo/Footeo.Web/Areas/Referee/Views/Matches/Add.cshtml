@@ -1,13 +1,7 @@
-﻿@using Footeo.Web.Areas.Referee.ViewModels.Players.Output
-@using Footeo.Web.Areas.Referee.ViewModels.Players.Input
-
-@model Footeo.Web.Areas.Referee.ViewModels.Matches.Input.AddMatchInfoInputModel
+﻿@model Footeo.Web.Areas.Referee.ViewModels.Matches.Input.AddMatchInfoInputModel
 
 @{
     ViewData["Title"] = "Add Match Info";
-
-    var homeTeamPlayers = this.ViewData["HomeTeamPlayers"] as IEnumerable<PlayerViewModel>;
-    var awayTeamPlayers = this.ViewData["AwayTeamPlayers"] as IEnumerable<PlayerViewModel>;
 }
 
 <div class="container">
@@ -33,57 +27,6 @@
                 <span asp-validation-for="AwayTeamGoals" class="text-danger"></span>
             </div>
         </div>
-
-        <hr />
-
-        @*@for (int i = 0; i < Model.Stats.Count; i++)
-            {*@
-        <div class="container">
-            <h3 class="text-center" style="color:#00a78e">Home Team Players</h3>
-            @foreach (var player in homeTeamPlayers)
-            {
-                <div class="form-row">
-                    <div class="col-md-4 mt-2">
-                        <div style="color:#00a78e">
-                            <label class="control-label">@player.Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input class="form-control" placeholder="Goals scored..." />
-                        <span class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input class="form-control" placeholder="Assists made..." />
-                        <span class="text-danger"></span>
-                    </div>
-                </div>
-            }
-        </div>
-
-        <hr />
-
-        <div class="container">
-            <h3 class="text-center" style="color:#00a78e">Away Team Players</h3>
-            @foreach (var player in awayTeamPlayers)
-            {
-                <div class="form-row">
-                    <div class="col-md-4 mt-2">
-                        <div style="color:#00a78e">
-                            <label class="control-label">@player.Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input class="form-control" placeholder="Goals scored..." />
-                        <span class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input class="form-control" placeholder="Assists made..." />
-                        <span class="text-danger"></span>
-                    </div>
-                </div>
-            }
-        </div>
-        @* } *@
 
         <hr class="hr-2" />
         <div class="text-center">

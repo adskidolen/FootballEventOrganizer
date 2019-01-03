@@ -1,8 +1,5 @@
 ﻿namespace Footeo.Web.Areas.Referee.ViewModels.Matches.Input
 {
-    using Footeo.Web.Areas.Referee.ViewModels.Players.Input;
-
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class AddMatchInfoInputModel
@@ -17,12 +14,5 @@
         [Required]
         [Range(MinGoalsValue, MaxGoalsValue)]
         public int AwayTeamGoals { get; set; }
-
-        public IList<PlayerStatisticsInputModel> Stats { get; set; }
-
-        public AddMatchInfoInputModel()
-        {
-            this.Stats = new List<PlayerStatisticsInputModel>();
-        }
     }
 }

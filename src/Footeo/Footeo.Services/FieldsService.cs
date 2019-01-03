@@ -6,8 +6,6 @@
     using Footeo.Models;
     using Footeo.Services.Contracts;
 
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     public class FieldsService : IFieldsService
@@ -42,22 +40,10 @@
             this.dbContext.SaveChanges();
         }
 
-        public bool FieldExistsById(int id)
-            => this.dbContext.Fields.Any(f => f.Id == id);
-
         public bool FieldExistsByName(string name)
             => this.dbContext.Fields.Any(f => f.Name == name);
 
         public IQueryable<TModel> AllFields<TModel>()
             => this.dbContext.Fields.AsQueryable().ProjectTo<TModel>();
-
-        public TModel GetFieldById<TModel>(int id)
-            => this.By<TModel>(f => f.Id == id).SingleOrDefault();
-
-        public TModel GetFieldByName<TModel>(string name)
-            => this.By<TModel>(f => f.Name == name).SingleOrDefault();
-
-        private IEnumerable<TModel> By<TModel>(Func<Field, bool> predicate)
-            => this.dbContext.Fields.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }

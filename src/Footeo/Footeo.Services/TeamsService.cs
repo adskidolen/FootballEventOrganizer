@@ -69,9 +69,6 @@
         public TModel GetTeamById<TModel>(int id)
             => this.By<TModel>(t => t.Id == id).SingleOrDefault();
 
-        public TModel GetTeamByName<TModel>(string name)
-            => this.By<TModel>(t => t.Name == name).SingleOrDefault();
-
         public IQueryable<TModel> AllTeams<TModel>()
             => this.dbContext.Teams.AsQueryable().ProjectTo<TModel>();
 

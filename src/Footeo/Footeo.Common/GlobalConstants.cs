@@ -48,5 +48,7 @@
         public const int MaxElementsOnPage = 10;
 
         public const int LeaguesIndexCount = 3;
+
+        public static int AllPlayedMatchesInLeague = 180;
     }
 }

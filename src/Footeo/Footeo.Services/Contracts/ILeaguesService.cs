@@ -9,10 +9,10 @@
         bool LeagueExistsById(int id);
         bool LeagueExistsByName(string name);
         TModel GetLeagueById<TModel>(int id);
-        TModel GetLeagueByName<TModel>(string name);
         IQueryable<TModel> AllPendingLeagues<TModel>();
         IQueryable<TModel> AllInProgressLeagues<TModel>();
         IQueryable<TModel> AllCompletedLeagues<TModel>();
         void SetLeagueStatusToInProgress(int id);
+        void SetLeagueStatusToCompleted(int id);
     }
 }

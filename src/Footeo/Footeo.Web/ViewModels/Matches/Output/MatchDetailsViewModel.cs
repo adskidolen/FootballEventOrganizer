@@ -2,6 +2,8 @@
 {
     public class MatchDetailsViewModel
     {
+        private const string NoMatchMessage = "N/A";
+
         public int Id { get; set; }
         public string RefereeFullName { get; set; }
         public string FieldName { get; set; }
@@ -12,6 +14,8 @@
 
         public int HomeTeamGoals { get; set; }
         public int AwayTeamGoals { get; set; }
-        public string Result => $"{this.HomeTeamGoals} : {this.AwayTeamGoals}";
+
+        public string Result { get; set; }
+        public string ShowResult => string.IsNullOrWhiteSpace(this.Result) ? NoMatchMessage : $"{this.HomeTeamGoals} : {this.AwayTeamGoals}";
     }
 }

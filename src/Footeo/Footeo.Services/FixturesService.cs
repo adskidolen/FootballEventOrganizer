@@ -51,10 +51,5 @@
 
         private IEnumerable<TModel> By<TModel>(Func<Fixture, bool> predicate)
             => this.dbContext.Fixtures.Where(predicate).AsQueryable().ProjectTo<TModel>();
-
-        //public IQueryable<TModel> AllMatchesByFixture<TModel>(int leagueId)
-        //    => this.dbContext.Fixtures.Where(l => l.LeagueId == leagueId)
-        //                              .FirstOrDefault().Matches
-        //                              .AsQueryable().ProjectTo<TModel>();
     }
 }

@@ -3,7 +3,6 @@
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Services.Contracts;
-    using System.Linq;
 
     public class TrophiesService : ITrophiesService
     {

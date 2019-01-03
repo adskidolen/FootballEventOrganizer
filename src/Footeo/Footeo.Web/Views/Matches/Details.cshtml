@@ -50,7 +50,7 @@ else
                                             <h4>Result</h4>
                                         </div>
                                         <p>
-                                            <span>@match.Result</span>
+                                            <span>@match.ShowResult</span>
                                             @if (this.User.IsInRole(GlobalConstants.RefereeRoleName)
                                                 && !this.MatchesService.MatchHasResult(match.Id)
                                                 && this.MatchesService.MatchHasCurrentReferee(match.Id, this.User.Identity.Name))

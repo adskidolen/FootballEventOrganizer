@@ -72,9 +72,6 @@
                              .AsQueryable()
                              .ProjectTo<TModel>();
 
-        public TModel GetPlayerByName<TModel>(string playerName)
-            => this.By<TModel>(p => p.FullName == playerName).SingleOrDefault();
-
         public TModel GetPlayerById<TModel>(int id)
             => this.By<TModel>(p => p.Id == id).SingleOrDefault();
 

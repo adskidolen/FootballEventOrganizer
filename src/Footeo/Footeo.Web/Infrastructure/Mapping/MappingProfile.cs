@@ -21,18 +21,18 @@
         {
             // ForMember(dest => dest.Property, opt => opt.MapFrom(src => src.Propery));
 
-            this.CreateMap<Field, FieldViewModel>();
             this.CreateMap<Field, Field>();
+            this.CreateMap<Field, FieldViewModel>();
             this.CreateMap<Field, SelectListItem>()
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => src.Name));
 
-            this.CreateMap<League, PendingLeagueViewModel>();
-            this.CreateMap<League, CompletedLeagueViewModel>();
-            this.CreateMap<League, InProgressLeagueViewModel>();
             this.CreateMap<League, League>();
+            this.CreateMap<League, PendingLeagueViewModel>();
+            this.CreateMap<League, InProgressLeagueViewModel>();
+            this.CreateMap<League, CompletedLeagueViewModel>();
             this.CreateMap<League, SelectListItem>()
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.Id))
@@ -43,8 +43,8 @@
             this.CreateMap<Team, TeamViewModel>();
             this.CreateMap<Team, TeamMatchViewModel>();
 
-            this.CreateMap<Player, PlayerTeamViewModel>();
             this.CreateMap<Player, Player>();
+            this.CreateMap<Player, PlayerTeamViewModel>();
 
             this.CreateMap<Town, Town>();
 
@@ -65,6 +65,9 @@
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => $"{src.Name} {src.Date}"));
 
+            this.CreateMap<Referee, RefereeViewModel>()
+                .ForMember(dest => dest.MatchAttendances,
+                           opt => opt.MapFrom(src => src.Matches.Count));
             this.CreateMap<Referee, SelectListItem>()
                 .ForMember(dest => dest.Value,
                            opt => opt.MapFrom(src => src.Id))
@@ -75,9 +78,6 @@
 
             this.CreateMap<SelectListItem, SelectListItem>();
 
-            this.CreateMap<Referee, RefereeViewModel>()
-                .ForMember(dest => dest.MatchAttendances,
-                           opt => opt.MapFrom(src => src.Matches.Count));
         }
     }
 }

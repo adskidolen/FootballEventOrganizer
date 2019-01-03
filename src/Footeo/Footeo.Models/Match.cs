@@ -49,12 +49,5 @@
         [ForeignKey(nameof(Field))]
         public int FieldId { get; set; }
         public virtual Field Field { get; set; }
-
-        public virtual ICollection<PlayerStatistic> Statistics { get; set; }
-
-        public Match()
-        {
-            this.Statistics = new List<PlayerStatistic>();
-        }
     }
 }

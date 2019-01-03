@@ -13,5 +13,6 @@
         TeamLeague GetTeamLeague(int teamId);
         TeamLeague GetTeamLeagueWinner(int leagueId);
         bool HasTeamAlreadyCurrentTrophy(int leagueId);
+        int AllPlayedMatchesCount(int leagueId);
     }
 }

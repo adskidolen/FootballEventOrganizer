@@ -1,7 +1,7 @@
 ﻿namespace Footeo.Services
 {
     using AutoMapper.QueryableExtensions;
-    using Footeo.Common;
+
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Models.Enums;
@@ -53,14 +53,11 @@
         public TModel GetLeagueById<TModel>(int id)
             => this.By<TModel>(l => l.Id == id).SingleOrDefault();
 
-        public TModel GetLeagueByName<TModel>(string name)
-            => this.By<TModel>(l => l.Name == name).SingleOrDefault();
-
         public IQueryable<TModel> AllPendingLeagues<TModel>()
             => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Pending).AsQueryable().ProjectTo<TModel>();
 
         public IQueryable<TModel> AllInProgressLeagues<TModel>()
-            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.InProgress && s.Teams.Count == GlobalConstants.MaxTeamsInLeagueCount).AsQueryable().ProjectTo<TModel>();
+            => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.InProgress).AsQueryable().ProjectTo<TModel>();
 
         public IQueryable<TModel> AllCompletedLeagues<TModel>()
             => this.dbContext.Leagues.Where(s => s.Status == LeagueStatus.Completed).AsQueryable().ProjectTo<TModel>();
@@ -73,6 +70,15 @@
             var league = this.dbContext.Leagues.FirstOrDefault(l => l.Id == id);
 
             league.Status = LeagueStatus.InProgress;
+
+            this.dbContext.SaveChanges();
+        }
+
+        public void SetLeagueStatusToCompleted(int id)
+        {
+            var league = this.dbContext.Leagues.FirstOrDefault(l => l.Id == id);
+
+            league.Status = LeagueStatus.Completed;
 
             this.dbContext.SaveChanges();
         }
