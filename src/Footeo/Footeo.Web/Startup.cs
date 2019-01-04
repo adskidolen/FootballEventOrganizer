@@ -79,7 +79,7 @@
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<ILeaguesService, LeagueService>();
+            services.AddScoped<ILeaguesService, LeaguesService>();
             services.AddScoped<ITeamsService, TeamsService>();
             services.AddScoped<ITownsService, TownsService>();
             services.AddScoped<IFieldsService, FieldsService>();

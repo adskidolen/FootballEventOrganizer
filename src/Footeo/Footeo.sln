@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Footeo.Services", "Footeo.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Footeo.Common", "Footeo.Common\Footeo.Common.csproj", "{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Footeo.Tests", "Footeo.Tests\Footeo.Tests.csproj", "{F24EFD14-1B33-4385-8010-0B7FD91F41DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB7307B4-AF38-4795-8FA7-0EA6315AD4FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24EFD14-1B33-4385-8010-0B7FD91F41DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24EFD14-1B33-4385-8010-0B7FD91F41DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24EFD14-1B33-4385-8010-0B7FD91F41DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F24EFD14-1B33-4385-8010-0B7FD91F41DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

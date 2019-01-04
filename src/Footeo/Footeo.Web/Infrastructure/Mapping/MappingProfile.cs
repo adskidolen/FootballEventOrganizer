@@ -64,7 +64,7 @@
                            opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Text,
                            opt => opt.MapFrom(src => $"{src.Name} {src.Date}"));
-
+            
             this.CreateMap<Referee, RefereeViewModel>()
                 .ForMember(dest => dest.MatchAttendances,
                            opt => opt.MapFrom(src => src.Matches.Count));

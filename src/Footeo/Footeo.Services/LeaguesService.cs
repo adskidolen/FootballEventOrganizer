@@ -11,12 +11,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class LeagueService : ILeaguesService
+    public class LeaguesService : ILeaguesService
     {
         private readonly FooteoDbContext dbContext;
         private readonly ITownsService townsService;
 
-        public LeagueService(FooteoDbContext dbContext, ITownsService townsService)
+        public LeaguesService(FooteoDbContext dbContext, ITownsService townsService)
         {
             this.dbContext = dbContext;
             this.townsService = townsService;
