@@ -21,6 +21,22 @@
             this.teamLeaguesService = teamLeaguesService;
         }
 
+        public void CreateReferee(FooteoUser user, Referee referee)
+        {
+            user.Referee = referee;
+            this.dbContext.SaveChanges();
+        }
+
+        public void AttendAMatch(string userName, int matchId)
+        {
+            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
+            var match = this.dbContext.Matches.FirstOrDefault(m => m.Id == matchId);
+
+            match.Referee = user.Referee;
+
+            this.dbContext.SaveChanges();
+        }
+
         public void AddResultToMatch(int matchId, int homeTeamGoals, int awayTeamGoals)
         {
             var match = this.dbContext.Matches.FirstOrDefault(m => m.Id == matchId);
@@ -37,22 +53,6 @@
 
             var result = $"{match.HomeTeam.Name} {match.HomeTeamGoals} : {match.AwayTeamGoals} {match.AwayTeam.Name}";
             match.Result = result;
-
-            this.dbContext.SaveChanges();
-        }
-
-        public void CreateReferee(FooteoUser user, Referee referee)
-        {
-            user.Referee = referee;
-            this.dbContext.SaveChanges();
-        }
-
-        public void AttendAMatch(string userName, int matchId)
-        {
-            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
-            var match = this.dbContext.Matches.FirstOrDefault(m => m.Id == matchId);
-
-            match.Referee = user.Referee;
 
             this.dbContext.SaveChanges();
         }

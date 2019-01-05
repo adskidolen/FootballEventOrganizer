@@ -47,6 +47,9 @@
             this.dbContext.SaveChanges();
         }
 
+        public bool MatchExistsById(int id)
+            => this.dbContext.Matches.Any(m => m.Id == id);
+
         public int GetFixturesIdByMatch(int matchId)
             => this.dbContext.Matches.FirstOrDefault(m => m.Id == matchId).FixtureId;
 
@@ -55,9 +58,6 @@
 
         public IQueryable<TModel> MatchesByFixture<TModel>(int fixtureId)
             => this.dbContext.Matches.Where(f => f.FixtureId == fixtureId).AsQueryable().ProjectTo<TModel>();
-
-        public bool MatchExistsById(int id)
-            => this.dbContext.Matches.Any(m => m.Id == id);
 
         public bool MatchHasCurrentReferee(int matchId, string userName)
         {

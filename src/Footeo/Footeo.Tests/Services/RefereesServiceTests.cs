@@ -210,10 +210,13 @@
         public void AddResultToMatchShouldNotReturnNull()
         {
             var options = new DbContextOptionsBuilder<FooteoDbContext>()
-                  .UseInMemoryDatabase(databaseName: "AddResultToMatch_Referees_DB")
-                  .Options;
+                .UseInMemoryDatabase(databaseName: "AddResultToMatch_Referees_DB")
+                .Options;
 
             var dbContext = new FooteoDbContext(options);
+            var townsService = new TownsService(dbContext);
+
+            var town = townsService.CreateTown("Burgas");
 
             var user = new FooteoUser
             {
@@ -222,13 +225,12 @@
                 FirstName = "Footeo",
                 LastName = "Referee",
                 UserName = $"footeoReferee",
-                TownId = new Random().Next(1, 20),
+                Town = town,
                 PasswordHash = "123123"
             };
 
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
-
 
             var userHT = new FooteoUser
             {
@@ -237,7 +239,7 @@
                 FirstName = "Footeo",
                 LastName = "Player",
                 UserName = $"footeoPlayer",
-                TownId = new Random().Next(1, 20),
+                Town = town,
                 PasswordHash = "123123",
                 Player = new Player
                 {
@@ -255,7 +257,7 @@
                 FirstName = "Footeo",
                 LastName = "Player",
                 UserName = $"footeoPlayer2",
-                TownId = new Random().Next(1, 20),
+                Town = town,
                 PasswordHash = "123123",
                 Player = new Player
                 {
@@ -277,7 +279,6 @@
             userManager.Setup(u => u.AddToRoleAsync(userAT, "PlayerInTeam")).Returns(Task.FromResult(IdentityResult.Success));
             userManager.Setup(u => u.AddToRoleAsync(userAT, "Captain")).Returns(Task.FromResult(IdentityResult.Success));
 
-            var townsService = new TownsService(dbContext);
             var fieldsService = new FieldsService(dbContext, townsService);
             var leaguesService = new LeaguesService(dbContext, townsService);
             var teamsService = new TeamsService(dbContext, townsService, leaguesService, userManager.Object, null);
@@ -296,7 +297,6 @@
             townsService.CreateTown("Sofia");
             leaguesService.CreateLeague("League", "Desc", DateTime.UtcNow, DateTime.UtcNow.AddMonths(3), "Sofia");
 
-
             teamsService.CreateTeam("Home Team", "HT", userHT.UserName);
             teamsService.CreateTeam("Away Team", "AT", userAT.UserName);
 
@@ -312,7 +312,7 @@
             var field = dbContext.Fields.FirstOrDefault(n => n.Name == "Field");
 
             matchesService.CreateMatch(userHT.Player.Team.Id, userAT.Player.Team.Id, field.Id, fixture.Id);
-            var match = dbContext.Matches.FirstOrDefault(f => f.Id == 1);
+            var match = dbContext.Matches.FirstOrDefault();
 
             refereesService.AttendAMatch(user.UserName, match.Id);
 
