@@ -95,8 +95,10 @@
             this.dbContext.SaveChanges();
         }
 
-        public bool IsSquadNumberTaken(int squadNumber)
-            => this.dbContext.Players.Any(sn => sn.SquadNumber == squadNumber);
+        public bool IsSquadNumberTaken(int squadNumber, int teamId)
+            => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId)
+                                   .Players
+                                   .Any(sn => sn.SquadNumber == squadNumber);
 
         public bool PlayerExistsById(int id)
             => this.dbContext.Players.Any(p => p.Id == id);

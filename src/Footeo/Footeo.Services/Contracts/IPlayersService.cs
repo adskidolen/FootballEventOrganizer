@@ -15,7 +15,7 @@
         TModel GetPlayerById<TModel>(int id);
         void SetSquadNumber(string userName, int squadNumber);
         void SetPosition(string userName, PlayerPosition position);
-        bool IsSquadNumberTaken(int squadNumber);
+        bool IsSquadNumberTaken(int squadNumber, int teamId);
         bool PlayerExistsById(int id);
     }
 }

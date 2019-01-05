@@ -169,7 +169,7 @@ namespace Footeo.Web.Areas.Identity.Pages.Account.Manage
             {
                 _playersService.SetPlayersNickname(user.UserName, Input.Nickname);
 
-                var isSquadNumberTaken = _playersService.IsSquadNumberTaken(Input.SquadNumber);
+                var isSquadNumberTaken = _playersService.IsSquadNumberTaken(Input.SquadNumber, user.Player.Team.Id);
                 if (isSquadNumberTaken)
                 {
                     return this.RedirectToPage();

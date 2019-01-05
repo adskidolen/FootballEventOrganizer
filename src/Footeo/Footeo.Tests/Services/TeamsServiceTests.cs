@@ -920,5 +920,104 @@
 
             Assert.AreEqual(expectedAwayMatchesCount, allAwayMatchesCount);
         }
+
+        [Test]
+        public void TeamExistsByNameShouldReturnTrue()
+        {
+            var options = new DbContextOptionsBuilder<FooteoDbContext>()
+                  .UseInMemoryDatabase(databaseName: "TeamExistsByNameTrue_Teams_DB")
+                  .Options;
+
+            var dbContext = new FooteoDbContext(options);
+
+            var townsService = new TownsService(dbContext);
+            var leaguesService = new LeaguesService(dbContext, townsService);
+
+            var mockUserStore = new Mock<IUserStore<FooteoUser>>();
+            var userManager = new Mock<UserManager<FooteoUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+
+            var town = townsService.CreateTown("Sofia");
+
+            var user = new FooteoUser
+            {
+                Age = new Random().Next(20, 30),
+                Email = $"footeoPlayer@mail.bg",
+                FirstName = "Footeo",
+                LastName = "Player",
+                UserName = $"footeoPlayer",
+                Town = town,
+                PasswordHash = "123123",
+                Player = new Player
+                {
+                    FullName = "Footeo Player"
+                }
+            };
+
+            dbContext.Users.Add(user);
+            dbContext.SaveChanges();
+
+            userManager.Setup(u => u.RemoveFromRoleAsync(user, "Player")).Returns(Task.FromResult(IdentityResult.Success));
+            userManager.Setup(u => u.AddToRoleAsync(user, "PlayerInTeam")).Returns(Task.FromResult(IdentityResult.Success));
+            userManager.Setup(u => u.AddToRoleAsync(user, "Captain")).Returns(Task.FromResult(IdentityResult.Success));
+
+            var teamsService = new TeamsService(dbContext, townsService, leaguesService, userManager.Object, null);
+
+            teamsService.CreateTeam("Team", "TTT", user.UserName);
+            var team = dbContext.Teams.FirstOrDefault(n => n.Name == "Team");
+
+            var teamExists = teamsService.TeamExistsByName(team.Name);
+
+            Assert.True(teamExists);
+        }
+
+        [Test]
+        public void TeamExistsByNameShouldReturnFalse()
+        {
+            var options = new DbContextOptionsBuilder<FooteoDbContext>()
+                  .UseInMemoryDatabase(databaseName: "TeamExistsByNameFalse_Teams_DB")
+                  .Options;
+
+            var dbContext = new FooteoDbContext(options);
+
+            var townsService = new TownsService(dbContext);
+            var leaguesService = new LeaguesService(dbContext, townsService);
+
+            var mockUserStore = new Mock<IUserStore<FooteoUser>>();
+            var userManager = new Mock<UserManager<FooteoUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+
+            var town = townsService.CreateTown("Sofia");
+
+            var user = new FooteoUser
+            {
+                Age = new Random().Next(20, 30),
+                Email = $"footeoPlayer@mail.bg",
+                FirstName = "Footeo",
+                LastName = "Player",
+                UserName = $"footeoPlayer",
+                Town = town,
+                PasswordHash = "123123",
+                Player = new Player
+                {
+                    FullName = "Footeo Player"
+                }
+            };
+
+            dbContext.Users.Add(user);
+            dbContext.SaveChanges();
+
+            userManager.Setup(u => u.RemoveFromRoleAsync(user, "Player")).Returns(Task.FromResult(IdentityResult.Success));
+            userManager.Setup(u => u.AddToRoleAsync(user, "PlayerInTeam")).Returns(Task.FromResult(IdentityResult.Success));
+            userManager.Setup(u => u.AddToRoleAsync(user, "Captain")).Returns(Task.FromResult(IdentityResult.Success));
+
+            var teamsService = new TeamsService(dbContext, townsService, leaguesService, userManager.Object, null);
+
+            teamsService.CreateTeam("Team", "TTT", user.UserName);
+            var team = dbContext.Teams.FirstOrDefault(n => n.Name == "Team");
+
+            var invalidTeamName = "Teeeeaaaam";
+            var teamExists = teamsService.TeamExistsByName(invalidTeamName);
+
+            Assert.False(teamExists);
+        }
     }
 }

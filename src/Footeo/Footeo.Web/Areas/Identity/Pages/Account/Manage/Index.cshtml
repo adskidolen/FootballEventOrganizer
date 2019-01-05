@@ -1,15 +1,27 @@
 ﻿@page
+
 @using Footeo.Common
 @using Footeo.Models.Enums
+
 @model IndexModel
+
+@inject UserManager<FooteoUser> UserManager
+
 @{
     ViewData["Title"] = "Profile";
 
     var positions = new string[]
     {
-PlayerPosition.Goalkeeper.ToString(), PlayerPosition.Defender.ToString(),
-PlayerPosition.Midfielder.ToString(), PlayerPosition.Forward.ToString()
+        PlayerPosition.Goalkeeper.ToString(), PlayerPosition.Defender.ToString(),
+        PlayerPosition.Midfielder.ToString(), PlayerPosition.Forward.ToString()
     };
+
+    var user = this.UserManager.GetUserAsync(this.User).GetAwaiter().GetResult();
+    var adminResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.AdminRoleName).GetAwaiter().GetResult();
+    var captainResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.CaptainRoleName).GetAwaiter().GetResult();
+    var playerInTeamResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.PlayerInTeamRoleName).GetAwaiter().GetResult();
+    var playerResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.PlayerRoleName).GetAwaiter().GetResult();
+    var refereeResult = this.UserManager.IsInRoleAsync(user, GlobalConstants.RefereeRoleName).GetAwaiter().GetResult();
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -45,15 +57,14 @@ PlayerPosition.Midfielder.ToString(), PlayerPosition.Forward.ToString()
                     <input asp-for="Input.PhoneNumber" class="form-control" />
                     <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                 </div>
-                @if (this.User.IsInRole(GlobalConstants.PlayerRoleName))
+                @if (playerResult)
                 {
                     <div class="form-group">
                         <label asp-for="FullName"></label>
                         <input asp-for="FullName" class="form-control" disabled />
                     </div>
                 }
-                @if (this.User.IsInRole(GlobalConstants.PlayerInTeamRoleName)
-                    || this.User.IsInRole(GlobalConstants.CaptainRoleName))
+                @if (playerInTeamResult || captainResult)
                 {
                     <div class="form-group">
                         <label asp-for="TeamName"></label>
@@ -91,7 +102,7 @@ PlayerPosition.Midfielder.ToString(), PlayerPosition.Forward.ToString()
                     </div>
 
                 }
-                @if (this.User.IsInRole(GlobalConstants.RefereeRoleName))
+                @if (refereeResult)
                 {
                     <div class="form-group">
                         <label asp-for="FullName"></label>
