@@ -1,8 +1,7 @@
 ﻿namespace Footeo.Services
 {
     using AutoMapper.QueryableExtensions;
-
-    using Footeo.Common;
+    
     using Footeo.Data;
     using Footeo.Models;
     using Footeo.Models.Enums;
@@ -81,11 +80,6 @@
                 League = league
             };
 
-            if (this.TeamsCount(league.Id) == GlobalConstants.MaxTeamsInLeagueCount)
-            {
-                league.Status = LeagueStatus.InProgress;
-            }
-
             this.dbContext.TeamsLeagues.Add(teamLeague);
             this.dbContext.SaveChanges();
         }
@@ -96,7 +90,7 @@
         public int TeamsCount(int leagueId)
             => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Count();
 
-        public int AllPlayedMatchesCount(int leagueId) 
+        public int AllPlayedMatchesCount(int leagueId)
             => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).Sum(p => p.PlayedMatches);
 
         private IEnumerable<TModel> By<TModel>(Func<TeamLeague, bool> predicate)

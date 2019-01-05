@@ -7,13 +7,11 @@
     public class TrophiesService : ITrophiesService
     {
         private readonly FooteoDbContext dbContext;
-        private readonly ITeamsService teamsService;
         private readonly ITeamLeaguesService teamLeaguesService;
 
-        public TrophiesService(FooteoDbContext dbContext, ITeamsService teamsService, ITeamLeaguesService teamLeaguesService)
+        public TrophiesService(FooteoDbContext dbContext, ITeamLeaguesService teamLeaguesService)
         {
             this.dbContext = dbContext;
-            this.teamsService = teamsService;
             this.teamLeaguesService = teamLeaguesService;
         }
 
