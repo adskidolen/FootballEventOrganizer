@@ -191,8 +191,8 @@
         public void SetLeagueStatusToInProgressAndReturnAllInProgressLeagues()
         {
             var options = new DbContextOptionsBuilder<FooteoDbContext>()
-              .UseInMemoryDatabase(databaseName: "InProgressLeagues_Leagues_DB")
-              .Options;
+                          .UseInMemoryDatabase(databaseName: "InProgressLeagues_Leagues_DB")
+                          .Options;
 
             var dbContext = new FooteoDbContext(options);
 
@@ -251,6 +251,52 @@
             var expectedCompletedLeaguesCount = 5;
 
             Assert.AreEqual(expectedCompletedLeaguesCount, completedLeaguesCount);
+        }
+
+        [Test]
+        public void SetLeagueStatusShouldReturnInProgressStatus()
+        {
+            var options = new DbContextOptionsBuilder<FooteoDbContext>()
+                          .UseInMemoryDatabase(databaseName: "SetInProgressStatus_Leagues_DB")
+                          .Options;
+
+            var dbContext = new FooteoDbContext(options);
+
+            var townsService = new TownsService(dbContext);
+            var leaguesService = new LeaguesService(dbContext, townsService);
+
+            leaguesService.CreateLeague($"LeagueIP", $"Description", DateTime.UtcNow.AddDays(5), DateTime.UtcNow.AddMonths(2), "Sofia");
+
+            var league = dbContext.Leagues.FirstOrDefault(n => n.Name == "LeagueIP");
+
+            leaguesService.SetLeagueStatusToInProgress(league.Id);
+
+            var expectedLeagueStatus = "InProgress";
+
+            Assert.AreEqual(expectedLeagueStatus, league.Status.ToString());
+        }
+
+        [Test]
+        public void SetLeagueStatusShouldReturnCompletedStatus()
+        {
+            var options = new DbContextOptionsBuilder<FooteoDbContext>()
+                         .UseInMemoryDatabase(databaseName: "SetCompletedStatus_Leagues_DB")
+                         .Options;
+
+            var dbContext = new FooteoDbContext(options);
+
+            var townsService = new TownsService(dbContext);
+            var leaguesService = new LeaguesService(dbContext, townsService);
+
+            leaguesService.CreateLeague($"LeagueC", $"Description", DateTime.UtcNow.AddDays(3), DateTime.UtcNow.AddMonths(3), "Varna");
+
+            var league = dbContext.Leagues.FirstOrDefault(n => n.Name == "LeagueC");
+
+            leaguesService.SetLeagueStatusToCompleted(league.Id);
+
+            var expectedLeagueStatus = "Completed";
+
+            Assert.AreEqual(expectedLeagueStatus, league.Status.ToString());
         }
     }
 }

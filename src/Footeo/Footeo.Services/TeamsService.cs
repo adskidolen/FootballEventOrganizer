@@ -35,7 +35,7 @@
 
         public void CreateTeam(string name, string initials, string userName)
         {
-            var user = this.userManager.Users.FirstOrDefault(u => u.UserName == userName);
+            var user = this.dbContext.Users.FirstOrDefault(u => u.UserName == userName);
 
             var team = new Team
             {
@@ -82,9 +82,6 @@
         public Team GetUsersTeam(string userName)
             => this.dbContext.Users.FirstOrDefault(u => u.UserName == userName).Player.Team;
 
-        private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
-        => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
-
         public IQueryable<TModel> AllTrophiesByTeamId<TModel>(int teamId)
             => this.dbContext.Trophies.Where(t => t.TeamId == teamId).AsQueryable().ProjectTo<TModel>();
 
@@ -93,5 +90,8 @@
 
         public IEnumerable<Match> AllAwayMatchesByTeamId(int teamId)
             => this.dbContext.Teams.FirstOrDefault(t => t.Id == teamId).AwayMatches.Where(r => r.Result != null);
+
+        private IEnumerable<TModel> By<TModel>(Func<Team, bool> predicate)
+        => this.dbContext.Teams.Where(predicate).AsQueryable().ProjectTo<TModel>();
     }
 }
