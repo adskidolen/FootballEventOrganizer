@@ -8,17 +8,20 @@
     using Footeo.Web.ViewModels;
     using Footeo.Web.ViewModels.Fixtures.Output;
     using Footeo.Web.ViewModels.Matches.Output;
+
     using Microsoft.AspNetCore.Mvc;
 
     public class FixturesController : BaseController
     {
         private readonly IFixturesService fixturesService;
         private readonly ILeaguesService leaguesService;
+        private readonly IMatchesService matchesService;
 
-        public FixturesController(IFixturesService fixturesService, ILeaguesService leaguesService)
+        public FixturesController(IFixturesService fixturesService, ILeaguesService leaguesService, IMatchesService matchesService)
         {
             this.fixturesService = fixturesService;
             this.leaguesService = leaguesService;
+            this.matchesService = matchesService;
         }
 
         public IActionResult All(int id)
@@ -59,9 +62,13 @@
                 return this.View(viewName: GlobalConstants.ErrorViewName, model: errorViewModel);
             }
 
-            var fixture = this.fixturesService.GetFixtureById<FixtureDetailsViewModel>(id);
+            var matches = this.matchesService.MatchesByFixture<MatchDetailsViewModel>(id).ToList();
+            var matchesViewModel = new AllMatchesViewModel
+            {
+                Matches = matches
+            };
 
-            return this.View(fixture);
+            return this.View(matchesViewModel);
         }
     }
 }

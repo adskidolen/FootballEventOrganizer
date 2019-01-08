@@ -24,8 +24,8 @@
             this.leaguesService = leaguesService;
         }
 
-        public TeamLeague GetTeamLeague(int teamId)
-            => this.dbContext.TeamsLeagues.FirstOrDefault(t => t.TeamId == teamId);
+        public TeamLeague GetTeamLeague(int teamId, int leagueId)
+            => this.dbContext.TeamsLeagues.Where(l => l.LeagueId == leagueId).FirstOrDefault(t => t.TeamId == teamId);
 
         public TeamLeague GetTeamLeagueWinner(int leagueId)
             => this.LeagueTable<TeamLeague>(leagueId)

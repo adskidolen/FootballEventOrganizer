@@ -10,7 +10,7 @@
         IQueryable<TModel> LeagueTable<TModel>(int leagueId);
         bool IsTeamInLeague(int leagueId, string userName);
         int TeamsCount(int leagueId);
-        TeamLeague GetTeamLeague(int teamId);
+        TeamLeague GetTeamLeague(int teamId, int leagueId);
         TeamLeague GetTeamLeagueWinner(int leagueId);
         bool HasTeamAlreadyCurrentTrophy(int leagueId);
         int AllPlayedMatchesCount(int leagueId);

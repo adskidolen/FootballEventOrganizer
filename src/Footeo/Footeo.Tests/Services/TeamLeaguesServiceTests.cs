@@ -79,7 +79,7 @@
 
             var teamLeaguesService = new TeamLeaguesService(dbContext, teamsService, leaguesService);
 
-            var teamLeagueModel = teamLeaguesService.GetTeamLeague(team.Id);
+            var teamLeagueModel = teamLeaguesService.GetTeamLeague(team.Id, league.Id);
 
             Assert.NotNull(teamLeagueModel);
         }

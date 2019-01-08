@@ -14,15 +14,13 @@
         private readonly IMatchesService matchesService;
         private readonly IRefereesService refereesService;
         private readonly IPlayersService playersService;
-        private readonly IPlayersStatisticsService playersStatisticsService;
 
         public MatchesController(IMatchesService matchesService, IRefereesService refereesService,
-            IPlayersService playersService, IPlayersStatisticsService playersStatisticsService)
+            IPlayersService playersService)
         {
             this.matchesService = matchesService;
             this.refereesService = refereesService;
             this.playersService = playersService;
-            this.playersStatisticsService = playersStatisticsService;
         }
 
         public IActionResult Add() => this.View();

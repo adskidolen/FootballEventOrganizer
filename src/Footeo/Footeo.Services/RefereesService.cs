@@ -46,8 +46,10 @@
             var homeTeam = match.HomeTeam;
             var awayTeam = match.AwayTeam;
 
-            var homeTeamLeague = this.teamLeaguesService.GetTeamLeague(homeTeam.Id);
-            var awayTeamLeague = this.teamLeaguesService.GetTeamLeague(awayTeam.Id);
+            var leagueId = match.Fixture.LeagueId;
+
+            var homeTeamLeague = this.teamLeaguesService.GetTeamLeague(homeTeam.Id, leagueId);
+            var awayTeamLeague = this.teamLeaguesService.GetTeamLeague(awayTeam.Id, leagueId);
 
             this.AddTeamStats(homeTeamGoals, awayTeamGoals, homeTeamLeague, awayTeamLeague);
 
@@ -57,55 +59,78 @@
             this.dbContext.SaveChanges();
         }
 
-        public IQueryable<TModel> Referees<TModel>()
-           => this.dbContext.Referees.AsQueryable().ProjectTo<TModel>();
-
         private void AddTeamStats(int homeTeamGoals, int awayTeamGoals, TeamLeague homeTeamLeague, TeamLeague awayTeamLeague)
         {
             if (homeTeamGoals > awayTeamGoals)
             {
-                this.TeamWin(homeTeamGoals, awayTeamGoals, homeTeamLeague);
-                this.TeamLose(homeTeamGoals, awayTeamGoals, awayTeamLeague);
+                this.HomeWin(homeTeamGoals, awayTeamGoals, homeTeamLeague, awayTeamLeague);
             }
-            else if (awayTeamGoals > homeTeamGoals)
+            if (awayTeamGoals > homeTeamGoals)
             {
-                this.TeamWin(homeTeamGoals, awayTeamGoals, awayTeamLeague);
-                this.TeamLose(homeTeamGoals, awayTeamGoals, homeTeamLeague);
+                this.AwayWin(homeTeamGoals, awayTeamGoals, homeTeamLeague, awayTeamLeague);
             }
-            else
+            if (homeTeamGoals == awayTeamGoals)
             {
-                this.TeamDraw(homeTeamGoals, awayTeamGoals, homeTeamLeague);
-                this.TeamDraw(homeTeamGoals, awayTeamGoals, awayTeamLeague);
+                Draw(homeTeamGoals, awayTeamGoals, homeTeamLeague, awayTeamLeague);
             }
         }
 
-        private void TeamWin(int homeTeamGoals, int awayTeamGoals, TeamLeague team)
+        private void Draw(int homeTeamGoals, int awayTeamGoals, TeamLeague homeTeamLeague, TeamLeague awayTeamLeague)
         {
-            team.PlayedMatches++;
-            team.Won++;
-            team.Points += 3;
-            team.GoalsFor += homeTeamGoals;
-            team.GoalsAgainst += awayTeamGoals;
-            team.GoalDifference += team.GoalsFor - team.GoalsAgainst;
+            homeTeamLeague.PlayedMatches++;
+            homeTeamLeague.Drawn++;
+            homeTeamLeague.Points += 1;
+            homeTeamLeague.GoalsFor += homeTeamGoals;
+            homeTeamLeague.GoalsAgainst += awayTeamGoals;
+            homeTeamLeague.GoalDifference += homeTeamLeague.GoalsFor - homeTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
+
+            awayTeamLeague.PlayedMatches++;
+            awayTeamLeague.Drawn++;
+            awayTeamLeague.Points += 1;
+            awayTeamLeague.GoalsFor += homeTeamGoals;
+            awayTeamLeague.GoalsAgainst += awayTeamGoals;
+            awayTeamLeague.GoalDifference += awayTeamLeague.GoalsFor - awayTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
         }
 
-        private void TeamDraw(int homeTeamGoals, int awayTeamGoals, TeamLeague team)
+        private void AwayWin(int homeTeamGoals, int awayTeamGoals, TeamLeague homeTeamLeague, TeamLeague awayTeamLeague)
         {
-            team.PlayedMatches++;
-            team.Drawn++;
-            team.Points += 1;
-            team.GoalsFor += homeTeamGoals;
-            team.GoalsAgainst += awayTeamGoals;
-            team.GoalDifference += team.GoalsFor - team.GoalsAgainst;
+            awayTeamLeague.PlayedMatches++;
+            awayTeamLeague.Won++;
+            awayTeamLeague.Points += 3;
+            awayTeamLeague.GoalsFor += awayTeamGoals;
+            awayTeamLeague.GoalsAgainst += homeTeamGoals;
+            awayTeamLeague.GoalDifference += awayTeamLeague.GoalsFor - awayTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
+
+            homeTeamLeague.PlayedMatches++;
+            homeTeamLeague.Lost++;
+            homeTeamLeague.GoalsFor += homeTeamGoals;
+            homeTeamLeague.GoalsAgainst += awayTeamGoals;
+            homeTeamLeague.GoalDifference += homeTeamLeague.GoalsFor - homeTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
         }
 
-        private void TeamLose(int homeTeamGoals, int awayTeamGoals, TeamLeague team)
+        private void HomeWin(int homeTeamGoals, int awayTeamGoals, TeamLeague homeTeamLeague, TeamLeague awayTeamLeague)
         {
-            team.PlayedMatches++;
-            team.Lost++;
-            team.GoalsFor += awayTeamGoals;
-            team.GoalsAgainst += homeTeamGoals;
-            team.GoalDifference += team.GoalsFor - team.GoalsAgainst;
+            homeTeamLeague.PlayedMatches++;
+            homeTeamLeague.Won++;
+            homeTeamLeague.Points += 3;
+            homeTeamLeague.GoalsFor += homeTeamGoals;
+            homeTeamLeague.GoalsAgainst += awayTeamGoals;
+            homeTeamLeague.GoalDifference += homeTeamLeague.GoalsFor - homeTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
+
+            awayTeamLeague.PlayedMatches++;
+            awayTeamLeague.Lost++;
+            awayTeamLeague.GoalsFor += awayTeamGoals;
+            awayTeamLeague.GoalsAgainst += homeTeamGoals;
+            awayTeamLeague.GoalDifference += awayTeamLeague.GoalsFor - awayTeamLeague.GoalsAgainst;
+            this.dbContext.SaveChanges();
         }
+
+        public IQueryable<TModel> Referees<TModel>()
+           => this.dbContext.Referees.AsQueryable().ProjectTo<TModel>();
     }
 }
