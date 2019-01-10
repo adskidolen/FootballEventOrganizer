@@ -59,9 +59,11 @@
 
             this.refereesService.AddResultToMatch(match.Id, model.HomeTeamGoals, model.AwayTeamGoals);
 
-            var routeValues = new { match.Id };
+            var fixtureId = match.Fixture.Id;
 
-            return this.RedirectToAction(controllerName: GlobalConstants.MatchesControllerName,
+            var routeValues = new { Id = fixtureId };
+
+            return this.RedirectToAction(controllerName: GlobalConstants.FixturesControllerName,
                                          actionName: GlobalConstants.DetailsActionName,
                                          routeValues: routeValues);
 
@@ -95,9 +97,12 @@
 
             this.refereesService.AttendAMatch(user, id);
 
-            var routeValues = new { Id = id };
+            var match = this.matchesService.GetMatchById<Match>(id);
+            var fixtureId = match.Fixture.Id;
 
-            return this.RedirectToAction(controllerName: GlobalConstants.MatchesControllerName,
+            var routeValues = new { Id = fixtureId };
+
+            return this.RedirectToAction(controllerName: GlobalConstants.FixturesControllerName,
                                          actionName: GlobalConstants.DetailsActionName,
                                          routeValues: routeValues);
         }
